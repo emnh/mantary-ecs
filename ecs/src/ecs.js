@@ -1,4 +1,4 @@
-import { createStore } from 'redux';
+import { configureStore, createSlice } from '@reduxjs/toolkit';
 import {
   hashMap, vector, assoc, dissoc, conj, filter, get, update, getIn
 } from 'mori';
@@ -52,11 +52,11 @@ function filterEntitiesByComponents(entities, componentTypes) {
 
 // Redux
 
-const UPDATE_POSITIONS = 'UPDATE_POSITIONS';
-
-function reducer(state = vector(), action) {
-  switch (action.type) {
-    case UPDATE_POSITIONS:
+const ecsSlice = createSlice({
+  name: 'ecs',
+  initialState: vector(),
+  reducers: {
+    updatePositions: (state) => {
       const movementSystem = defineSystem('movement', ['position', 'velocity'], entities => {
         return entities.map(entity => {
           const position = getComponent(entity, 'position');
@@ -70,12 +70,13 @@ function reducer(state = vector(), action) {
       });
 
       return runSystem(movementSystem, state);
-    default:
-      return state;
-  }
-}
+    },
+  },
+});
 
-const store = createStore(reducer);
+const store = configureStore({
+  reducer: ecsSlice.reducer,
+});
 
 // Example Usage
 
@@ -86,7 +87,6 @@ let entity = createEntity();
 entity = addComponent(entity, position, hashMap('x', 0, 'y', 0));
 entity = addComponent(entity, velocity, hashMap('x', 1, 'y', 2));
 
-store.dispatch({ type: 'INIT' }); // Add initial state to Redux store
-store.dispatch({ type: UPDATE_POSITIONS });
+store.dispatch(ecsSlice.actions.updatePositions());
 
 console.log(store.getState().toJS());

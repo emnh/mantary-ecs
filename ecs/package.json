@@ -12,6 +12,7 @@
     "vite": "^4.2.0"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "ecsy": "^0.4.2",
     "melonjs": "^15.1.1",
     "mori": "^0.3.2",

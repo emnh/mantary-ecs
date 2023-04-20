@@ -1,94 +1,92 @@
-import * as ecsy from 'ecsy';
-import mori from 'mori';
-import * as me from "melonjs";
+import { configureStore, createSlice } from '@reduxjs/toolkit';
+import {
+  hashMap, vector, assoc, dissoc, conj, filter, get, update, getIn
+} from 'mori';
 
-const { device } = me;
+// Entities
 
-const { World, System, Component, TagComponent, Types } = ecsy;
-
-// ecsy components
-class Position extends ecsy.Component { }
-Position.schema = {
-    x: { type: ecsy.Types.Number },
-    y: { type: ecsy.Types.Number },
-};
-
-class Velocity extends ecsy.Component { }
-Velocity.schema = {
-    x: { type: ecsy.Types.Number },
-    y: { type: ecsy.Types.Number },
-};
-
-// ecsy systems
-class MovementSystem extends ecsy.System {
-    execute(delta) {
-        this.queries.movingEntities.results.forEach((entity) => {
-            const position = entity.getComponent(Position);
-            const velocity = entity.getComponent(Velocity);
-
-            entity.getMutableComponent(Position).x += velocity.x * delta;
-            entity.getMutableComponent(Position).y += velocity.y * delta;
-        });
-    }
+function createEntity() {
+  return hashMap();
 }
 
-MovementSystem.queries = {
-    movingEntities: {
-        components: [Position, Velocity],
-    },
-};
+function addComponent(entity, componentType, componentData) {
+  return assoc(entity, componentType, componentData);
+}
 
-const main = function () {
+function removeComponent(entity, componentType) {
+  return dissoc(entity, componentType);
+}
 
-    // Create a melonJS game
-    const game = new me.video.init(800, 600, {
-        wrapper: "screen",
-        scale: "auto",
-        scaleMethod: "fit",
-    });
+function getComponent(entity, componentType) {
+  return get(entity, componentType);
+}
 
-    // Add game state
-    const gameStates = {
-        "play": new me.Container(),
-    };
+function hasComponent(entity, componentType) {
+  return get(entity, componentType) !== undefined;
+}
 
-    // Initialize melonJS
-    game.onload = function () {
-        me.state.set(me.state.PLAY, gameStates.play);
-        me.state.change(me.state.PLAY);
+// Components
 
-        // Create ecsy world and register the systems
-        const world = new ecsy.World();
-        world.registerSystem(MovementSystem);
+function defineComponent(componentName, initialData) {
+  return componentName;
+}
 
-        // Create a player entity
-        const playerEntity = world.createEntity();
-        playerEntity.addComponent(Position, { x: 100, y: 100 });
-        playerEntity.addComponent(Velocity, { x: 50, y: 0 });
+// Systems
 
-        // Game loop
-        me.event.subscribe(me.event.STATE_UPDATE, function (delta) {
-            // Update the ecsy world
-            world.execute(delta / 1000);
+function defineSystem(systemName, requiredComponents, systemFunction) {
+  return { systemName, requiredComponents, systemFunction };
+}
 
-            // Update the melonJS container
-            gameStates.play.update(delta);
+function runSystem(systemType, entities) {
+  const filteredEntities = filterEntitiesByComponents(entities, systemType.requiredComponents);
+  return systemType.systemFunction(filteredEntities);
+}
 
-            // Draw the player
-            me.video.renderer.fillRect(
-                playerEntity.getComponent(Position).x,
-                playerEntity.getComponent(Position).y,
-                32, 48, "blue"
-            );
+// Helpers
+
+function filterEntitiesByComponents(entities, componentTypes) {
+  return filter(entity => {
+    return componentTypes.every(componentType => hasComponent(entity, componentType));
+  }, entities);
+}
+
+// Redux
+
+const ecsSlice = createSlice({
+  name: 'ecs',
+  initialState: vector(),
+  reducers: {
+    updatePositions: (state) => {
+      const movementSystem = defineSystem('movement', ['position', 'velocity'], entities => {
+        return entities.map(entity => {
+          const position = getComponent(entity, 'position');
+          const velocity = getComponent(entity, 'velocity');
+          const newPosition = hashMap(
+            'x', get(position, 'x') + get(velocity, 'x'),
+            'y', get(position, 'y') + get(velocity, 'y')
+          );
+          return addComponent(entity, 'position', newPosition);
         });
-    };
+      });
 
-    // Boot the game
-    // game.boot();
-    me.state.change(me.state.PLAY);
-
-};
-
-device.onReady(() => {
-    main();
+      return runSystem(movementSystem, state);
+    },
+  },
 });
+
+const store = configureStore({
+  reducer: ecsSlice.reducer,
+});
+
+// Example Usage
+
+const position = defineComponent('position', hashMap('x', 0, 'y', 0));
+const velocity = defineComponent('velocity', hashMap('x', 0, 'y', 0));
+
+let entity = createEntity();
+entity = addComponent(entity, position, hashMap('x', 0, 'y', 0));
+entity = addComponent(entity, velocity, hashMap('x', 1, 'y', 2));
+
+store.dispatch(ecsSlice.actions.updatePositions());
+
+console.log(store.getState().toJS());
