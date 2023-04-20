@@ -43,14 +43,32 @@ and updates the position component.
         position.y += velocity.y;
     }
 ```
-
-Now let's make it immutable. We can do this by returning a new position component.
+How would I write this state altering function using redux, mori and ecsy?
 
 ```js
-    function updatePosition(position, velocity) {
-        return {
-            x: position.x + velocity.x,
-            y: position.y + velocity.y,
-        };
-    }
+const { hashMap, updateIn } = require('mori');
+
+// Define initial state
+const initialState = hashMap(
+  'position', hashMap('x', 0, 'y', 0),
+  'velocity', hashMap('x', 0, 'y', 0)
+);
+
+// Define reducer function
+function reducer(state = initialState, action) {
+  switch (action.type) {
+    case 'UPDATE_POSITION':
+      // Update the position in the state using Mori's `updateIn` function
+      return updateIn(state, ['position', 'x'], x => x + state.getIn(['velocity', 'x']))
+             .updateIn(['position', 'y'], y => y + state.getIn(['velocity', 'y']));
+    default:
+      return state;
+  }
+}
+
+// Create store using the reducer function
+const store = createStore(reducer);
+
+// Dispatch an action to update the position
+store.dispatch({ type: 'UPDATE_POSITION' });
 ```
