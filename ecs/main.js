@@ -2,6 +2,7 @@ import './style.css'
 
 import mori from 'mori';
 
+let state = mori.hashMap();
 let entityIdCounter = 0;
 let entitiesById = mori.hashMap();
 let entitiesByComponent = mori.hashMap();
@@ -12,6 +13,7 @@ let entitiesByComponent = mori.hashMap();
 // but why bother, they are both fast enough.
 
 const constants = {
+  PLAYER_ID_PREFIX: 'player',
   COMPONENT_TYPE_SPRITE: 'sprite',
   COMPONENT_TYPE_POSITION: 'position',
   COMPONENT_TYPE_VELOCITY: 'velocity',
@@ -22,18 +24,17 @@ const constants = {
   COMPONENT_TYPE_INPUT: 'input',
 };
 
-function addEntity() {
-  const id = entityIdCounter;
-  entityIdCounter++;
-  console.log(id);
-  entitiesById = mori.assoc(entitiesById, id, mori.hashMap());
-  return id;
+function getOrDefault(map, key, defaultValue) {
+  const value = mori.get(map, key);
+  return value !== null && value !== undefined ? value : defaultValue;
 }
 
-const id = addEntity();
-
-function RectComponent(x, y, width, height) {
-  return mori.hashMap('x', x, 'y', y, 'width', width, 'height', height);
+function addEntity(prefix) {
+  const id = prefix + entityIdCounter;
+  entityIdCounter++;
+  // console.log(id);
+  entitiesById = mori.assoc(entitiesById, id, mori.hashMap());
+  return id;
 }
 
 function addComponent(entityId, component) {
@@ -45,9 +46,15 @@ function addComponent(entityId, component) {
   entitiesByComponent = mori.updateIn(entitiesByComponent, [mori.get(component, "type")], mori.conj, entityId);
 }
 
-const playerEntityId = addEntity();
-const component = mori.hashMap({ type: constants.COMPONENT_TYPE_SPRITE, x: 10, y: 20 });
-addComponent(playerEntityId, component);
+function testComponent() {
+  const playerEntityId = addEntity(constants.PLAYER_ID_PREFIX);
+  const component = mori.hashMap('type', constants.COMPONENT_TYPE_SPRITE, 'x', 10, 'y', 20);
+  addComponent(playerEntityId, component);
+}
 
-console.log(mori.toJs(entitiesById)); // Output: { "player": { "type": "sprite", "x": 10, "y": 20 } }
-console.log(mori.toJs(entitiesByComponent)); // Output: { "type": ["player"] }
+function RectComponent(x, y, width, height) {
+  return mori.hashMap('x', x, 'y', y, 'width', width, 'height', height);
+}
+
+console.log(mori.toJs(entitiesById));
+console.log(mori.toJs(entitiesByComponent));
