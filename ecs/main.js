@@ -42,19 +42,22 @@ function addComponent(entityId, component) {
   if (!mori.hasKey(entitiesById, entityId)) {
     throw new Error(`Entity ${entityId} does not exist`);
   }
-  entitiesById = mori.updateIn(entitiesById, [entityId], mori.merge, component);
-  entitiesByComponent = mori.updateIn(entitiesByComponent, [mori.get(component, "type")], mori.conj, entityId);
+  const serializedComponent = mori.assoc(component, '_serialize', getOrDefault(component, '_serialize', false));
+  entitiesById = mori.updateIn(entitiesById, [entityId], mori.merge, serializedComponent);
+  entitiesByComponent = mori.updateIn(entitiesByComponent, [mori.get(serializedComponent, "type")], mori.conj, entityId);
 }
 
 function testComponent() {
   const playerEntityId = addEntity(constants.PLAYER_ID_PREFIX);
   const component = mori.hashMap('type', constants.COMPONENT_TYPE_SPRITE, 'x', 10, 'y', 20);
-  addComponent(playerEntityId, component);
+  addComponent(playerEntityId, component);  
+  console.log(mori.toJs(entitiesById));
+  console.log(mori.toJs(entitiesByComponent));
 }
 
 function RectComponent(x, y, width, height) {
   return mori.hashMap('x', x, 'y', y, 'width', width, 'height', height);
 }
 
-console.log(mori.toJs(entitiesById));
-console.log(mori.toJs(entitiesByComponent));
+testComponent();
+
