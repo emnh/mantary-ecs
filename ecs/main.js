@@ -1,63 +1,83 @@
-import './style.css'
-
+import * as ecsy from 'ecsy';
 import mori from 'mori';
+import * as me from "melonjs";
 
-let state = mori.hashMap();
-let entityIdCounter = 0;
-let entitiesById = mori.hashMap();
-let entitiesByComponent = mori.hashMap();
+const { World, System, Component, TagComponent, Types } = ecsy;
 
-// We could have an integer type counter,
-// but we want to maintain backwards compatibility in the saved data format,
-// so better use a string. Yeah we could have an integer for runtime and string for saved data,
-// but why bother, they are both fast enough.
-
-const constants = {
-  PLAYER_ID_PREFIX: 'player',
-  COMPONENT_TYPE_SPRITE: 'sprite',
-  COMPONENT_TYPE_POSITION: 'position',
-  COMPONENT_TYPE_VELOCITY: 'velocity',
-  COMPONENT_TYPE_COLLIDER: 'collider',
-  COMPONENT_TYPE_HEALTH: 'health',
-  COMPONENT_TYPE_AI: 'ai',
-  COMPONENT_TYPE_PLAYER: 'player',
-  COMPONENT_TYPE_INPUT: 'input',
+// ecsy components
+class Position extends ecsy.Component {}
+Position.schema = {
+  x: { type: ecsy.Types.Number },
+  y: { type: ecsy.Types.Number },
 };
 
-function getOrDefault(map, key, defaultValue) {
-  const value = mori.get(map, key);
-  return value !== null && value !== undefined ? value : defaultValue;
-}
+class Velocity extends ecsy.Component {}
+Velocity.schema = {
+  x: { type: ecsy.Types.Number },
+  y: { type: ecsy.Types.Number },
+};
 
-function addEntity(prefix) {
-  const id = prefix + entityIdCounter;
-  entityIdCounter++;
-  // console.log(id);
-  entitiesById = mori.assoc(entitiesById, id, mori.hashMap());
-  return id;
-}
+// ecsy systems
+class MovementSystem extends ecsy.System {
+  execute(delta) {
+    this.queries.movingEntities.results.forEach((entity) => {
+      const position = entity.getComponent(Position);
+      const velocity = entity.getComponent(Velocity);
 
-function addComponent(entityId, component) {
-  // Check that the entity exists
-  if (!mori.hasKey(entitiesById, entityId)) {
-    throw new Error(`Entity ${entityId} does not exist`);
+      entity.getMutableComponent(Position).x += velocity.x * delta;
+      entity.getMutableComponent(Position).y += velocity.y * delta;
+    });
   }
-  const serializedComponent = mori.assoc(component, '_serialize', getOrDefault(component, '_serialize', false));
-  entitiesById = mori.updateIn(entitiesById, [entityId], mori.merge, serializedComponent);
-  entitiesByComponent = mori.updateIn(entitiesByComponent, [mori.get(serializedComponent, "type")], mori.conj, entityId);
 }
 
-function testComponent() {
-  const playerEntityId = addEntity(constants.PLAYER_ID_PREFIX);
-  const component = mori.hashMap('type', constants.COMPONENT_TYPE_SPRITE, 'x', 10, 'y', 20);
-  addComponent(playerEntityId, component);  
-  console.log(mori.toJs(entitiesById));
-  console.log(mori.toJs(entitiesByComponent));
-}
+MovementSystem.queries = {
+  movingEntities: {
+    components: [Position, Velocity],
+  },
+};
 
-function RectComponent(x, y, width, height) {
-  return mori.hashMap('x', x, 'y', y, 'width', width, 'height', height);
-}
+// Create a melonJS game
+const game = new me.video.Game(800, 600, {
+  wrapper: "screen",
+  scale: "auto",
+  scaleMethod: "fit",
+});
 
-testComponent();
+// Add game state
+const gameStates = {
+  "play": new me.Container(),
+};
 
+// Initialize melonJS
+game.onload = function () {
+  me.state.set(me.state.PLAY, gameStates.play);
+  me.state.change(me.state.PLAY);
+
+  // Create ecsy world and register the systems
+  const world = new ecsy.World();
+  world.registerSystem(MovementSystem);
+
+  // Create a player entity
+  const playerEntity = world.createEntity();
+  playerEntity.addComponent(Position, { x: 100, y: 100 });
+  playerEntity.addComponent(Velocity, { x: 50, y: 0 });
+
+  // Game loop
+  me.event.subscribe(me.event.STATE_UPDATE, function (delta) {
+    // Update the ecsy world
+    world.execute(delta / 1000);
+
+    // Update the melonJS container
+    gameStates.play.update(delta);
+
+    // Draw the player
+    me.video.renderer.fillRect(
+      playerEntity.getComponent(Position).x,
+      playerEntity.getComponent(Position).y,
+      32, 48, "blue"
+    );
+  });
+};
+
+// Boot the game
+game.boot();
