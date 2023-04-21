@@ -1,5 +1,3 @@
-const fs = require('fs');
-const path = require('path');
 function concatenateJSFiles(dirPath) {
   console.log('concatenateJSFiles');
   const files = fs.readdirSync(dirPath);
