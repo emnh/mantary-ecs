@@ -1,4 +1,3 @@
-const acorn = require('acorn');
 function addConsoleLogToFunction(parsed) {
   console.log('addConsoleLogToFunction');
   const functionNode = parsed.body.find(node => node.type === 'FunctionDeclaration');
@@ -7,7 +6,3 @@ function addConsoleLogToFunction(parsed) {
   functionNode.body.body.unshift(consoleLogNode);
   return parsed;
 }
-const code = 'function hello() { console.log("Hello, world!"); }';
-const parsed = acorn.parse(code);
-const modified = addConsoleLogToFunction(parsed);
-console.log(modified.toString());
