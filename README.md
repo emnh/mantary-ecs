@@ -1,5 +1,22 @@
 # mantary-ecs
 
+# 3 things to do
+
+```powershell
+cd ecs/src
+python ..\..\apptyapp-chatgpt\server.py
+```
+
+```powershell	
+cd ecs
+npm run dev
+```
+
+```powershell
+cd ecs
+npm run signature
+```
+
 # Features
  - Function generation using chatgpt
  - Context extraction for chatgpt

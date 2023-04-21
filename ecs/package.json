@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "signature": "nodemon ./scripts/signature.cjs"
   },
   "devDependencies": {
     "vite": "^4.2.0"
@@ -16,6 +17,7 @@
     "ecsy": "^0.4.2",
     "melonjs": "^15.1.1",
     "mori": "^0.3.2",
+    "nodemon": "^2.0.22",
     "redux": "^4.2.1"
   }
 }
