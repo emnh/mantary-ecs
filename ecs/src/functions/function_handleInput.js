@@ -1,12 +1,14 @@
 function handleInput(player, keys) {
-  if (keys.ArrowUp && !player.jumping) {
-    player.jumping = true;
-    player.jumpSpeed = -player.speed * 2;
-  }
-  if (keys.ArrowLeft) {
+  if (keys["ArrowLeft"]) {
     player.x -= player.speed;
   }
-  if (keys.ArrowRight) {
+  if (keys["ArrowRight"]) {
     player.x += player.speed;
+  }
+  if (keys["ArrowUp"]) {
+    if (!player.jumping) {
+      player.jumping = true;
+      player.jumpSpeed = -player.jumpHeight;
+    }
   }
 }
