@@ -1,30 +1,24 @@
 function main() {
-  // Create the header section
+  // Create the header element
   const header = document.createElement("header");
-  header.style.backgroundColor = "#333";
-  header.style.color = "#fff";
-  header.style.padding = "10px";
-  header.style.textAlign = "center";
-  header.innerHTML = "<h1>Cool Website</h1>";
+  header.style.backgroundColor = "black";
+  header.style.color = "white";
+  header.style.padding = "20px";
+  header.innerHTML = "<h1>Welcome to my cool webpage!</h1>";
 
-  // Create the main section
+  // Create the main content area
   const main = document.createElement("main");
   main.style.padding = "20px";
-  main.innerHTML = `
-    <h2>Welcome to my cool website!</h2>
-    <p>This is some text on my page.</p>
-    <button style="background-color: #333; color: #fff; padding: 10px;">Click me!</button>
-  `;
+  main.innerHTML = "<p>This is the main content area of my cool webpage.</p><p>Here's a cool image:</p><img src='https://picsum.photos/400' alt='A random image from Lorem Picsum'>";
 
-  // Create the footer section
+  // Create the footer element
   const footer = document.createElement("footer");
-  footer.style.backgroundColor = "#333";
-  footer.style.color = "#fff";
-  footer.style.padding = "10px";
-  footer.style.textAlign = "center";
-  footer.innerHTML = "<p>&copy; 2023 Cool Website</p>";
+  footer.style.backgroundColor = "black";
+  footer.style.color = "white";
+  footer.style.padding = "20px";
+  footer.innerHTML = "<p>&copy; 2023 My Cool Webpage. All rights reserved.</p>";
 
-  // Add the sections to the page
+  // Add the header, main content area, and footer to the page
   document.body.appendChild(header);
   document.body.appendChild(main);
   document.body.appendChild(footer);
