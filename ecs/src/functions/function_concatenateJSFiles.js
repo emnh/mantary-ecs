@@ -1,4 +1,7 @@
+const fs = require('fs');
+const path = require('path');
 function concatenateJSFiles(dirPath) {
+  console.log('concatenateJSFiles');
   const files = fs.readdirSync(dirPath);
   const jsFiles = files.filter(file => path.extname(file) === '.js');
   const content = jsFiles.reduce((accumulator, file) => {
