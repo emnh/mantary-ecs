@@ -1,7 +1,12 @@
 function main() {
   console.log('main');
-  me.video.init(640, 480, {
-    wrapper: "screen",
+  var canvas = document.createElement("canvas");
+  canvas.width = 640;
+  canvas.height = 480;
+  document.body.appendChild(canvas);
+  me.boot();
+  me.video.init(canvas.width, canvas.height, {
+    wrapper: canvas,
     renderer: me.video.CANVAS,
     scale: "auto",
     scaleMethod: "fit",
