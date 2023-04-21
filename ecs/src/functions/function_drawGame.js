@@ -1,9 +1,9 @@
 function drawGame(ctx, platforms, player, lastTimestamp) {
   console.log('drawGame');
   const timestamp = performance.now();
-  const elapsed = timestamp - lastTimestamp;
+  const elapsed = (timestamp - lastTimestamp) / 1000;
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  player.velocityY += 0.1 * elapsed;
+  player.velocityY += 0.5 * elapsed;
   player.y += player.velocityY * elapsed;
   for (let i = 0; i < platforms.length; i++) {
     const platform = platforms[i];
