@@ -12,7 +12,7 @@ function main() {
   const keys = {};
   const update = () => {
     handleInput(player, keys);
-    updatePlayer(player, platforms);
+    updatePlayer(player, platforms, canvas);
     drawGame(ctx, platforms, player);
     requestAnimationFrame(update);
   };
