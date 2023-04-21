@@ -1,4 +1,5 @@
 function createPlayer(x, y, color) {
+  console.log('createPlayer');
   return {
     x: x,
     y: y,
