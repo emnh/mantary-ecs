@@ -1,6 +1,6 @@
 function main() {
-  // Set the background color to red
-  document.body.style.backgroundColor = "red";
+  // Set the background color to green
+  document.body.style.backgroundColor = "green";
 
   // Create the header element
   const header = createHeader("Welcome to my cool webpage!");
