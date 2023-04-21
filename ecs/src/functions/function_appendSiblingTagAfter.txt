@@ -1,16 +1,20 @@
-Prompt: 1 / 1How can I append a sibling tag after a tag?
-Answer: 1 / 1To append a sibling tag after an existing tag using JavaScript, you can use the insertAdjacentHTML() method. This method allows you to insert HTML code before, after, or at a specified position relative to an element.Here's an example function that takes a target element and new tag name as input, and appends a new sibling tag after the target element:javascriptCopy codefunction appendSiblingTagAfter(targetElement, newTagName) {
+Prompt: 1 / 1Add a text parameter to the function.
+Answer: 1 / 1Sure, here's the updated function with a text parameter that allows you to specify the text content of the new tag:javascriptCopy codefunction appendSiblingTagAfter(targetElement, newTagName, text) {
   const newTag = document.createElement(newTagName);
+  newTag.textContent = text;
   targetElement.insertAdjacentElement("afterend", newTag);
 }
-This function creates a new tag using the createElement() method and specifies the tag name as the second parameter. It then uses the insertAdjacentElement() method on the target element to insert the new tag after the target element. The first parameter specifies the position at which to insert the new tag, in this case "afterend".Here's an example of how you could use this function to append a new paragraph tag after an existing paragraph:htmlCopy code<p>Lorem ipsum dolor sit amet.</p>
+This function creates a new tag using the createElement() method and sets the textContent property of the new tag to the specified text. It then uses the insertAdjacentElement() method on the target element to insert the new tag after the target element.Here's an example of how you could use this function to append a new paragraph tag with some text content after an existing paragraph:htmlCopy code<p>Lorem ipsum dolor sit amet.</p>
 <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</p>
 
 <script>
   const targetElement = document.getElementsByTagName("p")[0];
-  appendSiblingTagAfter(targetElement, "p");
+  const newTagName = "p";
+  const text = "This is the new paragraph.";
+  appendSiblingTagAfter(targetElement, newTagName, text);
 </script>
 This would result in the following HTML:htmlCopy code<p>Lorem ipsum dolor sit amet.</p>
 <p></p>
+<p>This is the new paragraph.</p>
 <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</p>
-Note that the function assumes that the target element exists on the page. If the target element is not found, the function will throw an error.
+Note that if you don't want to specify any text content for the new tag, you can omit the text parameter when calling the function. In this case, the new tag will be created with empty content.
