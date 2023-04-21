@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 function concatenateJSFilesAndWatch(dirPath) {
-    const mainFilePath = path.join(dirPath, 'main.js');
+    const mainFilePath = 'main.js';
     let content = '';
 
     function updateMainFile() {
@@ -14,7 +14,12 @@ function concatenateJSFilesAndWatch(dirPath) {
             return accumulator + fileContent;
         }, '');
         content += 'main();'
-        fs.writeFileSync(mainFilePath, content);
+        try {
+            fs.writeFileSync(mainFilePath, content);
+        } catch (err) {
+            console.error(err);
+        }
+        
         console.log(`main.js updated with ${jsFiles.length} files`);
     }
 
