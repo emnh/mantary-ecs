@@ -1,25 +1,42 @@
-Prompt: 1 / 1Using js how can I word wrap a string with max 80 characters on each line?
-Answer: 1 / 1Here's a JavaScript function that word wraps a string with a maximum of 80 characters per line:javascriptCopy codefunction wrapText(text) {
+Prompt: 1 / 1Using js how can I word wrap a string with max 80 characters on
+each line?
+Answer: 1 / 1Here's a JavaScript function that word wraps a string
+with a maximum of 80 characters per line:javascriptCopy codefunction
+wrapText(text) {
   const words = text.split(" ");
   let currentLine = "";
-  const lines = [];
+const lines = [];
 
   words.forEach((word) => {
-    if (currentLine.length + word.length <= 80) {
+    if (currentLine.length +
+word.length <= 80) {
       currentLine += word + " ";
     } else {
-      lines.push(currentLine.trim());
+lines.push(currentLine.trim());
       currentLine = word + " ";
     }
   });
-
-  if (currentLine.length > 0) {
+if (currentLine.length > 0) {
     lines.push(currentLine.trim());
   }
 
-  return lines.join("\n");
+  return
+lines.join("\n");
 }
-This function takes a string as input and splits it into an array of words. It then iterates over each word and appends it to the current line, adding a space after each word.If the length of the current line plus the length of the next word is greater than 80, the function pushes the current line to an array of lines, and starts a new line with the next word.Once all the words have been processed, any remaining text in the current line is pushed to the array of lines.Finally, the function joins all the lines together with a newline character and returns the wrapped text.You can call this function like this:javascriptCopy codeconst wrappedText = wrapText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat velit vel odio vulputate vestibulum. Suspendisse potenti. In in turpis leo.");
+This function takes a string as input and splits it into an
+array of words. It then iterates over each word and appends it to the current
+line, adding a space after each word.If the length of the current line plus the
+length of the next word is greater than 80, the function pushes the current line
+to an array of lines, and starts a new line with the next word.Once all the
+words have been processed, any remaining text in the current line is pushed to
+the array of lines.Finally, the function joins all the lines together with a
+newline character and returns the wrapped text.You can call this function like
+this:javascriptCopy codeconst wrappedText = wrapText("Lorem ipsum dolor sit
+amet, consectetur adipiscing elit. Sed consequat velit vel odio vulputate
+vestibulum. Suspendisse potenti. In in turpis
+leo.");
 console.log(wrappedText);
-This will output:mathematicaCopy codeLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat velit vel
-odio vulputate vestibulum. Suspendisse potenti. In in turpis leo.
+This will output:mathematicaCopy codeLorem
+ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat velit vel
+odio
+vulputate vestibulum. Suspendisse potenti. In in turpis leo.
