@@ -1,4 +1,4 @@
-function updatePlayer(player, platforms) {
+function updatePlayer(player, platforms, canvas) {
   // Apply gravity to the player
   player.y += player.jumpSpeed;
   player.jumpSpeed += player.gravity;
