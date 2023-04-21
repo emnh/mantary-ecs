@@ -1,15 +1,35 @@
 Prompt: 1 / 1Given a tag how can I append a text after it?
-Answer: 1 / 1To append text after an HTML tag using JavaScript, you can use the innerHTML property to get the current content of the element and then concatenate the new text onto the end. Here's an example function that takes a tag name and text as input, and appends the text after the last occurrence of the tag:javascriptCopy codefunction appendTextAfterTag(tagName, text) {
-  const tags = document.getElementsByTagName(tagName);
-  const lastTag = tags[tags.length - 1];
+Answer: 1 / 1To
+append text after an HTML tag using JavaScript, you can use the innerHTML
+property to get the current content of the element and then concatenate the new
+text onto the end. Here's an example function that takes a tag name and text as
+input, and appends the text after the last occurrence of the tag:javascriptCopy
+codefunction appendTextAfterTag(tagName, text) {
+  const tags =
+document.getElementsByTagName(tagName);
+  const lastTag = tags[tags.length -
+1];
   lastTag.innerHTML += text;
 }
-This function uses the getElementsByTagName() method to get an array of all elements with the specified tag name, and then selects the last one using the length property.It then appends the specified text to the innerHTML property of the last tag, which will add the text after the tag in the HTML.Here's an example of how you could use this function to append text after a paragraph tag:htmlCopy code<p>Lorem ipsum dolor sit amet.</p>
-<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</p>
+This function uses the getElementsByTagName()
+method to get an array of all elements with the specified tag name, and then
+selects the last one using the length property.It then appends the specified
+text to the innerHTML property of the last tag, which will add the text after
+the tag in the HTML.Here's an example of how you could use this function to
+append text after a paragraph tag:htmlCopy code<p>Lorem ipsum dolor sit
+amet.</p>
+<p>Sed ut perspiciatis unde omnis iste natus error sit
+voluptatem.</p>
 
 <script>
-  appendTextAfterTag("p", " This text was appended after the last paragraph tag.");
+  appendTextAfterTag("p", " This text was appended
+after the last paragraph tag.");
 </script>
-This would result in the following HTML:htmlCopy code<p>Lorem ipsum dolor sit amet.</p>
-<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</p> This text was appended after the last paragraph tag.
-Note that the function assumes that at least one element with the specified tag name exists on the page. If no elements are found, the function will throw an error.
+This would result in the following
+HTML:htmlCopy code<p>Lorem ipsum dolor sit amet.</p>
+<p>Sed ut perspiciatis unde
+omnis iste natus error sit voluptatem.</p> This text was appended after the last
+paragraph tag.
+Note that the function assumes that at least one element with the
+specified tag name exists on the page. If no elements are found, the function
+will throw an error.
