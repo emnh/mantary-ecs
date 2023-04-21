@@ -1,22 +1,47 @@
 function main() {
   console.log('main');
-  const canvas = createCanvas(800, 600);
+  const canvas = document.createElement('canvas');
+  canvas.width = 640;
+  canvas.height = 480;
   document.body.appendChild(canvas);
-  const ctx = canvas.getContext("2d");
-  const player = createPlayer(50, 50, "blue");
-  const platforms = [createPlatform(0, 550, canvas.width, 50, "grey"), createPlatform(50, 400, 200, 50, "brown"), createPlatform(500, 300, 200, 50, "brown"), createPlatform(300, 200, 200, 50, "brown"), createPlatform(50, 100, 200, 50, "brown")];
-  const keys = {};
-  const update = () => {
-    handleInput(player, keys);
-    updatePlayer(player, platforms, canvas);
-    drawGame(ctx, platforms, player);
-    requestAnimationFrame(update);
+  const ctx = canvas.getContext('2d');
+  const platforms = [{
+    x: 100,
+    y: 350,
+    width: 100,
+    height: 20
+  }, {
+    x: 400,
+    y: 300,
+    width: 100,
+    height: 20
+  }, {
+    x: 200,
+    y: 250,
+    width: 100,
+    height: 20
+  }, {
+    x: 100,
+    y: 200,
+    width: 100,
+    height: 20
+  }, {
+    x: 400,
+    y: 150,
+    width: 100,
+    height: 20
+  }];
+  const player = {
+    x: 50,
+    y: 300,
+    width: 20,
+    height: 20,
+    velocityY: 0
   };
-  document.addEventListener("keydown", event => {
-    keys[event.code] = true;
-  });
-  document.addEventListener("keyup", event => {
-    keys[event.code] = false;
-  });
-  requestAnimationFrame(update);
+  let lastTimestamp = performance.now();
+  function gameLoop() {
+    lastTimestamp = drawGame(ctx, platforms, player, lastTimestamp);
+    requestAnimationFrame(gameLoop);
+  }
+  requestAnimationFrame(gameLoop);
 }
