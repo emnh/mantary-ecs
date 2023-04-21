@@ -12,7 +12,7 @@ function main() {
     doubleBuffering: true
   });
   me.loader.preload([], function onLoad() {
-    me.state.add("play", new PlayState());
+    me.state.states.play = new PlayState();
     me.state.change("play");
     me.game.repaint();
   });
