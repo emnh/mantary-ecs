@@ -1,14 +1,35 @@
 # mantary-ecs
 
 # Features
+ - Function generation using chatgpt
+ - Context extraction for chatgpt
  - 2d game engine on top of melonjs
  - Entity Component System
- - Function generation using chatgpt
- - Immutability using mori
- - Context extraction for chatgpt
  - Pure functions
- - Dependency diagram and injection
  - Tiered function buckets with dependencies only pointing to lower tiers
+ - Immutability using mori
+ - Dependency diagram and injection
+
+# Notes on requestAnimationFrame
+
+http://www.javascriptkit.com/javatutors/requestanimationframe.shtml
+https://gamedev.stackexchange.com/questions/1589/when-should-i-use-a-fixed-or-variable-time-step
+
+Always call requestAnimationFrame, even in a physics update function.
+If we need to slow down the update frequency,
+we can call requestAnimationFrame from within setTimeout or setInterval,
+or perhaps better to check the time elapsed within requestAnimationFrame
+and then call our physics update.
+
+So we're sticking with interpolation, because of perfectionism.
+It would likely work great without it, but we want to have super smooth animations on
+high refresh rate monitors by interpolation, plus we want deterministic physics updates as
+recommended by major game engines like Unity and physics engines like Box2D,
+plus we want to be able to slow down the game, which is achieved by running the physics update
+step supplying a a different time constant than the interval it's actually running at.
+
+So we need to find out what's the story with requestAnimationFrame in melonjs.
+How do we synchronize with melonjs?
 
 # Discussion
 
@@ -72,3 +93,23 @@ const store = createStore(reducer);
 // Dispatch an action to update the position
 store.dispatch({ type: 'UPDATE_POSITION' });
 ```
+
+
+# Example code
+
+I want to build some js code around a platformer game.
+Let's first define an example code that we can work with.
+The example code should draw a rectangle on screen using melonjs,
+update state using setInterval(physicsUpdate, 10)
+and linearly interpolate between two states on requestAnimationFrame.
+The rectangle should move using wasd.
+
+We are going store the state in entity component system style.
+The state is a global hashMap of components.
+The components are also hashMaps.
+The components are going to be updated by the physicsUpdate function.
+The physicsUpdate function is going to be called by setInterval.
+The physicsUpdate function is going to update the state.
+The state is going to be used by the render function.
+The render function is going to be called by requestAnimationFrame.
+The render function is going to draw the rectangle on screen.
