@@ -4,7 +4,7 @@ function main() {
 
   // Create a new image element for the jumping donkey
   const img = document.createElement("img");
-  img.src = "https://i.imgur.com/LrjMQ7V.gif";
+  img.src = "jumping-donkey.gif";
   img.alt = "Jumping Donkey";
 
   // Set the position and size of the image
