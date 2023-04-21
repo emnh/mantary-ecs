@@ -1,3 +1,9 @@
 function createPlatform(x, y, width, height, color) {
-  // createPlatform function code here
+  return {
+    x: x,
+    y: y,
+    width: width,
+    height: height,
+    color: color
+  };
 }
