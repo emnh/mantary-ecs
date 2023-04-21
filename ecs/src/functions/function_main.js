@@ -2,17 +2,63 @@ function main() {
   // Set the background color to green
   document.body.style.backgroundColor = "green";
 
-  // Create the header element
-  const header = createHeader("Welcome to my cool webpage!");
+  // Create the game canvas element
+  const canvas = document.createElement("canvas");
+  canvas.width = 800;
+  canvas.height = 600;
+  canvas.style.border = "1px solid black";
+  canvas.style.margin = "0 auto"; // Center the canvas horizontally
+  document.body.appendChild(canvas);
 
-  // Create the main content area
-  const main = createMain("<p>This is the main content area of my cool webpage.</p><p>Here's a cool image:</p><img src='https://picsum.photos/400' alt='A random image from Lorem Picsum'>");
+  // Create the game context object
+  const ctx = canvas.getContext("2d");
 
-  // Create the footer element
-  const footer = createFooter("&copy; 2023 My Cool Webpage. All rights reserved.");
+  // Create the player object
+  const player = {
+    x: 50,
+    y: 50,
+    width: 50,
+    height: 50,
+    speed: 5,
+    color: "blue"
+  };
 
-  // Add the header, main content area, and footer to the page
-  addElementToBody(header);
-  addElementToBody(main);
-  addElementToBody(footer);
+  // Define the game loop function
+  function gameLoop() {
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Move the player
+    if (keys.ArrowUp) {
+      player.y -= player.speed;
+    }
+    if (keys.ArrowDown) {
+      player.y += player.speed;
+    }
+    if (keys.ArrowLeft) {
+      player.x -= player.speed;
+    }
+    if (keys.ArrowRight) {
+      player.x += player.speed;
+    }
+
+    // Draw the player
+    ctx.fillStyle = player.color;
+    ctx.fillRect(player.x, player.y, player.width, player.height);
+
+    // Request the next frame of the game loop
+    requestAnimationFrame(gameLoop);
+  }
+
+  // Set up keyboard event listeners
+  const keys = {};
+  document.addEventListener("keydown", event => {
+    keys[event.code] = true;
+  });
+  document.addEventListener("keyup", event => {
+    keys[event.code] = false;
+  });
+
+  // Start the game loop
+  gameLoop();
 }
