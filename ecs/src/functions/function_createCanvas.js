@@ -1,4 +1,5 @@
 function createCanvas(width, height) {
+  console.log('createCanvas');
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
