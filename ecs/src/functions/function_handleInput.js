@@ -1,4 +1,5 @@
 function handleInput(player, keys) {
+  console.log('handleInput');
   if (keys["ArrowLeft"]) {
     player.x -= player.speed;
   }
