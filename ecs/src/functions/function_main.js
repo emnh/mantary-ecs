@@ -12,8 +12,12 @@ function main() {
     doubleBuffering: true
   });
   me.loader.preload([], function onLoad() {
-    me.state.states.play = new PlayState();
-    me.state.change("play");
-    me.game.repaint();
+    if (me.state.states) {
+      me.state.states.play = new PlayState();
+      me.state.change("play");
+      me.game.repaint();
+    } else {
+      console.error("me.state.states is undefined!");
+    }
   });
 }
