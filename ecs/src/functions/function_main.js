@@ -5,9 +5,6 @@ function main() {
     renderer: me.video.CANVAS,
     scale: "auto"
   });
-  me.loader.load({}, function () {
-    me.state.change(me.state.PLAY);
-  });
   me.state.PLAY = me.state.extend({
     onResetEvent: function () {
       var player = new Player(0, 0);
@@ -20,10 +17,12 @@ function main() {
       me.game.world.addChild(platform3);
     }
   });
-  me.state.change(me.state.PLAY);
-  me.input.bindKey(me.input.KEY.LEFT, "left");
-  me.input.bindKey(me.input.KEY.RIGHT, "right");
-  me.input.bindKey(me.input.KEY.UP, "jump");
-  me.game.viewport.follow(me.game.world.getChildByName("player")[0], me.game.viewport.AXIS.BOTH);
-  me.game.start();
+  me.device.onReady(function () {
+    me.state.change(me.state.PLAY);
+    me.input.bindKey(me.input.KEY.LEFT, "left");
+    me.input.bindKey(me.input.KEY.RIGHT, "right");
+    me.input.bindKey(me.input.KEY.UP, "jump");
+    me.game.viewport.follow(me.game.world.getChildByName("player")[0], me.game.viewport.AXIS.BOTH);
+    me.game.start();
+  });
 }
