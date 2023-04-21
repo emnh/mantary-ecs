@@ -39,7 +39,19 @@ function main() {
     velocityY: 0
   };
   let lastTimestamp = performance.now();
+  function handleInput() {
+    if (keyIsDown('ArrowLeft')) {
+      player.x -= 5;
+    }
+    if (keyIsDown('ArrowRight')) {
+      player.x += 5;
+    }
+    if (keyIsDown('ArrowUp') && player.velocityY === 0) {
+      player.velocityY = -10;
+    }
+  }
   function gameLoop() {
+    handleInput();
     lastTimestamp = drawGame(ctx, platforms, player, lastTimestamp);
     requestAnimationFrame(gameLoop);
   }
