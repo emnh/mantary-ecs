@@ -1,3 +1,3 @@
 function main() {
-  console.log("Hello");
+  document.body.style.backgroundColor = "blue";
 }
