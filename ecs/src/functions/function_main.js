@@ -1,6 +1,10 @@
 function main() {
   console.log('main');
-  me.initialize();
+  me.video.init(640, 480, {
+    wrapper: "screen",
+    renderer: me.video.CANVAS,
+    scale: "auto"
+  });
   me.loader.load({}, function () {
     me.state.change(me.state.PLAY);
   });
@@ -16,5 +20,10 @@ function main() {
       me.game.world.addChild(platform3);
     }
   });
-  me.start();
+  me.state.change(me.state.PLAY);
+  me.input.bindKey(me.input.KEY.LEFT, "left");
+  me.input.bindKey(me.input.KEY.RIGHT, "right");
+  me.input.bindKey(me.input.KEY.UP, "jump");
+  me.game.viewport.follow(me.game.world.getChildByName("player")[0], me.game.viewport.AXIS.BOTH);
+  me.game.start();
 }
