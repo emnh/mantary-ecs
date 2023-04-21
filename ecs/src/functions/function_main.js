@@ -1,16 +1,15 @@
 function main() {
   console.log('main');
-  var canvas = document.createElement("canvas");
-  canvas.width = 640;
-  canvas.height = 480;
-  document.body.appendChild(canvas);
-  var game = new melonjs.Game({
-    canvas: canvas,
-    resources: [],
-    states: []
+  me.video.init(640, 480, {
+    wrapper: "screen",
+    renderer: me.video.CANVAS,
+    scale: "auto",
+    scaleMethod: "fit",
+    doubleBuffering: true
   });
-  game.onload = function () {
+  me.loader.preload([], function () {
+    me.state.add("play", new PlayState());
     me.state.change("play");
-  };
-  game.start();
+    me.game.repaint();
+  });
 }
