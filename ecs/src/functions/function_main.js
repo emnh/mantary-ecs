@@ -39,6 +39,16 @@ function main() {
     velocityY: 0
   };
   let lastTimestamp = performance.now();
+  function keyIsDown(keyCode) {
+    return keyState[keyCode] || false;
+  }
+  const keyState = {};
+  window.addEventListener('keydown', event => {
+    keyState[event.code] = true;
+  });
+  window.addEventListener('keyup', event => {
+    keyState[event.code] = false;
+  });
   function handleInput() {
     if (keyIsDown('ArrowLeft')) {
       player.x -= 5;
