@@ -1,5 +1,3 @@
-const fs = require('fs');
-const path = require('path');
 function concatenateJSFilesAndWatch(dirPath) {
   console.log('concatenateJSFilesAndWatch');
   const mainFilePath = path.join(dirPath, 'main.js');
