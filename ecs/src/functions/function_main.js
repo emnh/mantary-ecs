@@ -1,5 +1,4 @@
 function main() {
-  console.log('main');
   var canvas = document.createElement("canvas");
   canvas.width = 640;
   canvas.height = 480;
@@ -12,7 +11,7 @@ function main() {
     scaleMethod: "fit",
     doubleBuffering: true
   });
-  me.loader.preload([], function () {
+  me.loader.preload([], function onLoad() {
     me.state.add("play", new PlayState());
     me.state.change("play");
     me.game.repaint();
