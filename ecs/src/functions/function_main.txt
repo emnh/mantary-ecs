@@ -1,0 +1,14 @@
+Prompt: 1 / 1Write a js function called main that calls it.
+Answer: 1 /
+1Certainly! Here's an example of a main function that calls the loadMelonJS
+function from the previous example:javascriptCopy codefunction main() {
+loadMelonJS();
+  // additional code can be added here to use
+melonJS
+}
+
+main();
+This main function simply calls the loadMelonJS function and
+then any additional code can be added below it to use the melonJS library. By
+calling main at the end of the script, the function will be executed when the
+page loads.
