@@ -18,6 +18,7 @@ function getPlayScreen(images) {
       player.body.vel.y = 3;
       me.game.world.addChild(player);
       this.player = player;
+      console.log(me.game.viewport.pos);
     }
     onResetEvent() {
       me.input.bindKey(me.input.KEY.LEFT, "left");
