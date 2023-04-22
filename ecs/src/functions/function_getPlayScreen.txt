@@ -1,31 +1,23 @@
-Prompt: 1 / 1Update the getPlayScreen function to try
-/images/platform2.png
-Answer: 1 / 1Sure! Here's an updated getPlayScreen
-function that tries both ../images/platform2.png and
-/images/platform2.png:javascriptCopy codefunction getPlayScreen() {
-  class
-PlayScreen extends me.Stage {
+Prompt: 1 / 1Try prefixing the image with /public/
+Answer: 1 / 1Sure thing!
+Here's an updated getPlayScreen function that prefixes the image path with
+/public/:javascriptCopy codefunction getPlayScreen() {
+  class PlayScreen
+extends me.Stage {
     /**
      * Constructor
      */
-constructor() {
-      super();
+    constructor() {
+super();
     }
 
     /**
-     * Called when the state is
-first initialized
-     */
+     * Called when the state is first initialized
+*/
     onResetEvent() {
-      // Add any game objects or
-UI elements here
-      let platformImage =
-me.loader.getImage('../images/platform2.png');
-      if (!platformImage) {
-platformImage = me.loader.getImage('/images/platform2.png');
-      }
-      if
-(!platformImage) {
+      // Add any game objects or UI elements here
+const platformImage = me.loader.getImage('/public/images/platform2.png');
+if (!platformImage) {
         console.error("Failed to load platform image!");
 return;
       }
@@ -44,13 +36,11 @@ here
 
   return PlayScreen;
 }
-In this updated code,
-me.loader.getImage('../images/platform2.png') is used to load the platform image
-from the original path, and me.loader.getImage('/images/platform2.png') is used
-to load the platform image from a new path that starts with a leading slash
-(/).If the image is successfully loaded from either path, it is passed to the
-drawPlatform function to draw the platform on the screen.If the image cannot be
-loaded from either path, an error message is logged to the console and the
-function returns without drawing the platform.This should help to ensure that
-the platform image is found, regardless of the specific file structure of your
-project.
+In this updated code, /public/ is added
+to the beginning of the image path. This assumes that the images directory is
+located in a public directory that is located at the root of your server.If the
+image is successfully loaded, it is passed to the drawPlatform function to draw
+the platform on the screen.If the image cannot be loaded, an error message is
+logged to the console and the function returns without drawing the platform.This
+should help to ensure that the platform image is found, regardless of the
+specific file structure of your project.
