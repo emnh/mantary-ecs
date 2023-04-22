@@ -3,7 +3,6 @@ async function loadDependencies() {
   try {
     await loadMelonJS();
     console.log('melonJS has been loaded!');
-    const me = window.me;
   } catch (error) {
     console.error(error);
   }
