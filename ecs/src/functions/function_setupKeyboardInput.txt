@@ -1,9 +1,21 @@
-Prompt: 1 / 1Wrap PlayerEntity in a getPlayerEntity function
-Answer: 1 / 1Sure,
-here's the updated code with a getPlayerEntity function that returns the
-PlayerEntity class:javascriptCopy codeasync function main() {
-  const melonjs =
-await import("https://esm.run/melonjs@latest/dist/melonjs.module.js");
+Prompt: 1 / 1ReferenceError: me is not defined
+    at setupKeyboardInput
+(about:srcdoc:35:3)
+    at onReady (about:srcdoc:32:5)
+    at a.emit
+(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:14:68136)
+at Zn
+(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:14:69409)
+at Ko
+(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:36:14842)
+Answer:
+1 / 1The ReferenceError: me is not defined error occurs because the me object is
+not defined in the setupKeyboardInput and onReady functions.This error can occur
+if the me object is not correctly imported or if it is out of scope.To fix this
+error, you can pass the me object as a parameter to the setupKeyboardInput and
+onReady functions. For example:javascriptCopy codeasync function main() {
+const melonjs = await
+import("https://esm.run/melonjs@latest/dist/melonjs.module.js");
 console.log("melonjs loaded:", melonjs);
   example(melonjs);
 }
@@ -12,11 +24,9 @@ function
 example(me) {
   me.boot();
 
-  me.device.onReady(onReady);
-
-  function onReady()
-{
-    if (!me.video.init(1218, 562, { parent: "screen", scale: "auto" })) {
+  me.device.onReady(function () {
+    if
+(!me.video.init(1218, 562, { parent: "screen", scale: "auto" })) {
 alert("Your browser does not support HTML5 canvas.");
       return;
     }
@@ -44,12 +54,12 @@ me.Text(609, 281, {
 "Hello World !",
     }));
 
-    setupKeyboardInput();
-  }
+    setupKeyboardInput(me);
+  });
 }
 
 function
-setupKeyboardInput() {
+setupKeyboardInput(me) {
   me.input.bindKey(me.input.KEY.LEFT, "left");
 me.input.bindKey(me.input.KEY.RIGHT, "right");
 me.input.bindKey(me.input.KEY.UP, "up");
@@ -58,58 +68,9 @@ me.input.bindKey(me.input.KEY.UP, "up");
 }
 
 function getPlayerEntity(me) {
-  class PlayerEntity extends
-me.Entity {
-    constructor(x, y, settings) {
-      super(x, y, settings);
-this.speed = 5;
-      this.renderable.addAnimation("stand", [0]);
-this.renderable.addAnimation("walk", [1, 2, 3, 4, 5, 6, 7, 8], 80);
-this.renderable.setCurrentAnimation("stand");
-      this.body.setShape(new
-me.Rect(0, 0, 32, 64));
-    }
-
-    update(dt) {
-      let moved = false;
-if (me.input.isKeyPressed("left") || me.input.isKeyPressed("A")) {
-this.renderable.flipX(true);
-        this.body.vel.x = -this.speed;
-this.renderable.setCurrentAnimation("walk");
-        moved = true;
-      }
-if (me.input.isKeyPressed("right") || me.input.isKeyPressed("D")) {
-this.renderable.flipX(false);
-        this.body.vel.x = this.speed;
-this.renderable.setCurrentAnimation("walk");
-        moved = true;
-      }
-if (!moved) {
-        this.body.vel.x = 0;
-this.renderable.setCurrentAnimation("stand");
-      }
-
-      if
-(me.input.isKeyPressed("up") || me.input.isKeyPressed("W")) {
-this.body.vel.y = -this.speed;
-      } else if (me.input.isKeyPressed("down") ||
-me.input.isKeyPressed("S")) {
-        this.body.vel.y = this.speed;
-      } else
-{
-        this.body.vel.y = 0;
-      }
-
-      this.body.update(dt);
-me.collision.check(this);
-      return true;
-    }
-  }
-
-  return
-PlayerEntity;
+  // ...
 }
-Saved exampleSaved mainIn this updated code, we've added a
-getPlayerEntity function that takes the me object as a parameter and returns the
-PlayerEntity class. We've also modified the example function to use the
-getPlayerEntity function to create the player entity.
+Saved exampleIn this
+modified code, we've passed the me object as a parameter to the
+setupKeyboardInput and onReady functions. This ensures that the me object is in
+scope within these functions and should fix the ReferenceError you're seeing.
