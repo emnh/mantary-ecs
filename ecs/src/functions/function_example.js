@@ -10,6 +10,7 @@ function example(me) {
       return;
     }
     me.game.world.addChild(new me.ColorLayer("background", "#202020"));
+    const PlayerEntity = getPlayerEntity(me);
     me.game.world.addChild(new PlayerEntity(100, 100, {
       width: 32,
       height: 64,
