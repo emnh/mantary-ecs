@@ -1,6 +1,6 @@
 function loadMelonJS() {
   console.log('loadMelonJS');
   const script = document.createElement('script');
-  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/melonjs/10.0.0/melonjs.min.js';
+  script.src = 'https://esm.run/melonjs';
   document.head.appendChild(script);
 }
