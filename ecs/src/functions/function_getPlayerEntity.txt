@@ -1,8 +1,7 @@
-Prompt: 1 / 1TypeError: Cannot read properties of null (reading
-'addEventListener')
-    at new PlayerEntity (about:srcdoc:44:22)
-    at
-about:srcdoc:18:28
+Prompt: 1 / 1TypeError: this.body.setShape is not a function
+    at new
+PlayerEntity (about:srcdoc:51:17)
+    at about:srcdoc:18:28
     at a.emit
 (https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:14:68136)
 at Zn
@@ -10,17 +9,18 @@ at Zn
 at Ko
 (https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:36:14842)
 Answer:
-1 / 1The TypeError: Cannot read properties of null (reading 'addEventListener')
-error is occurring because the image property of the settings object passed to
-the PlayerEntity constructor is null.This error can occur if the image specified
-in the settings object is not loaded yet. To fix this error, you can add a check
-to make sure that the image property is not null before trying to access its
-addEventListener method:javascriptCopy codefunction getPlayerEntity(me) {
-class PlayerEntity extends me.Entity {
-    constructor(x, y, settings) {
-super(x, y, settings);
+1 / 1The TypeError: this.body.setShape is not a function error is occurring
+because the setShape method is not defined on the body property of the
+PlayerEntity instance.This error can occur if the me.Body module is not
+correctly imported or if it is out of scope.To fix this error, you can add the
+me.Body module as a dependency of the PlayerEntity class:javascriptCopy
+codefunction getPlayerEntity(me) {
+  class PlayerEntity extends me.Entity {
+constructor(x, y, settings) {
+      super(x, y, settings);
 
-      this.speed = 5;
+      this.speed =
+5;
 
       if (settings.image) {
 settings.image.addEventListener("loaded", () => {
@@ -29,16 +29,17 @@ this.renderable.addAnimation("walk", [1, 2, 3, 4, 5, 6, 7, 8], 80);
 this.renderable.setCurrentAnimation("stand");
         });
       }
-this.body.setShape(new me.Rect(0, 0, 32, 64));
+this.body = new me.Body(this);
+      this.body.setShape(new me.Rect(0, 0, 32,
+64));
     }
 
     // ...
   }
 
-  return
-PlayerEntity;
+  return PlayerEntity;
 }
-In this modified code, we've added a check to see if the image
-property of the settings object is null before trying to access its
-addEventListener method. If image is null, we skip adding the animation. This
-should prevent the TypeError you're seeing.
+In this modified code,
+we've added the me.Body module as a dependency of the PlayerEntity class. We've
+also created a new me.Body instance in the PlayerEntity constructor and set its
+shape using the setShape method.This should fix the TypeError you're seeing.
