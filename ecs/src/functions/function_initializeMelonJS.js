@@ -1,6 +1,6 @@
-function initializeMelonJS() {
+function initializeMelonJS(callback) {
   console.log('initializeMelonJS');
-  game = new me.Game({
+  const game = new me.Game({
     renderer: me.CanvasRenderer,
     width: 640,
     height: 480,
@@ -8,4 +8,5 @@ function initializeMelonJS() {
     title: 'My MelonJS Game'
   });
   game.start();
+  callback(game);
 }
