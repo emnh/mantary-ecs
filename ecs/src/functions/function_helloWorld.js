@@ -3,4 +3,5 @@ function helloWorld() {
   const message = document.createElement("p");
   message.textContent = "Hello, world!";
   document.body.appendChild(message);
+  document.body.style.backgroundColor = "red";
 }
