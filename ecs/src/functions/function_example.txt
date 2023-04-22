@@ -1,76 +1,105 @@
-Prompt: 1 / 1ReferenceError: me is not defined
-    at setupKeyboardInput
-(about:srcdoc:35:3)
-    at onReady (about:srcdoc:32:5)
-    at a.emit
-(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:14:68136)
-at Zn
-(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:14:69409)
-at Ko
-(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:36:14842)
-Answer:
-1 / 1The ReferenceError: me is not defined error occurs because the me object is
-not defined in the setupKeyboardInput and onReady functions.This error can occur
-if the me object is not correctly imported or if it is out of scope.To fix this
-error, you can pass the me object as a parameter to the setupKeyboardInput and
-onReady functions. For example:javascriptCopy codeasync function main() {
-const melonjs = await
-import("https://esm.run/melonjs@latest/dist/melonjs.module.js");
-console.log("melonjs loaded:", melonjs);
-  example(melonjs);
-}
+Prompt: 1 / 1
+  I get the following error:
+  ReferenceError: me is not defined
+at getPlayerEntity (about:srcdoc:52:30)
+    at about:srcdoc:13:26
+    at
+EventEmitter.emit
+(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js:9454:34)
+at emit
+(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js:10074:25)
+at _domReady
+(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js:14494:9)
+Please respond with up to 3 corrected functions.
+  All classes must be wrapped
+in functions.
+  All functions must be named and short.
+  No global variables.
+Answer: 1 / 1Sure, here are the updated functions to fix the
+ReferenceError:javascriptCopy codefunction getPlayerEntity() {
+  class
+PlayerEntity extends me.Entity {
+    constructor(x, y, settings) {
+super(x, y, Object.assign(settings, {width: 32, height: 32}));
 
-function
-example(me) {
-  me.boot();
-
-  me.device.onReady(function () {
-    if
-(!me.video.init(1218, 562, { parent: "screen", scale: "auto" })) {
-alert("Your browser does not support HTML5 canvas.");
-      return;
+      this.body
+= new me.Body(this, new me.Rect(0, 0, 32, 32));
+      this.body.setVelocity(3,
+3);
+      this.body.collisionType = me.collision.types.PLAYER_OBJECT;
+this.renderable = new me.ColorLayer("player", "#00ff00", 32, 32);
+this.anchorPoint.set(0.5, 0.5);
     }
-me.game.world.addChild(new me.ColorLayer("background", "#202020"));
 
-    const
-PlayerEntity = getPlayerEntity(me);
-    me.game.world.addChild(new
-PlayerEntity(100, 100, {
-      width: 32,
-      height: 64,
-      image:
-me.loader.getImage("player"),
-    }));
+    update(dt) {
+super.update(dt);
 
-    me.game.world.addChild(new
-me.Text(609, 281, {
-      font: "Arial",
-      size: 160,
-      fillStyle:
-"#FFFFFF",
-      textBaseline: "middle",
-      textAlign: "center",
-      text:
-"Hello World !",
-    }));
+      if (me.input.isKeyPressed("left") ||
+me.input.isKeyPressed("a")) {
+        this.body.vel.x -= this.body.accel.x *
+me.timer.tick;
+      }
+      if (me.input.isKeyPressed("right") ||
+me.input.isKeyPressed("d")) {
+        this.body.vel.x += this.body.accel.x *
+me.timer.tick;
+      }
+      if (me.input.isKeyPressed("up") ||
+me.input.isKeyPressed("w")) {
+        this.body.vel.y -= this.body.accel.y *
+me.timer.tick;
+      }
+      if (me.input.isKeyPressed("down") ||
+me.input.isKeyPressed("s")) {
+        this.body.vel.y += this.body.accel.y *
+me.timer.tick;
+      }
 
-    setupKeyboardInput(me);
-  });
+      this.body.update(dt);
+me.collision.check(this);
+      return true;
+    }
+  }
+
+  return
+PlayerEntity;
 }
 
-function
-setupKeyboardInput(me) {
-  me.input.bindKey(me.input.KEY.LEFT, "left");
+function setupKeyboardInput() {
+me.input.bindKey(me.input.KEY.LEFT, "left");
 me.input.bindKey(me.input.KEY.RIGHT, "right");
 me.input.bindKey(me.input.KEY.UP, "up");
   me.input.bindKey(me.input.KEY.DOWN,
 "down");
+  me.input.bindKey(me.input.KEY.W, "w");
+me.input.bindKey(me.input.KEY.A, "a");
+  me.input.bindKey(me.input.KEY.S, "s");
+me.input.bindKey(me.input.KEY.D, "d");
+  me.input.bindKey(me.input.KEY.SPACE,
+"space");
+
+  me.input.bindPointer(me.input.KEY.LEFT);
+me.input.bindPointer(me.input.KEY.RIGHT);
+me.input.bindPointer(me.input.KEY.UP);
+me.input.bindPointer(me.input.KEY.DOWN);
 }
 
-function getPlayerEntity(me) {
-  // ...
+function example() {
+  const canvas
+= document.getElementById("screen");
+
+  me.init(canvas.width, canvas.height, {
+renderer: me.video.CANVAS,
+    wrapper: "screen",
+    scale: "auto",
+...me.game.HIDPI,
+  });
+
+  setupKeyboardInput();
+  me.game.world.addChild(new
+(getPlayerEntity())(me.game.viewport.width / 2, me.game.viewport.height / 2));
+me.state.change(me.state.PLAY);
 }
-In this modified code,
-we've passed the me object as a parameter to the setupKeyboardInput and onReady
-functions. This ensures that the me object is in scope within these functions
-and should fix the ReferenceError you're seeing.
+Here we define a getPlayerEntity() function
+that returns the PlayerEntity class, and we call it when we create a new
+instance of PlayerEntity in the example() function.
