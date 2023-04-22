@@ -1,0 +1,31 @@
+Prompt: 1 / 1Don't wrap it in html
+Answer: 1 / 1Sure, here's an example of a
+standalone JavaScript file that defines a main() function to add an h1 element
+with the text "Hello, World!" to the current web page:javascriptCopy
+codefunction main() {
+  const h1 = document.createElement("h1");
+h1.textContent = "Hello, World!";
+  document.body.appendChild(h1);
+}
+
+main();
+To
+use this code, you can save it as a standalone JavaScript file with a .js
+extension, and then include it in your HTML file using a <script> tag:htmlCopy
+code<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Page</title>
+    <script
+src="main.js"></script>
+  </head>
+  <body>
+  </body>
+</html>
+This code includes
+the main.js file using the src attribute of a <script> tag in the head section
+of the HTML file.When the HTML file is loaded in a web browser, the main()
+function in the main.js file will be executed, and an h1 element with the text
+"Hello, World!" will be added to the body element of the page.Note that the
+main() function is executed immediately when the script file is loaded, so you
+don't need to call it explicitly in your HTML file.
