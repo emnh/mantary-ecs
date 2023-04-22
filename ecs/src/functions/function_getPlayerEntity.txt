@@ -1,9 +1,8 @@
-Prompt: 1 / 1Don't forget to wrap the class in a function.
-Answer: 1 / 1You're
-right! Don't forget to wrap the PlayerEntity class in the getPlayerEntity
-function to make it more modular and reusable.Here's the updated getPlayerEntity
-function with the green rectangle PlayerEntity:javascriptCopy codefunction
-getPlayerEntity(me) {
+Prompt: 1 / 1Give me the full getPlayerEntity function with the update
+Answer: 1
+/ 1Sure, here's the updated getPlayerEntity function that includes the update
+method and the draw method to make the green rectangle visible:javascriptCopy
+codefunction getPlayerEntity(me) {
   class PlayerEntity extends me.Entity {
 constructor(x, y, settings) {
       super(x, y, settings);
@@ -25,11 +24,55 @@ green
 0, 32, 64));
     }
 
-    // ...
+    update(dt) {
+      if (me.input.isKeyPressed("left") ||
+me.input.isKeyPressed("a")) {
+        this.body.vel.x -= this.speed *
+me.timer.tick;
+      } else if (me.input.isKeyPressed("right") ||
+me.input.isKeyPressed("d")) {
+        this.body.vel.x += this.speed *
+me.timer.tick;
+      } else {
+        this.body.vel.x = 0;
+      }
+
+      if
+(me.input.isKeyPressed("up") || me.input.isKeyPressed("w")) {
+this.body.vel.y -= this.speed * me.timer.tick;
+      } else if
+(me.input.isKeyPressed("down") || me.input.isKeyPressed("s")) {
+this.body.vel.y += this.speed * me.timer.tick;
+      } else {
+this.body.vel.y = 0;
+      }
+
+      // update the position of the player entity
+based on input
+      this.body.update(dt);
+
+      // refresh the game world to
+show changes
+      me.game.repaint();
+
+      // call the parent update method to
+update other properties of the entity
+      super.update(dt);
+    }
+draw(renderer) {
+      // draw the renderable object on the screen
+this.renderable.draw(renderer, this.pos.x, this.pos.y);
+
+      // call the
+parent draw method to draw other properties of the entity
+super.draw(renderer);
+    }
   }
 
   return PlayerEntity;
 }
-Remember to import
-the me object and call me.boot() before calling getPlayerEntity to get the
-PlayerEntity class.
+This code includes the
+update method, which updates the position of the player entity based on user
+input, and the draw method, which draws the renderable object on the screen.
+Remember to import the me object and call me.boot() before calling
+getPlayerEntity to get the PlayerEntity class.
