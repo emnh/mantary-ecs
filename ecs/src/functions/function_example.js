@@ -1,5 +1,9 @@
 function example() {
   console.log('example');
+  if (!window.me) {
+    console.error("melonjs is not properly loaded.");
+    return;
+  }
   const me = window.me;
   me.device.onReady(function () {
     if (!me.video.init(1218, 562, {
