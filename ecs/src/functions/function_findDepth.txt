@@ -1,0 +1,33 @@
+Prompt: 1 / 1Write a js function that takes a node and finds its depth via its
+parent pointers.
+Answer: 1 / 1Sure, here's an example JavaScript function that
+takes a node and finds its depth via its parent pointers:javascriptCopy
+codefunction findDepth(node) {
+  let depth = 0;
+  let current = node;
+  while
+(current.parent !== null) {
+    current = current.parent;
+    depth++;
+  }
+return depth;
+}
+In this example, the findDepth() function takes a node object as
+its parameter. The node object is assumed to have a parent property that points
+to its parent node. The function then uses a while loop to traverse the parent
+pointers until it reaches the root node (i.e., a node whose parent property is
+null). The depth variable keeps track of the number of parent pointers
+traversed. Finally, the function returns the depth of the node.You can call this
+function with a node object that has a parent property pointing to its parent
+node, like this:javascriptCopy codeconst root = { parent: null };
+const child1 =
+{ parent: root };
+const child2 = { parent: child1 };
+const child3 = { parent:
+child2 };
+
+console.log(findDepth(child3)); // Outputs: 3
+In this example, we
+create a tree with four nodes, where root is the root node and child3 is the
+node whose depth we want to find. We call the findDepth() function with child3
+as its parameter, and it returns the depth of child3, which is 3.
