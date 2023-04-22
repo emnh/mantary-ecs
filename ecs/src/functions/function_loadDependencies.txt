@@ -1,0 +1,29 @@
+Prompt: 1 / 1Rename main to loadDependencies. Write a new function called main
+which calls loadDependencies.
+Answer: 1 / 1Certainly! Here's an updated
+loadDependencies function and a new main function that calls it:javascriptCopy
+codeasync function loadDependencies() {
+  try {
+    await loadMelonJS();
+console.log('melonJS has been loaded!');
+    const me = window.me; // assuming
+that melonJS exposes itself as a global variable
+    // additional code can be
+added here to use melonJS
+  } catch (error) {
+    console.error(error);
+}
+}
+
+function main() {
+  loadDependencies();
+}
+
+main();
+Saved mainThis code
+renames the previous main function to loadDependencies and creates a new main
+function that simply calls loadDependencies. By doing this, we can have a clear
+separation between the code that loads our dependencies and the code that uses
+them.Note that the loadDependencies function still uses await and is marked as
+async, allowing us to wait for the loadMelonJS Promise to complete before
+continuing with any additional code.
