@@ -1,5 +1,4 @@
 function example(me) {
-  console.log('example');
   me.boot();
   me.device.onReady(function () {
     if (!me.video.init(1218, 562, {
