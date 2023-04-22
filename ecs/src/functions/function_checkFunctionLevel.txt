@@ -1,0 +1,54 @@
+Prompt: 1 / 1Write a js function that takes a node and checks whether it is
+contained in a function or is a top level function.
+Answer: 1 / 1Here's an
+example JavaScript function that takes a node object and checks whether it is
+contained in a function or is a top-level function:javascriptCopy codefunction
+checkFunctionLevel(node) {
+  let current = node;
+  while (current.parent !==
+null) {
+    current = current.parent;
+    if (current.type ===
+"FunctionDeclaration" || current.type === "FunctionExpression") {
+      // The
+node is contained in a function
+      return "contained in a function";
+    }
+}
+  // The node is a top-level function
+  return "top-level function";
+}
+In this
+example, the checkFunctionLevel() function takes a node object as its parameter.
+The node object is assumed to have a parent property that points to its parent
+node, and a type property that indicates its type (e.g., "FunctionDeclaration",
+"FunctionExpression", etc.).The function then uses a while loop to traverse the
+parent pointers until it reaches the root node (i.e., a node whose parent
+property is null). At each step, it checks if the parent node is a function node
+(i.e., a node with a type of "FunctionDeclaration" or "FunctionExpression"). If
+it is, the function returns "contained in a function" to indicate that the node
+is contained in a function. If the loop completes without finding a function
+node, the function returns "top-level function" to indicate that the node is a
+top-level function.You can call this function with a node object that has a
+parent property pointing to its parent node and a type property indicating its
+type, like this:javascriptCopy codeconst functionNode = {
+  type:
+"FunctionDeclaration",
+  parent: {
+    type: "BlockStatement",
+    parent: {
+type: "FunctionDeclaration",
+      parent: {
+        type: "Program",
+parent: null,
+      },
+    },
+},
+};
+
+console.log(checkFunctionLevel(functionNode)); // Outputs: "contained in
+a function"
+In this example, we create a functionNode object that represents a
+function declaration contained in another function. We call the
+checkFunctionLevel() function with functionNode as its parameter, and it returns
+"contained in a function".
