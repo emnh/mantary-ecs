@@ -1,46 +1,38 @@
-Prompt: 1 / 1Why do you think the me object doesn't exist? Could it be that it's
-called something else, like melonjs?
-Answer: 1 / 1Yes, you're correct! It's
-possible that the melonjs library is loaded with a different variable name
-instead of me.In that case, you should replace the window.me with the
-appropriate variable name that is used to access the melonjs library.For
-example, if the melonjs library is loaded with the variable name melonjs, you
-would need to replace window.me with window.melonjs.Here's an updated version of
-the example function that uses window.melonjs to access the melonjs
-library:javascriptCopy codefunction example() {
-  if (!window.melonjs) {
-console.error("melonjs is not properly loaded.");
-    return;
+Prompt: 1 / 1Rewrite the example to use me instead of melonjs
+Answer: 1 / 1Sure!
+Here's an updated version of the example function that uses me instead of
+melonjs to access the melonjs library:javascriptCopy codefunction example() {
+if (!window.me) {
+    console.error("melonjs is not properly loaded.");
+return;
   }
   
-  const
-melonjs = window.melonjs;
+  const me = window.me;
 
-  melonjs.device.onReady(function () {
+  me.device.onReady(function () {
     //
 initialize the display canvas once the device/browser is ready
     if
-(!melonjs.video.init(1218, 562, {parent : "screen", scale : "auto"})) {
+(!me.video.init(1218, 562, {parent : "screen", scale : "auto"})) {
 alert("Your browser does not support HTML5 canvas.");
       return;
     }
 // add a gray background to the default Stage
-melonjs.game.world.addChild(new melonjs.ColorLayer("background", "#202020"));
-// add a font text display object
-    melonjs.game.world.addChild(new
-melonjs.Text(609, 281, {
+    me.game.world.addChild(new
+me.ColorLayer("background", "#202020"));
+
+    // add a font text display object
+me.game.world.addChild(new me.Text(609, 281, {
       font: "Arial",
-      size: 160,
-      fillStyle:
-"#FFFFFF",
+size: 160,
+      fillStyle: "#FFFFFF",
       textBaseline : "middle",
-      textAlign : "center",
-      text
-: "Hello World !"
+textAlign : "center",
+      text : "Hello World !"
     }));
   });
 }
-In this example, we replaced window.me with
-window.melonjs, and updated the variable names to use melonjs instead of me.
-This ensures that we are accessing the melonjs library with the correct variable
-name.
+In this
+example, we replaced window.melonjs with window.me, and updated the variable
+names to use me instead of melonjs. This ensures that we are accessing the
+melonjs library with the correct variable name.
