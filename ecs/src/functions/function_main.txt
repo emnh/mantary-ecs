@@ -1,29 +1,50 @@
-Prompt: 1 / 1Rename main to loadDependencies. Write a new function called main
-which calls loadDependencies.
-Answer: 1 / 1Certainly! Here's an updated
-loadDependencies function and a new main function that calls it:javascriptCopy
-codeasync function loadDependencies() {
-  try {
-    await loadMelonJS();
-console.log('melonJS has been loaded!');
-    const me = window.me; // assuming
-that melonJS exposes itself as a global variable
-    // additional code can be
-added here to use melonJS
-  } catch (error) {
-    console.error(error);
+Prompt: 1 / 1Do not use a global variable. Append a call to initializeMelonJS to
+main.
+Answer: 1 / 1Certainly! Here's an updated initializeMelonJS function that
+doesn't use a global variable, and an updated main function that calls
+initializeMelonJS before calling drawRectangle:javascriptCopy codefunction
+initializeMelonJS(callback) {
+  const game = new me.Game({
+    renderer:
+me.CanvasRenderer,
+    width: 640,
+    height: 480,
+    parent:
+'game-container',
+    title: 'My MelonJS Game'
+  });
+
+  // Load any assets here
+// me.loader.preload({/*...*/});
+
+  // Start the game
+  game.start();
+callback(game);
 }
+
+function drawRectangle(game, x, y, width, height, color) {
+const rect = new me.Renderable(x, y, width, height);
+  rect.draw =
+function(renderer) {
+    renderer.setColor(color);
+renderer.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+  };
+game.world.addChild(rect);
 }
 
 function main() {
-  loadDependencies();
+  initializeMelonJS((game) => {
+drawRectangle(game, 100, 100, 50, 50, '#FF0000');
+  });
 }
 
 main();
-This code renames the
-previous main function to loadDependencies and creates a new main function that
-simply calls loadDependencies. By doing this, we can have a clear separation
-between the code that loads our dependencies and the code that uses them.Note
-that the loadDependencies function still uses await and is marked as async,
-allowing us to wait for the loadMelonJS Promise to complete before continuing
-with any additional code.
+The
+initializeMelonJS function now takes a callback function as a parameter, which
+is called with the game object once it has been created. This allows us to pass
+the game object to other functions without needing to use a global variable.The
+drawRectangle function now takes the game object as its first parameter, and
+this object is passed to it when it is called from the main function. Note that
+initializeMelonJS is called first in the main function and the drawRectangle
+function is called from the callback passed to it. This ensures that melonJS is
+fully initialized before attempting to draw anything on the screen.
