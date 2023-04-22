@@ -7,7 +7,9 @@ function getPlayScreen(images) {
       this.backgroundColor = '#202020';
       drawPlatform(me.game.world, 0, 500, 800, 100, images.platform);
       const player = new PlayerEntity(0, 0, {
-        image: images.player
+        image: images.player,
+        width: 64,
+        height: 64
       });
       player.renderable.scale(2, 2);
       player.body.gravityScale = 0;
