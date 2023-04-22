@@ -2,7 +2,10 @@ function getPlayerEntity() {
   console.log('getPlayerEntity');
   class PlayerEntity extends me.Entity {
     constructor(x, y, settings) {
-      super(x, y, settings);
+      super(x, y, {
+        width: settings.width,
+        height: settings.height
+      });
       this.renderable = new me.Sprite(0, 0, {
         image: settings.image,
         framewidth: 64,
