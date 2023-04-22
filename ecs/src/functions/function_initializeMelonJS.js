@@ -1,11 +1,13 @@
 function initializeMelonJS(callback) {
-  const game = new me.Game({
-    renderer: me.CanvasRenderer,
-    width: 640,
-    height: 480,
+  console.log('initializeMelonJS');
+  me.video.init(640, 480, {
     parent: 'game-container',
-    title: 'My MelonJS Game'
+    renderer: me.video.CANVAS,
+    scale: 'auto',
+    scaleMethod: 'fit'
   });
-  game.start();
+  const game = new me.Container();
+  me.game.world.addChild(game);
+  me.state.change(me.state.PLAY);
   callback(game);
 }
