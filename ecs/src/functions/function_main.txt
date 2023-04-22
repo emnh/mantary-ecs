@@ -1,24 +1,38 @@
-Prompt: 1 / 1call it from main
-Answer: 1 / 1Sure! Here's an updated code that
-includes the redirectToGoogle() function and calls it from the main() function
-when the document has finished loading:javascriptCopy codefunction
-redirectToGoogle() {
-  window.location.href =
-'https://www.google.com';
+Prompt: 1 / 1Without the import please.
+Answer: 1 / 1Sure, here's the example
+melonjs hello world code wrapped in a JS main function without the import
+statement:javascriptCopy codefunction main() {
+  const me = window.me;
+me.device.onReady(function () {
+    // initialize the display canvas once the
+device/browser is ready
+    if (!me.video.init(1218, 562, {parent : "screen",
+scale : "auto"})) {
+      alert("Your browser does not support HTML5 canvas.");
+return;
+    }
+
+    // add a gray background to the default Stage
+me.game.world.addChild(new me.ColorLayer("background", "#202020"));
+
+    // add
+a font text display object
+    me.game.world.addChild(new me.Text(609, 281, {
+font: "Arial",
+      size: 160,
+      fillStyle: "#FFFFFF",
+textBaseline : "middle",
+      textAlign : "center",
+      text : "Hello World
+!"
+    }));
+  });
 }
 
-function main() {
-  // Call the redirectToGoogle
-function
-  redirectToGoogle();
-}
-
-// Call the main function when the document
-has finished loading
-window.addEventListener('load', main);
-In this code, we
-define both the redirectToGoogle() function and the main() function. We then add
-an event listener to the window object that listens for the load event, which is
-fired when the document has finished loading. When the load event is fired, the
-main() function is called, which in turn calls the redirectToGoogle() function
-to redirect the browser to the Google homepage.
+main();
+In this example, we use window.me to access the me
+object from melonjs since we are not using an import statement. We then wrap the
+code in a function called main(), and call this function at the end of the code
+using main(). This ensures that the code only runs when we want it to, and
+allows us to easily use the same code in multiple places without duplicating
+it.
