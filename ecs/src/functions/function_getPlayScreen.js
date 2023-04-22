@@ -14,8 +14,8 @@ function getPlayScreen(images) {
       player.renderable.scale(2, 2);
       player.body.gravityScale = 0;
       player.body.collisionType = me.collision.types.PLAYER_OBJECT;
-      player.body.setVelocity(3, 3);
-      player.body.setMaxVelocity(3, 3);
+      player.body.vel.x = 3;
+      player.body.vel.y = 3;
       me.game.world.addChild(player);
     }
     onResetEvent() {
