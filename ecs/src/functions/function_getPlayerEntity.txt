@@ -1,12 +1,12 @@
-Prompt: 1 / 1Please list the updated function.
-Answer: 1 / 1Sure, here's the
-updated getPlayerEntity function with default values for width and
-height:javascriptCopy codefunction getPlayerEntity(me) {
-  class PlayerEntity
-extends me.Entity {
+Prompt: 1 / 1Please always answer in full functions.
+Answer: 1 / 1Sure, here's
+the getPlayerEntity function with the modified PlayerEntity
+constructor:javascriptCopy codefunction getPlayerEntity(me) {
+  class
+PlayerEntity extends me.Entity {
     constructor(x, y, settings) {
-      // set default
-values for width and height
+      // set
+default values for width and height
       settings = settings || {};
 settings.width = settings.width || 32;
       settings.height = settings.height
@@ -16,29 +16,63 @@ settings.width = settings.width || 32;
 
       // create a new renderable object
 this.renderable = new me.Renderable(0, 0, settings.width, settings.height);
-this.renderable.anchorPoint.set(0, 0);
+this.renderable.anchorPoint.set(0.5, 0.5); // set anchor point to center
+// set the renderable color to green
+      this.renderable.color = new
+me.Color(0, 255, 0);
 
-      // set the renderable color to
-green
-      this.renderable.color = new me.Color(0, 255, 0);
+      // add the renderable to the entity
+this.addChild(this.renderable);
 
-      this.speed =
-5;
+      this.speed = 5;
 
-      this.body = new me.Body(this);
-      this.body.addShape(new me.Rect(0,
-0, settings.width, settings.height));
+      this.body = new
+me.Body(this);
+      this.body.addShape(new me.Rect(0, 0, settings.width,
+settings.height));
     }
 
     // ...
 
   }
 
-  return
-PlayerEntity;
+  return PlayerEntity;
 }
-With this modification, you can create a new player entity
-without passing the width and height parameters, like this:javascriptCopy
-codeconst player = new PlayerEntity(0, 0);
-And it will use the default values of
-width = 32 and height = 64.
+And here's
+the main function that uses the getPlayerEntity function to create a player
+entity with a green rectangle:javascriptCopy codeasync function main() {
+  //
+load the melonJS library
+  const me = await
+import("https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js");
+// set up the display canvas once the device/browser is ready
+me.device.onReady(() => {
+    if (!me.video.init(1218, 562, { parent: "screen",
+scale: "auto" })) {
+      alert("Your browser does not support HTML5 canvas.");
+return;
+    }
+
+    // add a gray background to the default stage
+me.game.world.addChild(new me.ColorLayer("background", "#202020"));
+
+    //
+create a new instance of the PlayerEntity class
+    const PlayerEntity =
+getPlayerEntity(me);
+    const player = new PlayerEntity(0, 0);
+
+    // add the
+player entity to the game world
+    me.game.world.addChild(player);
+
+    // set
+up keyboard input
+    setupKeyboardInput(me, player);
+  });
+}
+
+// call the main
+function to start the game
+main();
+Saved main
