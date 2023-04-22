@@ -5,7 +5,7 @@ function getPlayScreen() {
       super();
     }
     onResetEvent() {
-      drawRectangle(me.game.world, 100, 100, 50, 50, '#FF0000');
+      drawRectangle(me.game, 100, 100, 50, 50, '#FF0000');
     }
     onDestroyEvent() {}
   }
