@@ -10,5 +10,4 @@ function drawPlatform(container, x, y, width, height, image) {
     image: image
   });
   container.addChild(platform);
-  me.game.world.addChild(platform);
 }
