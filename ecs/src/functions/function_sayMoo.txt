@@ -1,0 +1,12 @@
+Prompt: 1 / 1Write a js function that says moo.
+Answer: 1 / 1Sure, here's a
+simple JavaScript function that says "moo" when called:javascriptCopy
+codefunction sayMoo() {
+  console.log("moo");
+}
+When you call this function, it
+will log the message "moo" to the console:javascriptCopy codesayMoo(); // logs
+"moo" to the console
+Of course, you can modify this function to do something
+else with the "moo" message, such as displaying it on the screen or speaking it
+out loud using a text-to-speech library.
