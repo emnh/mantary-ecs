@@ -1,31 +1,40 @@
 import * as me from "https://esm.run/melonjs@15";
 
-let counter = 0;
+function getAnyEntity() {
+    let counter = 0;
 
-class AnyEntity extends me.Entity {
+    class AnyEntity extends me.Entity {
 
-    constructor(x, y, settings) {
-        super(x, y, settings);
+        constructor(x, y, settings) {
+            super(x, y, settings);
 
-        this.renderable.scale(settings.scale, settings.scale);
+            this.renderable.scale(settings.scale, settings.scale);
 
-        this.body.maxVel = settings.maxVel || { x: 0, y: 0 };
-        this.body.ignoreGravity = settings.ignoreGravity;
-        this.body.collisionType = settings.myCollisionType;
-        this.onCollision = settings.onCollision || (() => { });
-        const theThis = this;
-        this.update = (dt) => (settings.update || (() => { }))(theThis, super.update.bind(this), dt);
-        this.id = counter;
-        counter += 1;
-        this.src = settings.image.src;
+            this.body.maxVel = settings.maxVel || { x: 0, y: 0 };
+            this.body.ignoreGravity = settings.ignoreGravity;
+            this.body.collisionType = settings.myCollisionType;
+            this.onCollision = settings.onCollision || (() => { });
+            const theThis = this;
+            this.update = (dt) => (settings.update || (() => { }))(theThis, super.update.bind(this), dt);
+            this.id = counter;
+            counter += 1;
+            this.src = settings.image.src;
+        }
+
+        onCollision(response, other) {
+            return thisRenderable.onCollision(response, other);
+        }
     }
 
-    onCollision(response, other) {
-        return thisRenderable.onCollision(response, other);
-    }
+    const newLessConstructor = function (x, y, settings) {
+        return new AnyEntity(x, y, settings);
+    };
+
+    return newLessConstructor;
 }
 
-function getAddPlatform(world, imageURL) {
+
+function getAddPlatform(makeAnyEntity, world, imageURL) {
     const platformImg = new Image();
     platformImg.src = imageURL;
     const s = 0.4;
@@ -35,7 +44,7 @@ function getAddPlatform(world, imageURL) {
     platformImg.height = height;
 
     return function (x, y) {
-        world.addChild(new AnyEntity(x, y, {
+        world.addChild(makeAnyEntity(x, y, {
             image: platformImg,
             width: width,
             height: height,
@@ -59,8 +68,7 @@ function setupInput() {
     me.input.bindKey(me.input.KEY.DOWN, "down");
 }
 
-function playerUpdate(thisPlayer, superUpdate, dt) {
-
+function handleMoveMentLeftRight(thisPlayer) {
     if (me.input.isKeyPressed("left")) {
         if (thisPlayer.body.vel.y === 0) {
             // thisPlayer.renderable.setCurrentAnimation("walk");
@@ -73,8 +81,13 @@ function playerUpdate(thisPlayer, superUpdate, dt) {
         }
         thisPlayer.body.force.x = thisPlayer.body.maxVel.x;
         thisPlayer.renderable.flipX(false);
+    } else {
+        thisPlayer.body.force.x = 0;
+        thisPlayer.body.vel.x = 0;
     }
+}
 
+function handleJump(thisPlayer) {
     if (me.input.isKeyPressed("jump")) {
         // thisPlayer.renderable.setCurrentAnimation("jump");
         thisPlayer.body.jumping = true;
@@ -94,7 +107,11 @@ function playerUpdate(thisPlayer, superUpdate, dt) {
             thisPlayer.multipleJump = 2;
         }
     }
+}
 
+function playerUpdate(thisPlayer, superUpdate, dt) {
+    handleMoveMentLeftRight(thisPlayer);
+    handleJump(thisPlayer);
 
     if (thisPlayer.body.force.x === 0 && thisPlayer.body.force.y === 0) {
         // thisPlayer.renderable.setCurrentAnimation("stand");
@@ -122,41 +139,7 @@ function playerUpdate(thisPlayer, superUpdate, dt) {
     return false;
 }
 
-me.device.onReady(function () {
-    // initialize the display canvas once the device/browser is ready
-    // if (!me.video.init(800, 600, {
-    if (!me.video.init(3840, 2160, {
-        parent: "app",
-        scaleMethod: "flex-width",
-        renderer: me.video.AUTO,
-        preferWebGL1: false,
-        subPixel: true,
-        antiAlias: true,
-    })) {
-        alert("Your browser does not support HTML5 canvas.");
-        return;
-    }
-
-    // add a gray background to the default Stage
-    me.game.world.addChild(new me.ColorLayer("background", "#808080"));
-
-    console.log("viewport camera", me.game.viewport);
-    const world = me.game.world;
-    const addPlatform = getAddPlatform(world, "./images/platform2.png");
-
-    world.x = 0;
-    world.y = 0;
-    // world.width = window.innerWidth;
-    // world.height = window.innerHeight;
-    // world.width = 1000;
-    // world.height = 1000;
-
-    const sp = 3.0;
-    addPlatform(sp*40, sp*500);
-    addPlatform(sp*200, sp*500);
-    addPlatform(sp*400, sp*500);
-    addPlatform(sp*600, sp*500);
-
+function addPlayer(makeAnyEntity, world) {
     const playerImg = new Image();
     playerImg.src = "./images/protagonist.png";
 
@@ -165,7 +148,7 @@ me.device.onReady(function () {
     const height = 579 * s;
     playerImg.width = width;
     playerImg.height = height;
-    const player = new AnyEntity(50, 0, {
+    const player = makeAnyEntity(50, 0, {
         image: playerImg,
         height: height,
         width: width,
@@ -184,5 +167,44 @@ me.device.onReady(function () {
     me.game.viewport.follow(player, me.game.viewport.AXIS.BOTH, 0.1);
 
     setupInput();
+}
 
-});
+function addLevel(makeAnyEntity, world) {
+    // add a gray background to the default Stage
+    me.game.world.addChild(new me.ColorLayer("background", "#808080"));
+
+    // console.log("viewport camera", me.game.viewport);
+    const addPlatform = getAddPlatform(makeAnyEntity, world, "./images/platform2.png");
+
+    const sp = 3.0;
+    addPlatform(sp*40, sp*500);
+    addPlatform(sp*200, sp*500);
+    addPlatform(sp*400, sp*500);
+    addPlatform(sp*600, sp*500);
+}
+
+function deviceOnReady() {
+    // initialize the display canvas once the device/browser is ready
+    // if (!me.video.init(800, 600, {
+    if (!me.video.init(3840, 2160, {
+        parent: "app",
+        scaleMethod: "flex-width",
+        renderer: me.video.AUTO,
+        preferWebGL1: false,
+        subPixel: true,
+        antiAlias: true,
+    })) {
+        alert("Your browser does not support HTML5 canvas.");
+        return;
+    }
+
+    const makeAnyEntity = getAnyEntity();
+    addLevel(makeAnyEntity, me.game.world);
+    addPlayer(makeAnyEntity, me.game.world);
+};
+
+function main() {
+    me.device.onReady(deviceOnReady);
+}
+
+main();
