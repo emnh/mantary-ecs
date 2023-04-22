@@ -104,9 +104,9 @@ me.collision.check(this);
     return true;
   }
 }
-Saved exampleIn this refactored
-code, we have separated the PlayerEntity class into its own file as a pure
-function, and created a separate setupKeyboardInput() function to set up the
-keyboard input bindings. We've also split up the code into separate functions
-and removed the me.device.onReady() function as an inline callback. This makes
-the code easier to read and understand.
+Saved exampleSaved mainIn this
+refactored code, we have separated the PlayerEntity class into its own file as a
+pure function, and created a separate setupKeyboardInput() function to set up
+the keyboard input bindings. We've also split up the code into separate
+functions and removed the me.device.onReady() function as an inline callback.
+This makes the code easier to read and understand.
