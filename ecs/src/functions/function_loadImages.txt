@@ -1,30 +1,97 @@
-Prompt: 1 / 1Create an async function loadImages that takes an array of image
-URLs and returns a dictionary of images retrieved with getImage. 
-Answer: 1 /
-1Sure! Here's an implementation of an async function called loadImages that
-takes an array of image URLs and returns a dictionary of images retrieved with
-the getImage function:javascriptCopy codeasync function loadImages(imageUrls) {
-const images = {};
-  for (const imageUrl of imageUrls) {
-    const image =
-await getImage(imageUrl);
+Prompt: 1 / 1Update the url of platform2.png to be ./platform2.png. Update the
+loadImages function to prefix all images with ./images/
+Answer: 1 / 1Sure,
+here's the updated implementation of loadImages and getPlayScreen:javascriptCopy
+codeasync function loadImages(imageUrls) {
+  const images = {};
+  for (const
+imageUrl of imageUrls) {
+    const image = await
+getImage(`./images/${imageUrl}`);
     if (!image) {
-      console.error(`Failed to load
-image from URL: ${imageUrl}`);
+      console.error(`Failed
+to load image from URL: ${imageUrl}`);
       continue;
     }
-    images[imageUrl] =
-image;
+images[imageUrl] = image;
   }
   return images;
 }
-In this implementation, the loadImages function
-takes an array of image URLs as its argument.The function creates an empty
-images object to store the loaded images.For each image URL in the imageUrls
-array, the function calls the getImage function to load the image as a Promise.
-If the Promise resolves to an image object, the function adds the image object
-to the images object using the URL as the key. If the Promise is rejected or the
-image object is falsy, the function logs an error message to the console and
-continues to the next image URL.Finally, the function returns the images object
-containing the loaded images.This implementation should allow you to load
-multiple images asynchronously and store them in a dictionary for later use.
+
+function getPlayScreen(images)
+{
+  class PlayScreen extends me.Stage {
+    /**
+     * Constructor
+     */
+constructor() {
+      super();
+    }
+
+    /**
+     * Called when the state is
+first initialized
+     */
+    onResetEvent() {
+      // Add any game objects or
+UI elements here
+      const platformImage = images['platform2.png'];
+      if
+(!platformImage) {
+        console.error("Failed to load platform image!");
+return;
+      }
+      drawPlatform(me.game, 100, 400, 200, 50,
+platformImage);
+    }
+
+    /**
+     * Called when the state is destroyed
+*/
+    onDestroyEvent() {
+      // Clean up any game objects or UI elements
+here
+    }
+  }
+
+  return PlayScreen;
+}
+Saved getPlayScreenIn this updated
+implementation, the loadImages function prefixes all image URLs with ./images/,
+which is the path to the directory containing the images.The getPlayScreen
+function has been updated to look up the platform2.png image using its filename
+instead of its URL, and to pass the images object to the drawPlatform
+function.The initializeMelonJS function should also be updated to pass an array
+of image filenames instead of image URLs to the loadImages function. For
+example:javascriptCopy codeasync function initializeMelonJS() {
+  // Load
+MelonJS
+  const melonScript = await loadMelonJS();
+
+  // Initialize MelonJS
+me.video.init(window.innerWidth, window.innerHeight, { wrapper : "screen", scale
+: "auto", renderer : me.video.CANVAS });
+  me.audio.init("mp3,ogg");
+
+  // Load
+images
+  const imageFilenames = [
+    'platform2.png',
+    'player.png'
+  ];
+const images = await loadImages(imageFilenames);
+
+  // Set up game resources
+me.loader.preload(images);
+
+  // Set up game screens
+me.state.set(me.state.PLAY, new (await getPlayScreen(images))());
+
+  // Start
+the game
+  me.state.change(me.state.PLAY);
+}
+Saved initializeMelonJSWith these
+changes, the loadImages function should now correctly prefix all image URLs with
+./images/, and the getPlayScreen function should be able to look up the
+platform2.png image using its filename instead of its URL.
