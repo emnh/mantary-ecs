@@ -18,14 +18,13 @@ npm run signature
 ```
 
 # Features
- - Function generation using chatgpt
- - Context extraction for chatgpt
  - 2d game engine on top of melonjs
  - Entity Component System
  - Pure functions
  - Tiered function buckets with dependencies only pointing to lower tiers
  - Immutability using mori
  - Dependency diagram and injection
+ - Functions should be either pure, idempotent with side effects or using entity system for state
 
 # Notes on requestAnimationFrame
 
