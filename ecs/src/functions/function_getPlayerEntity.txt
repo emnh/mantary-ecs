@@ -1,30 +1,77 @@
-Prompt: 1 / 1TypeError: Cannot read properties of null (reading
-'addEventListener')
-Answer: 1 / 1If you're seeing a TypeError: Cannot read
-properties of null (reading 'addEventListener') error, it means that the image
-property of the settings object passed to the PlayerEntity constructor is
-null.To fix this error, you should make sure that the image property is
-correctly defined in the settings object passed to the PlayerEntity
-constructor.If you're still having trouble, it could be helpful to add some
-logging statements to your code to help you track down where the error is
-occurring. For example, you could add a console.log statement in the
-getPlayerEntity function to log the settings object passed to the
-constructor:javascriptCopy codefunction getPlayerEntity(me) {
-  class
-PlayerEntity extends me.Entity {
-    constructor(x, y, settings) {
-super(x, y, settings);
-      console.log("settings:", settings);
-      // ...
+Prompt: 1 / 1ReferenceError: me is not defined
+    at setupKeyboardInput
+(about:srcdoc:35:3)
+    at onReady (about:srcdoc:32:5)
+    at a.emit
+(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:14:68136)
+at Zn
+(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:14:69409)
+at Ko
+(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:36:14842)
+Answer:
+1 / 1The ReferenceError: me is not defined error occurs because the me object is
+not defined in the setupKeyboardInput and onReady functions.This error can occur
+if the me object is not correctly imported or if it is out of scope.To fix this
+error, you can pass the me object as a parameter to the setupKeyboardInput and
+onReady functions. For example:javascriptCopy codeasync function main() {
+const melonjs = await
+import("https://esm.run/melonjs@latest/dist/melonjs.module.js");
+console.log("melonjs loaded:", melonjs);
+  example(melonjs);
 }
 
-    // ...
-  }
+function
+example(me) {
+  me.boot();
 
-  return PlayerEntity;
+  me.device.onReady(function () {
+    if
+(!me.video.init(1218, 562, { parent: "screen", scale: "auto" })) {
+alert("Your browser does not support HTML5 canvas.");
+      return;
+    }
+me.game.world.addChild(new me.ColorLayer("background", "#202020"));
+
+    const
+PlayerEntity = getPlayerEntity(me);
+    me.game.world.addChild(new
+PlayerEntity(100, 100, {
+      width: 32,
+      height: 64,
+      image:
+me.loader.getImage("player"),
+    }));
+
+    me.game.world.addChild(new
+me.Text(609, 281, {
+      font: "Arial",
+      size: 160,
+      fillStyle:
+"#FFFFFF",
+      textBaseline: "middle",
+      textAlign: "center",
+      text:
+"Hello World !",
+    }));
+
+    setupKeyboardInput(me);
+  });
 }
-This should log the settings object
-to the console when the PlayerEntity is created, which could help you identify
-any issues with the image property.Once you've identified the issue, you can
-modify the settings object to ensure that the image property is correctly
-defined.
+
+function
+setupKeyboardInput(me) {
+  me.input.bindKey(me.input.KEY.LEFT, "left");
+me.input.bindKey(me.input.KEY.RIGHT, "right");
+me.input.bindKey(me.input.KEY.UP, "up");
+  me.input.bindKey(me.input.KEY.DOWN,
+"down");
+}
+
+function getPlayerEntity(me) {
+  // ...
+}
+Saved
+setupKeyboardInputSaved exampleIn this modified code, we've passed the me object
+as a parameter to the setupKeyboardInput and onReady functions. This ensures
+that the me object is in scope within these functions and should fix the
+ReferenceError you're seeing.
