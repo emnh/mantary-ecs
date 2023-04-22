@@ -1,0 +1,34 @@
+Prompt: 1 / 1Write a js function that loads Prism syntax highlighter by
+injecting into the page
+Answer: 1 / 1Sure, here's an example JavaScript function
+that loads the Prism syntax highlighter by injecting it into the
+page:javascriptCopy codefunction loadPrism() {
+  const prismStylesheet =
+document.createElement("link");
+  prismStylesheet.setAttribute("rel",
+"stylesheet");
+  prismStylesheet.setAttribute("href",
+"https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css");
+document.head.appendChild(prismStylesheet);
+
+  const prismScript =
+document.createElement("script");
+  prismScript.setAttribute("src",
+"https://cdn.jsdelivr.net/npm/prismjs/prism.js");
+document.head.appendChild(prismScript);
+}
+In this example, the loadPrism()
+function creates two new elements using the createElement() method of the
+document object. The first element is a link element that sets the rel attribute
+to "stylesheet" and the href attribute to the CDN link for the Prism CSS
+stylesheet. The link element is then appended to the head element of the HTML
+page using the appendChild() method.The second element is a script element that
+sets the src attribute to the CDN link for the Prism JavaScript file. The script
+element is also appended to the head element of the HTML page using the
+appendChild() method.Together, these elements load the Prism syntax highlighter
+into the HTML page by injecting the necessary CSS and JavaScript files.You can
+call this function by running it in a JavaScript environment that has access to
+the HTML document object, such as a web browser. When the function is called, it
+injects the Prism syntax highlighter into the HTML page by adding the necessary
+CSS and JavaScript files to the head element. Once loaded, you can use Prism to
+highlight code syntax on the page.
