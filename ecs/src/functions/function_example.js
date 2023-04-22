@@ -1,5 +1,4 @@
-function example(melonjs) {
-  const me = melonjs.default;
+function example(me) {
   me.device.onReady(function () {
     if (!me.video.init(1218, 562, {
       parent: "screen",
