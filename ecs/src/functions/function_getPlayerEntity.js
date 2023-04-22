@@ -11,6 +11,7 @@ function getPlayerEntity(me) {
           this.renderable.setCurrentAnimation("stand");
         });
       }
+      this.body = new me.Body(this);
       this.body.setShape(new me.Rect(0, 0, 32, 64));
     }
   }
