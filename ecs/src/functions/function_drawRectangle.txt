@@ -1,29 +1,28 @@
-Prompt: 1 / 1I want to draw a rectangle on screen using melonjs. Write a
-function drawRectangle which takes x, y, width, height and color. Come to think
-of it, also write a function initializeMelonJS which does what the name
-says.
-Answer: 1 / 1Sure! Here are two functions: initializeMelonJS which sets up
-the game and drawRectangle which can be used to draw a rectangle on the screen
-using melonJS.javascriptCopy codelet game = null;
-
-function initializeMelonJS()
-{
-  game = new me.Game({
-    renderer: me.CanvasRenderer,
+Prompt: 1 / 1Do not use a global variable. Append a call to initializeMelonJS to
+main.
+Answer: 1 / 1Certainly! Here's an updated initializeMelonJS function that
+doesn't use a global variable, and an updated main function that calls
+initializeMelonJS before calling drawRectangle:javascriptCopy codefunction
+initializeMelonJS(callback) {
+  const game = new me.Game({
+    renderer:
+me.CanvasRenderer,
     width: 640,
-height: 480,
-    parent: 'game-container',
+    height: 480,
+    parent:
+'game-container',
     title: 'My MelonJS Game'
   });
-// Load any assets here
-  // me.loader.preload({/*...*/});
-  
-  // Start the
-game
+
+  // Load any assets here
+// me.loader.preload({/*...*/});
+
+  // Start the game
   game.start();
+callback(game);
 }
 
-function drawRectangle(x, y, width, height, color) {
+function drawRectangle(game, x, y, width, height, color) {
 const rect = new me.Renderable(x, y, width, height);
   rect.draw =
 function(renderer) {
@@ -32,15 +31,21 @@ renderer.fillRect(this.pos.x, this.pos.y, this.width, this.height);
   };
 game.world.addChild(rect);
 }
-Saved initializeMelonJSThe initializeMelonJS
-function sets up the game using new me.Game and specifies the renderer to be
-used (me.CanvasRenderer), the width and height of the game, and the title of the
-game. Any necessary assets can be loaded using me.loader.preload (not shown in
-this example), and the game is started using game.start().The drawRectangle
-function creates a new me.Renderable object with the specified x, y, width, and
-height. The draw method of the object is overridden to draw a filled rectangle
-using the specified color. The rectangle object is added to the game world using
-game.world.addChild(rect).Note that the game object is initialized outside of
-these functions so that it can be accessed by both initializeMelonJS and
-drawRectangle. It's also worth noting that this code assumes that melonJS has
-already been loaded and that the me object is available in the global scope.
+
+function main() {
+  initializeMelonJS((game) => {
+drawRectangle(game, 100, 100, 50, 50, '#FF0000');
+  });
+}
+
+main();
+Saved
+initializeMelonJSSaved mainThe initializeMelonJS function now takes a callback
+function as a parameter, which is called with the game object once it has been
+created. This allows us to pass the game object to other functions without
+needing to use a global variable.The drawRectangle function now takes the game
+object as its first parameter, and this object is passed to it when it is called
+from the main function. Note that initializeMelonJS is called first in the main
+function and the drawRectangle function is called from the callback passed to
+it. This ensures that melonJS is fully initialized before attempting to draw
+anything on the screen.
