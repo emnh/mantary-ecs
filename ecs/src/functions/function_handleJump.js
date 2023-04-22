@@ -1,5 +1,5 @@
 function handleJump(thisPlayer) {
-  console.log('handleJump');
+  if (('debug' in window) && window.debug) console.log('handleJump');
   if (me.input.isKeyPressed("jump")) {
     thisPlayer.body.jumping = true;
     if (thisPlayer.multipleJump <= 2) {
