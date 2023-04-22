@@ -1,0 +1,16 @@
+Prompt: 1 / 1Create a main js function that injects a script into the page with
+the url to melonjs.
+Answer: 1 / 1Sure! Here's an example of a main.js function
+that injects a script into the page with the URL to melonJS:javascriptCopy
+codefunction loadMelonJS() {
+  const script = document.createElement('script');
+script.src =
+'https://cdnjs.cloudflare.com/ajax/libs/melonjs/10.0.0/melonjs.min.js';
+document.head.appendChild(script);
+}
+
+loadMelonJS();
+This function creates a new
+script element, sets its src attribute to the URL for melonJS, and then appends
+it to the head element of the current page. Once this function is called, the
+browser will download and execute the melonJS script.
