@@ -1,0 +1,49 @@
+Prompt: 1 / 1Write a js function that takes a textarea html element and adds an
+inline button as its next sibling, which when clicked sets the value of the
+textarea to data fetched from http://localhost:5000/signatures.json.
+Answer: 1 /
+1Here's an example JavaScript function that takes a textarea HTML element and
+adds an inline button as its next sibling, which when clicked sets the value of
+the textarea to data fetched from
+http://localhost:5000/signatures.json:javascriptCopy codefunction
+addFetchButton(textareaElement) {
+  const buttonElement =
+document.createElement("button");
+  buttonElement.innerText = "Fetch
+Signatures";
+  buttonElement.style.marginLeft = "10px";
+  buttonElement.onclick
+= async () => {
+    try {
+      const response = await
+fetch("http://localhost:5000/signatures.json");
+      const data = await
+response.json();
+      textareaElement.value = JSON.stringify(data);
+    } catch
+(error) {
+      console.error(error);
+    }
+  };
+textareaElement.parentNode.insertBefore(buttonElement,
+textareaElement.nextSibling);
+}
+In this example, the addFetchButton() function
+takes a textarea HTML element as its parameter. It creates a new button element
+with the text "Fetch Signatures", sets its marginLeft style property to "10px",
+and adds an onclick event listener that sends a fetch request to
+http://localhost:5000/signatures.json when the button is clicked.The fetch
+request returns a Promise that resolves to the server response. The json()
+method is called on the response to extract the JSON data from it. The JSON data
+is then set as the value of the textarea element.If an error occurs during the
+fetch request or JSON parsing, it is caught and logged to the console.Finally,
+the function inserts the button element as the next sibling of the textarea
+element using the parentNode.insertBefore() method.You can call this function
+with a textarea element like this:javascriptCopy codeconst textareaElement =
+document.getElementById("myTextarea");
+addFetchButton(textareaElement);
+In this
+example, we assume there is an HTML textarea element with the ID "myTextarea".
+The addFetchButton() function adds a button element as its next sibling, which
+when clicked fetches data from http://localhost:5000/signatures.json and sets it
+as the value of the textarea element.
