@@ -1,28 +1,12 @@
-function example(me) {
-  me.boot();
-  me.device.onReady(function () {
-    if (!me.video.init(1218, 562, {
-      parent: "screen",
-      scale: "auto"
-    })) {
-      alert("Your browser does not support HTML5 canvas.");
-      return;
-    }
-    me.game.world.addChild(new me.ColorLayer("background", "#202020"));
-    const PlayerEntity = getPlayerEntity(me);
-    me.game.world.addChild(new PlayerEntity(100, 100, {
-      width: 32,
-      height: 64,
-      image: me.loader.getImage("player")
-    }));
-    me.game.world.addChild(new me.Text(609, 281, {
-      font: "Arial",
-      size: 160,
-      fillStyle: "#FFFFFF",
-      textBaseline: "middle",
-      textAlign: "center",
-      text: "Hello World !"
-    }));
-    setupKeyboardInput(me);
+function example() {
+  const canvas = document.getElementById("screen");
+  me.init(canvas.width, canvas.height, {
+    renderer: me.video.CANVAS,
+    wrapper: "screen",
+    scale: "auto",
+    ...me.game.HIDPI
   });
+  setupKeyboardInput();
+  me.game.world.addChild(new (getPlayerEntity())(me.game.viewport.width / 2, me.game.viewport.height / 2));
+  me.state.change(me.state.PLAY);
 }
