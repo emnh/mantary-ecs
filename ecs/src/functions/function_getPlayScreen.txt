@@ -1,45 +1,38 @@
-Prompt: 1 / 1In the constructor add the line "me.game.viewport.follow(this,
-me.game.viewport.AXIS.BOTH, 0.1);" and forget about the other follow
-line.
-Answer: 1 / 1Sure, here's the updated implementation of the getPlayScreen
-function with the updated follow method:javascriptCopy codefunction
-getPlayScreen(images) {
-  const PlayerEntity = getPlayerEntity();
+Prompt: 1 / 1And remove the follow line from getPlayScreen
+Answer: 1 / 1Sure,
+here's the updated implementation of the getPlayScreen function without the
+follow method:javascriptCopy codefunction getPlayScreen(images) {
+  const
+PlayerEntity = getPlayerEntity();
 
-  class
-PlayScreen extends me.Stage {
-    constructor() {
+  class PlayScreen extends me.Stage {
+constructor() {
       super();
-this.backgroundColor = '#202020';
-
-      drawPlatform(me.game.world, 0, 500,
-800, 100, images.platform);
-      const player = new PlayerEntity(0, 0, {
-image: images.player,
-        width: 64,
+      this.backgroundColor = '#202020';
+drawPlatform(me.game.world, 0, 500, 800, 100, images.platform);
+      const
+player = new PlayerEntity(0, 0, {
+        image: images.player,
+        width:
+64,
         height: 64,
       });
-player.renderable.scale(2, 2);
-      player.body.gravityScale = 0;
-player.body.collisionType = me.collision.types.PLAYER_OBJECT;
-player.body.vel.x = 3;
-      player.body.vel.y = 3;
-me.game.world.addChild(player);
+      player.renderable.scale(2, 2);
+player.body.gravityScale = 0;
+      player.body.collisionType =
+me.collision.types.PLAYER_OBJECT;
+      player.body.vel.x = 3;
+player.body.vel.y = 3;
+      me.game.world.addChild(player);
 
-      // set the player as a property of the
-PlayScreen instance
+      // set the
+player as a property of the PlayScreen instance
       this.player = player;
-
-      // follow the player with
-the viewport
-      me.game.viewport.follow(this, me.game.viewport.AXIS.BOTH,
-0.1);
-    }
+}
 
     onResetEvent() {
-      me.input.bindKey(me.input.KEY.LEFT,
-"left");
-      me.input.bindKey(me.input.KEY.RIGHT, "right");
+      me.input.bindKey(me.input.KEY.LEFT, "left");
+me.input.bindKey(me.input.KEY.RIGHT, "right");
 me.input.bindKey(me.input.KEY.UP, "jump", true);
 me.input.bindKey(me.input.KEY.SPACE, "shoot");
 me.game.viewport.setDeadzone(30, 30);
@@ -48,9 +41,5 @@ me.game.viewport.setDeadzone(30, 30);
   return PlayScreen;
 }
 In the
-updated implementation, the getPlayScreen function now uses the
-me.game.viewport.follow method to follow the PlayScreen instance with the
-viewport. The follow method now takes three parameters - the first is the object
-to follow (which is this in this case), the second is the axis to follow on
-(both horizontal and vertical in this case), and the third is the damping rate
-(which is set to 0.1). The other follow method call has been removed.
+updated implementation, the getPlayScreen function no longer has the follow
+method. Instead, the follow method is now in the getPlayerEntity function.
