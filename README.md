@@ -1,20 +1,16 @@
 # mantary-ecs
 
-# 3 things to do
+# 2 things to do
 
 ```powershell
 cd ecs/src
+# Sorry, this code is private for now
 python ..\..\apptyapp-chatgpt\server.py
 ```
 
 ```powershell	
 cd ecs
 npm run dev
-```
-
-```powershell
-cd ecs
-npm run signature
 ```
 
 # Features
