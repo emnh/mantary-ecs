@@ -1,79 +1,51 @@
-Prompt: 1 / 1
-  I get the following error:
-  ReferenceError: me is not defined
-at getPlayerEntity (about:srcdoc:45:30)
-    at about:srcdoc:13:26
-    at
-EventEmitter.emit
-(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js:9454:34)
-at emit
-(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js:10074:25)
-at _domReady
-(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js:14494:9)
-Please respond with up to 3 corrected functions.
-  All classes must be wrapped
-in functions.
-  All functions must be named and short.
-  No global variables.
-Answer: 1 / 1Here's a corrected version of the getPlayerEntity function that
-should fix the ReferenceError: me is not defined error:kotlinCopy codefunction
-getPlayerEntity() {
-  class PlayerEntity extends me.Entity {
-    constructor(x,
-y, settings) {
-      // call the super constructor
+Prompt: 1 / 1You are forgetting to pass me to getPlayerEntity
+Answer: 1 / 1You
+are right, I apologize for that mistake. Here's the corrected getPlayerEntity
+function:kotlinCopy codefunction getPlayerEntity(me) {
+  class PlayerEntity
+extends me.Entity {
+    constructor(x, y, settings) {
       super(x, y,
 settings);
-
-      // set the default horizontal & vertical speed (accel vector)
-this.body.setVelocity(3, 3);
-      this.body.setMaxVelocity(6, 6);
-// set the display to follow our position on both axis
-me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
-
-      // ensure
-the player is updated even when outside of the viewport
-      this.alwaysUpdate
-= true;
-
-      // add a green rectangle to represent the player
-      const gfx
-= new me.GraphicsRenderer();
-      gfx.createRenderable(0, 0, this.width,
-this.height);
-      gfx.fillStyle = "#00FF00";
-      gfx.fillRect(0, 0,
-this.width, this.height);
-      this.renderable = gfx;
-      
-      // bind the
-keys to movement
-      setupKeyboardInput.call(this);
+      this.body.setVelocity(3, 3);
+      this.body.setMaxVelocity(5,
+5);
+      this.body.setFriction(0.4, 0.4);
+      this.body.gravity.set(0, 0);
+const shape = new me.Rect(0, 0, settings.width, settings.height);
+this.body.addShape(shape);
+      this.renderable = new me.ColorLayer("green",
+"#00ff00", 0, 0, settings.width, settings.height);
     }
 
     update(dt) {
-// apply physics to the body (this moves the entity)
+if (me.input.isKeyPressed("left") || me.input.isKeyPressed("A")) {
+this.body.vel.x -= this.body.accel.x * me.timer.tick;
+      } else if
+(me.input.isKeyPressed("right") || me.input.isKeyPressed("D")) {
+this.body.vel.x += this.body.accel.x * me.timer.tick;
+      } else {
+this.body.vel.x = 0;
+      }
+
+      if (me.input.isKeyPressed("up") ||
+me.input.isKeyPressed("W")) {
+        this.body.vel.y -= this.body.accel.y *
+me.timer.tick;
+      } else if (me.input.isKeyPressed("down") ||
+me.input.isKeyPressed("S")) {
+        this.body.vel.y += this.body.accel.y *
+me.timer.tick;
+      } else {
+        this.body.vel.y = 0;
+      }
 this.body.update(dt);
-
-      // handle collisions against other shapes
-me.collision.check(this);
-
-      // update the animation if necessary
-      if
-(this.body.vel.x !== 0 || this.body.vel.y !== 0) {
-        // update object
-animation
-        this._super(me.Entity, "update", [dt]);
-        return true;
-}
-
-      // else inform the engine we did not perform
-      // any update
-(e.g. position, animation)
-      return false;
+      me.collision.check(this);
+      return
+super.update(dt);
     }
   }
-
-  return
-PlayerEntity;
+  return PlayerEntity;
 }
+Notice that the me
+parameter is now passed to the function and used inside the PlayerEntity class.
