@@ -17,21 +17,22 @@ addPlatform(sp*200, sp*500);
     addPlatform(sp*400, sp*500);
 addPlatform(sp*600, sp*500);
 }
-File function_addLevel.js saved and committed
-successfully, diff: phpCopy codefunction deviceOnReady() {
-    // initialize the
-display canvas once the device/browser is ready
-    // if (!me.video.init(800,
-600, {
+phpCopy codefunction deviceOnReady() {
+    //
+initialize the display canvas once the device/browser is ready
+    // if
+(!me.video.init(800, 600, {
     if (!me.video.init(3840, 2160, {
-        parent: "app",
-scaleMethod: "flex-width",
+        parent:
+"app",
+        scaleMethod: "flex-width",
         renderer: me.video.AUTO,
 preferWebGL1: false,
         subPixel: true,
         antiAlias: true,
-    })) {
-alert("Your browser does not support HTML5 canvas.");
+    }))
+{
+        alert("Your browser does not support HTML5 canvas.");
         return;
 }
 
