@@ -1,39 +1,57 @@
-Prompt: 1 / 1player.png is named walk.gif
-Answer: 1 / 1Thanks for letting me
-know! In that case, here's the updated implementation of initializeMelonJS,
-loadImages, and getPlayScreen that uses walk.gif as the filename for the player
-image:javascriptCopy codeasync function loadImages(imageFilenames) {
-  const
-images = {};
-  for (const filename of imageFilenames) {
-    const imageUrl =
-`./images/${filename}`;
-    const image = await getImage(imageUrl);
-    if
-(!image) {
-      console.error(`Failed to load image from URL: ${imageUrl}`);
-continue;
+Prompt: 1 / 1caught TypeError: game.addChild is not a function
+    at
+drawPlatform (main.js:12:8)
+    at PlayScreen.onResetEvent (main.js:50:7)
+    at
+PlayScreen.reset (melonjs.module.js:19237:27)
+    at Object._switchState
+(melonjs.module.js:27779:37)
+d
+Answer: 1 / 1The error "game.addChild is not a
+function" suggests that me.game may not be an instance of me.Container, which is
+the class that provides the addChild method. To fix this, you can create a new
+instance of me.Container and add it to the game using me.game.world.addChild.
+Then, you can draw your platforms and player inside this container.Here's an
+updated implementation of initializeMelonJS, loadImages, and getPlayScreen that
+uses a container to draw the game objects:javascriptCopy codeasync function
+loadImages(imageFilenames) {
+  const images = {};
+  for (const filename of
+imageFilenames) {
+    const imageUrl = `./images/${filename}`;
+    const image =
+await getImage(imageUrl);
+    if (!image) {
+      console.error(`Failed to load
+image from URL: ${imageUrl}`);
+      continue;
     }
-    images[filename] = image;
+    images[filename] =
+image;
   }
-  return
-images;
+  return images;
 }
 
 function getPlayScreen(images) {
-  class PlayScreen extends me.Stage
-{
+  class
+PlayScreen extends me.Stage {
     /**
      * Constructor
      */
-    constructor() {
+constructor() {
       super();
+      this.container = null;
     }
-/**
-     * Called when the state is first initialized
+
+    /**
+* Called when the state is first initialized
      */
-onResetEvent() {
-      // Add any game objects or UI elements here
+    onResetEvent() {
+// Add any game objects or UI elements here
+      this.container = new
+me.Container();
+      me.game.world.addChild(this.container);
+
       const
 platformImage = images['platform2.png'];
       if (!platformImage) {
@@ -45,46 +63,45 @@ const playerImage = images['walk.gif'];
 console.error("Failed to load player image!");
         return;
       }
-drawPlatform(me.game, 100, 400, 200, 50, platformImage);
-drawPlayer(me.game, 100, 300, 50, 50, playerImage);
+drawPlatform(this.container, 100, 400, 200, 50, platformImage);
+drawPlayer(this.container, 100, 300, 50, 50, playerImage);
     }
 
     /**
-     * Called
-when the state is destroyed
+     *
+Called when the state is destroyed
      */
     onDestroyEvent() {
-      // Clean up any
-game objects or UI elements here
+      // Clean
+up any game objects or UI elements here
+      if (this.container) {
+me.game.world.removeChild(this.container);
+        this.container = null;
+}
     }
   }
 
   return PlayScreen;
 }
 
-async
-function initializeMelonJS() {
-  // Load MelonJS
-  const melonScript = await
-loadMelonJS();
+async function initializeMelonJS() {
+  //
+Load MelonJS
+  const melonScript = await loadMelonJS();
 
-  // Initialize MelonJS
-  me.video.init(window.innerWidth,
-window.innerHeight, { wrapper : "screen", scale : "auto", renderer :
-me.video.CANVAS });
-  me.audio.init("mp3,ogg");
+  // Initialize
+MelonJS
+  me.video.init(window.innerWidth, window.innerHeight, { wrapper :
+"screen", scale : "auto", renderer : me.video.CANVAS });
+me.audio.init("mp3,ogg");
 
   // Load images
-  const
-imageFilenames = [
-    'platform2.png',
+  const imageFilenames = [
+'platform2.png',
     'walk.gif'
   ];
-  const images =
-await loadImages(imageFilenames);
-
-  // Set up game resources
-me.loader.preload(images);
+  const images = await
+loadImages(imageFilenames);
 
   // Set up game screens
 me.state.set(me.state.PLAY, new (await getPlayScreen(images))());
@@ -93,13 +110,11 @@ me.state.set(me.state.PLAY, new (await getPlayScreen(images))());
 the game
   me.state.change(me.state.PLAY);
 }
-Saved initializeMelonJSIn this
-updated implementation, the loadImages function prefixes all image filenames
-with ./images/ and stores the loaded images in an object using the filename as
-the key.The getPlayScreen function has been updated to look up both the
-platform2.png and walk.gif images from the images object and pass them to the
-drawPlatform and drawPlayer functions respectively.Finally, the
-initializeMelonJS function has been updated to pass an array of image filenames
-to the loadImages function instead of image URLs. The me.loader.preload function
-is still used to preload the images, and the getPlayScreen function is still
-used to create the game screens.
+In this updated implementation, the
+getPlayScreen function now creates a new instance of me.Container and adds it to
+the game using me.game.world.addChild. The drawPlatform and drawPlayer functions
+are now passed the container object instead of me.game, and the game objects are
+added to this container instead of the game world directly.Note that the
+onDestroyEvent method of PlayScreen now removes the container from the game
+world using me.game.world.removeChild and sets it to null to prevent memory
+leaks.
