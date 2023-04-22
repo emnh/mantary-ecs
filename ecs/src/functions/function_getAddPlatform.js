@@ -1,5 +1,5 @@
 function getAddPlatform(makeAnyEntity, world, imageURL) {
-  console.log('getAddPlatform');
+  if (('debug' in window) && window.debug) console.log('getAddPlatform');
   const platformImg = new Image();
   platformImg.src = imageURL;
   const s = 0.4;
