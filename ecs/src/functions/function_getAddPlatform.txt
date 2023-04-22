@@ -1,0 +1,164 @@
+Prompt: 1 / 1Now list all the functions including their implementations.
+Answer:
+1 / 1Certainly, here are all the functions along with their
+implementations:kotlinCopy codefunction getAnyEntity() {
+    let counter = 0;
+class AnyEntity extends me.Entity {
+
+        constructor(x, y, settings) {
+super(x, y, settings);
+this.renderable.scale(settings.scale, settings.scale);
+this.body.maxVel = settings.maxVel || { x: 0, y: 0 };
+this.body.ignoreGravity = settings.ignoreGravity;
+this.body.collisionType = settings.myCollisionType;
+            this.onCollision
+= settings.onCollision || (() => { });
+            const theThis = this;
+this.update = (dt) => (settings.update || (() => { }))(theThis,
+super.update.bind(this), dt);
+            this.id = counter;
+            counter
++= 1;
+            this.src = settings.image.src;
+        }
+onCollision(response, other) {
+            return
+thisRenderable.onCollision(response, other);
+        }
+    }
+
+    const
+newLessConstructor = function (x, y, settings) {
+        return new AnyEntity(x,
+y, settings);
+    };
+
+    return newLessConstructor;
+}
+File
+function_getAnyEntity.js saved and committed successfully, diff: diff --git
+a/ecs/src/functions/function_getAnyEntity.js
+b/ecs/src/functions/function_getAnyEntity.js
+new file mode 100644
+index
+0000000..1e54358
+--- /dev/null
++++
+b/ecs/src/functions/function_getAnyEntity.js
+@@ -0,0 +1,29 @@
++function
+getAnyEntity() {
++  console.log('getAnyEntity');
++  let counter = 0;
++  class
+AnyEntity extends me.Entity {
++    constructor(x, y, settings) {
++      super(x,
+y, settings);
++      this.renderable.scale(settings.scale, settings.scale);
++
+this.body.maxVel = settings.maxVel || ({
++        x: 0,
++        y: 0
++
+});
++      this.body.ignoreGravity = settings.ignoreGravity;
++
+this.body.collisionType = settings.myCollisionType;
++      this.onCollision =
+settings.onCollision || (() => {});
++      const theThis = this;
++
+this.update = dt => (settings.update || (() => {}))(theThis,
+super.update.bind(this), dt);
++      this.id = counter;
++      counter += 1;
++
+this.src = settings.image.src;
++    }
++    onCollision(response, other) {
++
+return thisRenderable.onCollision(response, other);
++    }
++  }
++  const
+newLessConstructor = function (x, y, settings) {
++    return new AnyEntity(x, y,
+settings);
++  };
++  return newLessConstructor;
++}
+arduinoCopy codefunction
+getAddPlatform(makeAnyEntity, world, imageURL) {
+    const platformImg = new
+Image();
+    platformImg.src = imageURL;
+    const s = 0.4;
+    const width =
+Math.round(675 * s);
+    const height = Math.round(618 * s);
+platformImg.width = width;
+    platformImg.height = height;
+
+    return function
+(x, y) {
+        world.addChild(makeAnyEntity(x, y, {
+            image:
+platformImg,
+            width: width,
+            height: height,
+scale: 1,
+            ignoreGravity: true,
+            myCollisionType:
+me.collision.types.WORLD_SHAPE,
+            onCollision: (response, other) => {
+// console.log("Collision", response, other);
+return false;
+            }
+        }));
+    };
+};
+vbnetCopy codefunction
+setupInput() {
+    me.input.bindKey(me.input.KEY.LEFT, "left");
+me.input.bindKey(me.input.KEY.RIGHT, "right");
+me.input.bindKey(me.input.KEY.X, "jump", true);
+me.input.bindKey(me.input.KEY.UP, "jump", true);
+me.input.bindKey(me.input.KEY.SPACE, "jump", true);
+me.input.bindKey(me.input.KEY.DOWN, "down");
+}
+luaCopy codefunction
+handleMoveMentLeftRight(thisPlayer) {
+    if (me.input.isKeyPressed("left")) {
+if (thisPlayer.body.vel.y === 0) {
+            //
+thisPlayer.renderable.setCurrentAnimation("walk");
+        }
+thisPlayer.body.force.x = -thisPlayer.body.maxVel.x;
+thisPlayer.renderable.flipX(true);
+    } else if
+(me.input.isKeyPressed("right")) {
+        if (thisPlayer.body.vel.y === 0) {
+// thisPlayer.renderable.setCurrentAnimation("walk");
+        }
+thisPlayer.body.force.x = thisPlayer.body.maxVel.x;
+thisPlayer.renderable.flipX(false);
+    } else {
+        thisPlayer.body.force.x
+= 0;
+        thisPlayer.body.vel.x = 0;
+    }
+}
+vbnetCopy codefunction
+handleJump(thisPlayer) {
+    if (me.input.isKeyPressed("jump")) {
+        //
+thisPlayer.renderable.setCurrentAnimation("jump");
+thisPlayer.body.jumping = true;
+        if (thisPlayer.multipleJump <= 2) {
+// easy "math" for double jump
+            thisPlayer.body.force.y =
+-thisPlayer.body.maxVel.y * thisPlayer.multipleJump++;
+            //
+me.audio.stop("jump");
+            // me.audio.play("jump", false
