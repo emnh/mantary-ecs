@@ -1,12 +1,12 @@
-Prompt: 1 / 1log melonjs, not melonjs.default
-Answer: 1 / 1Sorry about that!
-Here's an updated version of the main() function with a console.log() statement
-that logs the melonjs object:javascriptCopy codeasync function main() {
-  const
-melonjs = await
+Prompt: 1 / 1There you go, don't use .default when calling example
+either
+Answer: 1 / 1You're right, sorry about that. Here's an updated version of
+the main() function without using .default when calling the example()
+function:javascriptCopy codeasync function main() {
+  const melonjs = await
 import("https://esm.run/melonjs@latest/dist/melonjs.module.js");
 console.log("melonjs loaded:", melonjs);
-  example(melonjs.default);
+  example(melonjs);
 }
 
 function
@@ -44,7 +44,7 @@ me.game.world.addChild(new me.Text(609, 281, {
 
 main();
 In this
-example, we use console.log() to log the melonjs object that is returned by the
-import() call. This should log the entire module object to the console,
-including all the exports that are available.Once the module has been loaded, we
-call the example() function with the me object as the parameter, as before.
+example, we pass the entire melonjs object to the example() function, and remove
+the .default property from the me object parameter in the example() function.
+This should work correctly as long as the melonjs module exports a single
+default object.
