@@ -1,3 +1,4 @@
 function main() {
-  rabbit();
+  console.log('main');
+  nonExistentFunction();
 }
