@@ -1,16 +1,16 @@
-Prompt: 1 / 1Create a main js function that injects a script into the page with
-the url to melonjs.
-Answer: 1 / 1Sure! Here's an example of a main.js function
-that injects a script into the page with the URL to melonJS:javascriptCopy
-codefunction loadMelonJS() {
-  const script = document.createElement('script');
-script.src =
-'https://cdnjs.cloudflare.com/ajax/libs/melonjs/10.0.0/melonjs.min.js';
+Prompt: 1 / 1Let the script source be https://esm.run/melonjs
+Answer: 1 /
+1Certainly! Here's an updated loadMelonJS function that uses the new
+URL:javascriptCopy codefunction loadMelonJS() {
+  const script =
+document.createElement('script');
+  script.src = 'https://esm.run/melonjs';
 document.head.appendChild(script);
 }
 
 loadMelonJS();
 This function creates a new
-script element, sets its src attribute to the URL for melonJS, and then appends
-it to the head element of the current page. Once this function is called, the
-browser will download and execute the melonJS script.
+script element, sets its src attribute to the URL for melonJS from
+https://esm.run/, and then appends it to the head element of the current page.
+Once this function is called, the browser will download and execute the melonJS
+script.
