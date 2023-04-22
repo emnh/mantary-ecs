@@ -1,8 +1,11 @@
 Prompt: 1 / 1
   I get the following error:
-  ReferenceError: me is not defined
-at getPlayerEntity (about:srcdoc:52:30)
-    at about:srcdoc:13:26
+  TypeError: Cannot read properties
+of undefined (reading 'width')
+    at new Entity
+(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js:37071:30)
+at new PlayerEntity (about:srcdoc:47:7)
+    at about:srcdoc:14:20
     at
 EventEmitter.emit
 (https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js:9454:34)
@@ -15,57 +18,64 @@ Please respond with up to 3 corrected functions.
 in functions.
   All functions must be named and short.
   No global variables.
-Answer: 1 / 1Sure, here are the updated functions to fix the
-ReferenceError:javascriptCopy codefunction getPlayerEntity() {
-  class
-PlayerEntity extends me.Entity {
-    constructor(x, y, settings) {
-super(x, y, Object.assign(settings, {width: 32, height: 32}));
-
-      this.body
-= new me.Body(this, new me.Rect(0, 0, 32, 32));
-      this.body.setVelocity(3,
-3);
-      this.body.collisionType = me.collision.types.PLAYER_OBJECT;
-this.renderable = new me.ColorLayer("player", "#00ff00", 32, 32);
-this.anchorPoint.set(0.5, 0.5);
+Answer: 1 / 1Sure, here are up to 3 corrected functions:jsCopy codefunction
+getPlayerEntity(me) {
+  class PlayerEntity extends me.Entity {
+constructor(x, y) {
+      const settings = {
+        width: 32,
+        height:
+32,
+      };
+      super(x, y, settings);
+      this.body = new me.Body(this,
+new me.Rect(0, 0, settings.width, settings.height));
+this.body.addShape(new me.Polygon(0, 0, [
+        new me.Vector2d(0, 0),
+new me.Vector2d(settings.width, 0),
+        new me.Vector2d(settings.width,
+settings.height),
+        new me.Vector2d(0, settings.height)
+      ]));
+this.body.collisionType = me.collision.types.PLAYER_OBJECT;
+this.body.setVelocity(3, 3);
+      this.body.setMaxVelocity(3, 3);
+this.body.setFriction(0.4, 0.4);
+      this.body.gravity.set(0, 0.1);
+this.renderable = new me.ColorLayer("player", "#00ff00", settings.width,
+settings.height);
     }
 
     update(dt) {
-super.update(dt);
-
-      if (me.input.isKeyPressed("left") ||
-me.input.isKeyPressed("a")) {
-        this.body.vel.x -= this.body.accel.x *
-me.timer.tick;
-      }
-      if (me.input.isKeyPressed("right") ||
-me.input.isKeyPressed("d")) {
-        this.body.vel.x += this.body.accel.x *
-me.timer.tick;
+      if
+(me.input.isKeyPressed("left") || me.input.isKeyPressed("a")) {
+this.body.vel.x -= this.body.accel.x * me.timer.tick;
+      } else if
+(me.input.isKeyPressed("right") || me.input.isKeyPressed("d")) {
+this.body.vel.x += this.body.accel.x * me.timer.tick;
+      } else {
+this.body.vel.x = 0;
       }
       if (me.input.isKeyPressed("up") ||
 me.input.isKeyPressed("w")) {
         this.body.vel.y -= this.body.accel.y *
 me.timer.tick;
-      }
-      if (me.input.isKeyPressed("down") ||
+      } else if (me.input.isKeyPressed("down") ||
 me.input.isKeyPressed("s")) {
         this.body.vel.y += this.body.accel.y *
 me.timer.tick;
+      } else {
+        this.body.vel.y = 0;
       }
-
-      this.body.update(dt);
-me.collision.check(this);
+this.body.update(dt);
+      me.collision.check(this);
       return true;
     }
-  }
-
-  return
-PlayerEntity;
+}
+  return PlayerEntity;
 }
 
-function setupKeyboardInput() {
+function setupKeyboardInput(me, player) {
 me.input.bindKey(me.input.KEY.LEFT, "left");
 me.input.bindKey(me.input.KEY.RIGHT, "right");
 me.input.bindKey(me.input.KEY.UP, "up");
@@ -75,31 +85,26 @@ me.input.bindKey(me.input.KEY.UP, "up");
 me.input.bindKey(me.input.KEY.A, "a");
   me.input.bindKey(me.input.KEY.S, "s");
 me.input.bindKey(me.input.KEY.D, "d");
-  me.input.bindKey(me.input.KEY.SPACE,
-"space");
-
-  me.input.bindPointer(me.input.KEY.LEFT);
-me.input.bindPointer(me.input.KEY.RIGHT);
-me.input.bindPointer(me.input.KEY.UP);
-me.input.bindPointer(me.input.KEY.DOWN);
 }
 
-function example() {
-  const canvas
-= document.getElementById("screen");
+async function main() {
+  const me =
+await import("https://esm.run/melonjs");
 
-  me.init(canvas.width, canvas.height, {
-renderer: me.video.CANVAS,
-    wrapper: "screen",
+  me.boot();
+  me.video.init(1218,
+562, {
+    parent: "screen",
     scale: "auto",
-...me.game.HIDPI,
+    renderer:
+me.video.RENDERER_WEBGL,
   });
 
-  setupKeyboardInput();
-  me.game.world.addChild(new
-(getPlayerEntity())(me.game.viewport.width / 2, me.game.viewport.height / 2));
-me.state.change(me.state.PLAY);
+  const PlayerEntity = getPlayerEntity(me);
+const player = new PlayerEntity(100, 100);
+  setupKeyboardInput(me, player);
+me.game.world.addChild(player);
+
+  me.state.change(me.state.PLAY);
 }
-Saved exampleHere we define a
-getPlayerEntity() function that returns the PlayerEntity class, and we call it
-when we create a new instance of PlayerEntity in the example() function.
+Saved main
