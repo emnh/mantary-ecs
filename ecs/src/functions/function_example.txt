@@ -1,15 +1,14 @@
-Prompt: 1 / 1Do we need to call me.boot first?
-Answer: 1 / 1It's a good practice
-to call me.boot() before any other me.* call, as this initializes some internal
-melonJS modules and checks the device features. However, it is not strictly
-necessary to call me.boot() before me.device.onReady().The me.device.onReady()
-function is designed to be called after the device/browser is ready and provides
-a callback function that is called once the device is ready. The
-me.device.onReady() function also internally calls me.boot() if it has not been
-called yet.In general, it's a good idea to call me.boot() early in your code to
-ensure that the melonJS environment is set up correctly. Here's an example of
-how you can modify the example() function to call me.boot() before using the me
-object:javascriptCopy codefunction example(me) {
+Prompt: 1 / 1Add a console.log after awaiting import
+Answer: 1 / 1Sure! Here's
+an updated version of the main() function with a console.log() statement after
+the import() call:javascriptCopy codeasync function main() {
+  const melonjs =
+await import("https://esm.run/melonjs@latest/dist/melonjs.module.js");
+console.log("melonjs loaded:", melonjs.default);
+example(melonjs.default);
+}
+
+function example(me) {
   me.boot();
 me.device.onReady(function () {
     // initialize the display canvas once the
@@ -36,7 +35,10 @@ textBaseline : "middle",
     }));
   });
 }
-In this example, we call me.boot() before using the me
-object to ensure that the melonJS environment is set up correctly. We then
-define the me.device.onReady() function to initialize the display canvas once
-the device/browser is ready.
+
+main();
+Saved mainIn this example, we add a console.log()
+statement after the import() call to log the melonjs object to the console. This
+will help you verify that the module has been loaded correctly and is available
+in your code.Once the module has been loaded, we call the example() function
+with the me object as the parameter, as before.
