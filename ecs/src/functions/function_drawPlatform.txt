@@ -1,25 +1,24 @@
-Prompt: 1 / 1Update drawPlatform to use game.world.addChild
-Answer: 1 / 1Sure,
-here's the updated implementation of drawPlatform that uses
-me.game.world.addChild:javascriptCopy codefunction drawPlatform(container, x, y,
-width, height, image) {
-  const platform = new me.Entity(x, y, {
-    width:
-width,
+Prompt: 1 / 1Just add to container, forget about me.game.world.
+Answer: 1 /
+1Sure, here's the updated implementation of drawPlatform that only adds the
+platform to the specified container:javascriptCopy codefunction
+drawPlatform(container, x, y, width, height, image) {
+  const platform = new
+me.Entity(x, y, {
+    width: width,
     height: height,
     collidable: true,
-    type:
-me.collision.types.WORLD_SHAPE
+type: me.collision.types.WORLD_SHAPE
   });
 
-  platform.renderable = new me.Sprite(0,
-0, {
+  platform.renderable = new
+me.Sprite(0, 0, {
     image: image,
   });
 
   container.addChild(platform);
-me.game.world.addChild(platform);
 }
-In the updated implementation, drawPlatform
-now adds the platform entity to both the specified container and me.game.world
-using container.addChild and me.game.world.addChild, respectively.
+In
+the updated implementation, drawPlatform only adds the platform entity to the
+specified container using container.addChild. It does not add it to
+me.game.world.
