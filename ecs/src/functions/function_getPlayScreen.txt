@@ -1,0 +1,49 @@
+Prompt: 1 / 1Now define getPlayScreen which returns a class. The class is
+defined using class PlayScreen extends me.Stage {}.
+Answer: 1 / 1Certainly!
+Here's an example of a getPlayScreen function that returns a class PlayScreen
+defined using class PlayScreen extends me.Stage {}:javascriptCopy codefunction
+getPlayScreen() {
+  class PlayScreen extends me.Stage {
+    /**
+     *
+Constructor
+     */
+    constructor() {
+      super();
+    }
+
+    /**
+     *
+Called when the state is first initialized
+     */
+    onResetEvent() {
+      //
+Add any game objects or UI elements here
+      drawRectangle(me.game.world, 100,
+100, 50, 50, '#FF0000');
+    }
+
+    /**
+     * Called when the state is
+destroyed
+     */
+    onDestroyEvent() {
+      // Clean up any game objects or
+UI elements here
+    }
+  }
+
+  return PlayScreen;
+}
+This function returns a class
+PlayScreen that extends me.Stage, which is a base class for melonJS game states.
+The PlayScreen class has two methods: onResetEvent and onDestroyEvent, which are
+called when the state is first initialized and destroyed, respectively.The
+onResetEvent method is where game objects and UI elements should be added to the
+screen. In this example, we call the drawRectangle function to draw a red
+rectangle on the screen.The onDestroyEvent method is called when the state is
+destroyed, and is where any cleanup should be performed.Note that this code
+assumes that the drawRectangle function has already been defined, and that it
+takes the game object as its first parameter. You may need to modify this code
+to fit your specific use case.
