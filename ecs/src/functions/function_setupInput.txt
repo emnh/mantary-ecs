@@ -36,66 +36,13 @@ y, settings);
     return newLessConstructor;
 }
 File
-function_getAnyEntity.js saved and committed successfully, diff: diff --git
-a/ecs/src/functions/function_getAnyEntity.js
-b/ecs/src/functions/function_getAnyEntity.js
-new file mode 100644
-index
-0000000..1e54358
---- /dev/null
-+++
-b/ecs/src/functions/function_getAnyEntity.js
-@@ -0,0 +1,29 @@
-+function
-getAnyEntity() {
-+  console.log('getAnyEntity');
-+  let counter = 0;
-+  class
-AnyEntity extends me.Entity {
-+    constructor(x, y, settings) {
-+      super(x,
-y, settings);
-+      this.renderable.scale(settings.scale, settings.scale);
-+
-this.body.maxVel = settings.maxVel || ({
-+        x: 0,
-+        y: 0
-+
-});
-+      this.body.ignoreGravity = settings.ignoreGravity;
-+
-this.body.collisionType = settings.myCollisionType;
-+      this.onCollision =
-settings.onCollision || (() => {});
-+      const theThis = this;
-+
-this.update = dt => (settings.update || (() => {}))(theThis,
-super.update.bind(this), dt);
-+      this.id = counter;
-+      counter += 1;
-+
-this.src = settings.image.src;
-+    }
-+    onCollision(response, other) {
-+
-return thisRenderable.onCollision(response, other);
-+    }
-+  }
-+  const
-newLessConstructor = function (x, y, settings) {
-+    return new AnyEntity(x, y,
-settings);
-+  };
-+  return newLessConstructor;
-+}
-arduinoCopy codefunction
-getAddPlatform(makeAnyEntity, world, imageURL) {
-    const platformImg = new
-Image();
+function_getAnyEntity.js saved and committed successfully, diff: arduinoCopy
+codefunction getAddPlatform(makeAnyEntity, world, imageURL) {
+    const
+platformImg = new Image();
     platformImg.src = imageURL;
     const s = 0.4;
-    const width =
-Math.round(675 * s);
+const width = Math.round(675 * s);
     const height = Math.round(618 * s);
 platformImg.width = width;
     platformImg.height = height;
