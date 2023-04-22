@@ -1,25 +1,25 @@
-Prompt: 1 / 1Define a drawPlatform with the same arguments as drawRectangle
-except it takes an image instead of a color.
-Answer: 1 / 1Certainly! Here's an
-example of a drawPlatform function that takes an image parameter instead of a
-color parameter:javascriptCopy codefunction drawPlatform(game, x, y, width,
-height, image) {
-  const platform = new me.Sprite(x, y, { image: image });
-platform.anchorPoint.set(0, 0);
-  platform.width = width;
-  platform.height =
-height;
-  game.addChild(platform);
+Prompt: 1 / 1Update drawPlatform to use game.world.addChild
+Answer: 1 / 1Sure,
+here's the updated implementation of drawPlatform that uses
+me.game.world.addChild:javascriptCopy codefunction drawPlatform(container, x, y,
+width, height, image) {
+  const platform = new me.Entity(x, y, {
+    width:
+width,
+    height: height,
+    collidable: true,
+    type:
+me.collision.types.WORLD_SHAPE
+  });
+
+  platform.renderable = new me.Sprite(0,
+0, {
+    image: image,
+  });
+
+  container.addChild(platform);
+me.game.world.addChild(platform);
 }
-This drawPlatform function works similarly
-to the drawRectangle function, except that it takes an additional image
-parameter. This parameter should be a path to the image file to use for the
-platform.Inside the function, a new me.Sprite object is created with the
-specified x and y coordinates, and the image parameter is passed in as an object
-with the image property set to the image path. The anchorPoint property is set
-to (0, 0) to ensure that the sprite is aligned with the specified x and y
-coordinates.The width and height of the platform are set to the specified width
-and height parameters, and the platform is added to the game object using
-game.addChild(platform).Note that this code assumes that the specified image
-parameter is a valid path to an image file. You may need to modify this code to
-fit your specific use case.
+In the updated implementation, drawPlatform
+now adds the platform entity to both the specified container and me.game.world
+using container.addChild and me.game.world.addChild, respectively.
