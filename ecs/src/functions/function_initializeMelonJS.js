@@ -1,17 +1,15 @@
-function initializeMelonJS(callback) {
+async function initializeMelonJS() {
   console.log('initializeMelonJS');
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  me.video.init(width, height, {
-    parent: 'game-container',
-    renderer: me.video.CANVAS,
-    scale: 'auto',
-    scaleMethod: 'fit'
+  const melonScript = await loadMelonJS();
+  me.video.init(window.innerWidth, window.innerHeight, {
+    wrapper: "screen",
+    scale: "auto",
+    renderer: me.video.CANVAS
   });
-  const game = new me.Container();
-  me.game.world.addChild(game);
-  const PlayScreen = getPlayScreen();
-  me.state.set(me.state.PLAY, new PlayScreen());
+  me.audio.init("mp3,ogg");
+  const imageUrls = ['/images/platform2.png', '/images/player.png'];
+  const images = await loadImages(imageUrls);
+  me.loader.preload(images);
+  me.state.set(me.state.PLAY, new (await getPlayScreen(images))());
   me.state.change(me.state.PLAY);
-  callback(game);
 }
