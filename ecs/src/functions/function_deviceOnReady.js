@@ -1,5 +1,5 @@
 function deviceOnReady() {
-  console.log('deviceOnReady');
+  if (('debug' in window) && window.debug) console.log('deviceOnReady');
   if (!me.video.init(3840, 2160, {
     parent: "app",
     scaleMethod: "flex-width",
