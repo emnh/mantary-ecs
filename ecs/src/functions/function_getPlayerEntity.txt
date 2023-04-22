@@ -109,7 +109,7 @@ me.collision.check(this);
   return
 PlayerEntity;
 }
-Saved exampleIn this updated code, we've added a getPlayerEntity
-function that takes the me object as a parameter and returns the PlayerEntity
-class. We've also modified the example function to use the getPlayerEntity
-function to create the player entity.
+Saved setupKeyboardInputSaved exampleSaved mainIn this updated
+code, we've added a getPlayerEntity function that takes the me object as a
+parameter and returns the PlayerEntity class. We've also modified the example
+function to use the getPlayerEntity function to create the player entity.
