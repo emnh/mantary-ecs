@@ -9,7 +9,13 @@ function getPlayScreen(images) {
         console.error("Failed to load platform image!");
         return;
       }
+      const playerImage = images['walk.gif'];
+      if (!playerImage) {
+        console.error("Failed to load player image!");
+        return;
+      }
       drawPlatform(me.game, 100, 400, 200, 50, platformImage);
+      drawPlayer(me.game, 100, 300, 50, 50, playerImage);
     }
     onDestroyEvent() {}
   }
