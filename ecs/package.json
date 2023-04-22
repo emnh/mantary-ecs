@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "signature": "nodemon ./scripts/signature.cjs"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "vite": "^4.2.0"
