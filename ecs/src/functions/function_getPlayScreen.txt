@@ -1,18 +1,9 @@
-Prompt: 1 / 1Add .png to the image url.
-Answer: 1 / 1Sure! Here's the updated
-getImage function with the .png file extension added to the URL:javascriptCopy
-codeasync function getImage(url) {
-  return new Promise((resolve, reject) => {
-const image = new Image();
-    image.onload = () => resolve(image);
-image.onerror = (err) => reject(err);
-    image.src = url;
-  });
-}
-And here's
-the updated getPlayScreen function that uses the getImage function to load the
-platform image with the .png file extension:javascriptCopy codeasync function
-getPlayScreen() {
+Prompt: 1 / 1Update getPlayScreen to take images and to look up platform2.png in
+the dictionary.
+Answer: 1 / 1Sure thing! Here's an updated implementation of
+getPlayScreen that takes an images object as an argument and looks up
+platform2.png in the dictionary:javascriptCopy codefunction
+getPlayScreen(images) {
   class PlayScreen extends me.Stage {
     /**
      *
@@ -26,10 +17,11 @@ Constructor
      *
 Called when the state is first initialized
      */
-    async onResetEvent() {
-// Add any game objects or UI elements here
-      const platformImage = await
-getImage('/images/platform2.png');
+    onResetEvent() {
+      //
+Add any game objects or UI elements here
+      const platformImage =
+images['/images/platform2.png'];
       if (!platformImage) {
 console.error("Failed to load platform image!");
         return;
@@ -50,7 +42,11 @@ up any game objects or UI elements here
   return PlayScreen;
 }
 In
-this updated code, the .png file extension is added to the platform image URL in
-the getImage and getPlayScreen functions.This should help to ensure that the
-platform image is loaded correctly by the getImage function and that it is
-displayed correctly on the screen when passed to the drawPlatform function.
+this updated implementation, the getPlayScreen function takes an images object
+as its argument.In the onResetEvent method of the PlayScreen class, we use the
+images object to look up the platform2.png image using its URL as the dictionary
+key. If the image is found, we pass it to the drawPlatform function to draw the
+platform on the screen. If the image is not found, we log an error message to
+the console and return without drawing the platform.This implementation should
+allow you to load and use images more efficiently by storing them in a
+dictionary and passing the dictionary to the game screens that need them.
