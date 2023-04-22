@@ -5,7 +5,7 @@ function getPlayScreen() {
       super();
     }
     onResetEvent() {
-      const platformImage = me.loader.getImage('./images/platform2.png');
+      const platformImage = me.loader.getImage('../images/platform2.png');
       drawPlatform(me.game, 100, 400, 200, 50, platformImage);
     }
     onDestroyEvent() {}
