@@ -1,10 +1,14 @@
-function drawPlatform(game, x, y, width, height, image) {
+function drawPlatform(container, x, y, width, height, image) {
   console.log('drawPlatform');
-  const platform = new me.Sprite(x, y, {
+  const platform = new me.Entity(x, y, {
+    width: width,
+    height: height,
+    collidable: true,
+    type: me.collision.types.WORLD_SHAPE
+  });
+  platform.renderable = new me.Sprite(0, 0, {
     image: image
   });
-  platform.anchorPoint.set(0, 0);
-  platform.width = width;
-  platform.height = height;
-  game.addChild(platform);
+  container.addChild(platform);
+  me.game.world.addChild(platform);
 }
