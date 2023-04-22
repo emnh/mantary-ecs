@@ -1,5 +1,7 @@
 import * as me from "https://esm.run/melonjs@15";
 
+let counter = 0;
+
 class AnyEntity extends me.Entity {
 
     constructor(x, y, settings) {
@@ -16,7 +18,7 @@ class AnyEntity extends me.Entity {
         //     frameheight: settings.height
         // });
 
-        // this.renderable.scale(settings.scale, settings.scale);
+        this.renderable.scale(settings.scale, settings.scale);
 
         this.body.maxVel = settings.maxVel || { x: 0, y: 0 };
         this.body.ignoreGravity = settings.ignoreGravity;
@@ -24,17 +26,84 @@ class AnyEntity extends me.Entity {
         this.onCollision = settings.onCollision || (() => { });
         const theThis = this;
         this.update = (dt) => (settings.update || (() => { }))(theThis, super.update.bind(this), dt);
+        this.id = counter;
+        counter += 1;
+        this.src = settings.image.src;
     }
 
+    // draw(renderer, viewport) {
+
+    //     // do nothing if we are flickering
+    //     const thisRenderable = this.renderable;
+
+    //     if (thisRenderable._flicker.isFlickering) {
+    //         thisRenderable._flicker.state = !thisRenderable._flicker.state;
+    //         if (!thisRenderable._flicker.state) {
+    //             return;
+    //         }
+    //     }
+
+    //     // the frame to draw
+    //     let frame = thisRenderable.current;
+
+    //     // cache the current position and size
+    //     let xpos = thisRenderable.pos.x,
+    //         ypos = thisRenderable.pos.y;
+
+    //     let w = frame.width,
+    //         h = frame.height;
+
+    //     // frame offset in the texture/atlas
+    //     let frame_offset = frame.offset;
+    //     let g_offset = thisRenderable.offset;
+
+
+    //     // remove image's TexturePacker/ShoeBox rotation
+    //     if (frame.angle !== 0) {
+    //         // renderer.translate(-xpos, -ypos);
+    //         // renderer.rotate(frame.angle);
+    //         xpos -= h;
+    //         w = frame.height;
+    //         h = frame.width;
+    //     }
+
+    //     // renderer.drawImage(
+    //     //     thisRenderable.image,
+    //     //     g_offset.x + frame_offset.x, // sx
+    //     //     g_offset.y + frame_offset.y, // sy
+    //     //     w, h,                        // sw,sh
+    //     //     xpos, ypos,                  // dx,dy
+    //     //     w, h                         // dw,dh
+    //     // );
+
+
+
+    //     const id = this.id;
+    //     const img = document.getElementById("entity" + id) || document.createElement("img");
+    //     img.id = "entity" + id;
+    //     img.src = this.src;
+    //     img.style.position = "absolute";
+    //     // img.style.left = this.renderable.pos.x + "px";
+    //     // img.style.top = this.renderable.pos.y + "px";
+    //     img.style.left = xpos + "px";
+    //     img.style.top = ypos + "px";
+    //     img.style.width = w + "px";
+    //     img.style.height = h + "px";
+    //     img.style.zIndex = 10;
+    //     document.body.appendChild(img);
+
+    //     return super.draw(renderer, viewport);
+    // }
+
     onCollision(response, other) {
-        return this.onCollision(response, other);
+        return thisRenderable.onCollision(response, other);
     }
 }
 
 function getAddPlatform(world, imageURL) {
     const platformImg = new Image();
     platformImg.src = imageURL;
-    const s = 0.25;
+    const s = 0.4;
     const width = Math.round(675 * s);
     const height = Math.round(618 * s);
     platformImg.width = width;
@@ -67,7 +136,7 @@ function setupInput() {
 
 function playerUpdate(thisPlayer, superUpdate, dt) {
 
-    if (me.input.isKeyPressed("left")){
+    if (me.input.isKeyPressed("left")) {
         if (thisPlayer.body.vel.y === 0) {
             // thisPlayer.renderable.setCurrentAnimation("walk");
         }
@@ -110,7 +179,7 @@ function playerUpdate(thisPlayer, superUpdate, dt) {
     if (!thisPlayer.inViewport && (thisPlayer.pos.y > me.video.renderer.getHeight())) {
         // if yes reset the game
         me.game.world.removeChild(thisPlayer);
-        me.game.viewport.fadeIn("#fff", 150, function(){
+        me.game.viewport.fadeIn("#fff", 150, function () {
             me.audio.play("die", false);
             me.level.reload();
             me.game.viewport.fadeOut("#fff", 150);
@@ -130,7 +199,15 @@ function playerUpdate(thisPlayer, superUpdate, dt) {
 
 me.device.onReady(function () {
     // initialize the display canvas once the device/browser is ready
-    if (!me.video.init(window.innerWidth, window.innerHeight, { parent: "screen", scale: "auto" })) {
+    // if (!me.video.init(800, 600, {
+    if (!me.video.init(3840, 2160, {
+        parent: "app",
+        scaleMethod: "flex-width",
+        renderer: me.video.AUTO,
+        preferWebGL1: false,
+        subPixel: true,
+        antiAlias: true,
+    })) {
         alert("Your browser does not support HTML5 canvas.");
         return;
     }
@@ -144,24 +221,29 @@ me.device.onReady(function () {
 
     world.x = 0;
     world.y = 0;
-    world.width = window.innerWidth;
-    world.height = window.innerHeight;
+    // world.width = window.innerWidth;
+    // world.height = window.innerHeight;
+    // world.width = 1000;
+    // world.height = 1000;
 
-    addPlatform(50, 500);
-    addPlatform(200, 500);
-    addPlatform(400, 500);
-    addPlatform(600, 500);
+    const sp = 3.0;
+    addPlatform(sp*40, sp*500);
+    addPlatform(sp*200, sp*500);
+    addPlatform(sp*400, sp*500);
+    addPlatform(sp*600, sp*500);
 
     const playerImg = new Image();
     playerImg.src = "./images/protagonist.png";
 
-    const s = 0.125;
-    playerImg.width = 396 * s;
-    playerImg.height = 579 * s;
-    world.addChild(new AnyEntity(50, 0, {
+    const s = 0.4;
+    const width = 396 * s;
+    const height = 579 * s;
+    playerImg.width = width;
+    playerImg.height = height;
+    const player = new AnyEntity(50, 0, {
         image: playerImg,
-        height: playerImg.height,
-        width: playerImg.width,
+        height: height,
+        width: width,
         scale: 1,
         ignoreGravity: false,
         update: playerUpdate,
@@ -171,7 +253,10 @@ me.device.onReady(function () {
             // console.log("PlayerCollision", response, other);
             return true;
         }
-    }));
+    });
+    world.addChild(player);
+
+    me.game.viewport.follow(player, me.game.viewport.AXIS.BOTH, 0.1);
 
     setupInput();
 
