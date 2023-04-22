@@ -11,7 +11,7 @@ async function main() {
     }
     me.game.world.addChild(new me.ColorLayer("background", "#202020"));
     const PlayerEntity = getPlayerEntity(me);
-    const player = new PlayerEntity(0, 0, {});
+    const player = new PlayerEntity(0, 0);
     me.game.world.addChild(player);
     setupKeyboardInput(me, player);
   });
