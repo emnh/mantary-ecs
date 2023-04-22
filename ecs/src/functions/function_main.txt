@@ -1,65 +1,61 @@
-Prompt: 1 / 1caught SyntaxError: Unexpected token 'export' (at
-melonjs.module.js:38224:1)
-Answer: 1 / 1The SyntaxError: Unexpected token
-'export' error usually occurs when you try to use the import or export
-statements in a script that is not being processed as a module.To fix this
-error, you can either use the import statement in an ES module context (e.g. in
-a .mjs file or a script with type="module"), or use a module bundler like
-webpack or Rollup to bundle the modules into a single script.If you want to use
-the import statement in a regular script file, you can try using a module
-bundler like webpack or Rollup to bundle your code into a single script that can
-be used in a non-module context.Alternatively, you can try using the non-module
-version of melonjs, which does not use the export or import statements. You can
-use the following URL to load the non-module version of melonjs:javascriptCopy
-codehttps://cdn.jsdelivr.net/npm/melonjs@15.1.1/dist/melonjs.min.js
-Here's an
-example of how you can use the non-module version of melonjs in your
-code:javascriptCopy codefunction example() {
-  const me = window.me;
-me.device.onReady(function () {
-    // initialize the display canvas once the
-device/browser is ready
-    if (!me.video.init(1218, 562, {parent : "screen",
-scale : "auto"})) {
-      alert("Your browser does not support HTML5 canvas.");
-return;
+Prompt: 1 / 1Let's use the previous url but set script type to module
+Answer: 1
+/ 1Sure, you can use the previous URL
+https://cdn.jsdelivr.net/npm/melonjs@15.1.1/dist/melonjs.module.js and set the
+type attribute of the script tag to "module" to load the melonjs module in a
+module context.Here's an updated version of the main function that uses the type
+attribute to load the melonjs module:javascriptCopy codefunction main() {
+const script = document.createElement("script");
+  script.src =
+"https://cdn.jsdelivr.net/npm/melonjs@15.1.1/dist/melonjs.module.js";
+script.async = false;
+  script.type = "module";
+  script.onload = function () {
+example();
+  };
+  document.head.appendChild(script);
+}
+In this example, we
+set the type attribute of the script tag to "module", which tells the browser to
+load the melonjs script as a module. We also set the onload function to call the
+example function once the module has loaded.With this configuration, you can use
+the import statement to import the me object from the melonjs module, like
+this:javascriptCopy codeimport * as me from
+"https://cdn.jsdelivr.net/npm/melonjs@15.1.1/dist/melonjs.module.js";
+
+function
+example() {
+  me.device.onReady(function () {
+    // initialize the display
+canvas once the device/browser is ready
+    if (!me.video.init(1218, 562,
+{parent : "screen", scale : "auto"})) {
+      alert("Your browser does not
+support HTML5 canvas.");
+      return;
     }
 
-    // add a gray background to the default Stage
-me.game.world.addChild(new me.ColorLayer("background", "#202020"));
+    // add a gray background to
+the default Stage
+    me.game.world.addChild(new me.ColorLayer("background",
+"#202020"));
 
-    // add
-a font text display object
-    me.game.world.addChild(new me.Text(609, 281, {
-font: "Arial",
-      size: 160,
+    // add a font text display object
+me.game.world.addChild(new me.Text(609, 281, {
+      font: "Arial",
+      size:
+160,
       fillStyle: "#FFFFFF",
-textBaseline : "middle",
-      textAlign : "center",
-      text : "Hello World
-!"
+      textBaseline : "middle",
+      textAlign
+: "center",
+      text : "Hello World !"
     }));
   });
 }
 
-function main() {
-  const script =
-document.createElement("script");
-  script.src =
-"https://cdn.jsdelivr.net/npm/melonjs@15.1.1/dist/melonjs.min.js";
-script.async = false;
-  script.type = "text/javascript";
-  script.onload =
-function () {
-    example();
-  };
-document.head.appendChild(script);
-}
-
 main();
-In this example, we use the
-non-module version of melonjs by loading the
-https://cdn.jsdelivr.net/npm/melonjs@15.1.1/dist/melonjs.min.js script, which
-does not use the export or import statements. We also use the example function
-to define the melonjs code, and the main function to load the melonjs script and
-call the example function.
+In this
+example, we use the import statement to import the me object from the melonjs
+module, and define the example function to use the me object. We also call the
+main function to load the melonjs module and call the example function.
