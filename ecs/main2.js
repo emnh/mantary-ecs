@@ -5,18 +5,7 @@ let counter = 0;
 class AnyEntity extends me.Entity {
 
     constructor(x, y, settings) {
-        // call the constructor
-        // console.log("CollisionType", settings.collisionType);
         super(x, y, settings);
-
-        // this.renderable = 
-        // new me.Sprite(x, y, {
-        //     image: settings.image,
-        //     spritewidth: settings.width,
-        //     spriteheight: settings.height,
-        //     framewidth: settings.width,
-        //     frameheight: settings.height
-        // });
 
         this.renderable.scale(settings.scale, settings.scale);
 
@@ -30,70 +19,6 @@ class AnyEntity extends me.Entity {
         counter += 1;
         this.src = settings.image.src;
     }
-
-    // draw(renderer, viewport) {
-
-    //     // do nothing if we are flickering
-    //     const thisRenderable = this.renderable;
-
-    //     if (thisRenderable._flicker.isFlickering) {
-    //         thisRenderable._flicker.state = !thisRenderable._flicker.state;
-    //         if (!thisRenderable._flicker.state) {
-    //             return;
-    //         }
-    //     }
-
-    //     // the frame to draw
-    //     let frame = thisRenderable.current;
-
-    //     // cache the current position and size
-    //     let xpos = thisRenderable.pos.x,
-    //         ypos = thisRenderable.pos.y;
-
-    //     let w = frame.width,
-    //         h = frame.height;
-
-    //     // frame offset in the texture/atlas
-    //     let frame_offset = frame.offset;
-    //     let g_offset = thisRenderable.offset;
-
-
-    //     // remove image's TexturePacker/ShoeBox rotation
-    //     if (frame.angle !== 0) {
-    //         // renderer.translate(-xpos, -ypos);
-    //         // renderer.rotate(frame.angle);
-    //         xpos -= h;
-    //         w = frame.height;
-    //         h = frame.width;
-    //     }
-
-    //     // renderer.drawImage(
-    //     //     thisRenderable.image,
-    //     //     g_offset.x + frame_offset.x, // sx
-    //     //     g_offset.y + frame_offset.y, // sy
-    //     //     w, h,                        // sw,sh
-    //     //     xpos, ypos,                  // dx,dy
-    //     //     w, h                         // dw,dh
-    //     // );
-
-
-
-    //     const id = this.id;
-    //     const img = document.getElementById("entity" + id) || document.createElement("img");
-    //     img.id = "entity" + id;
-    //     img.src = this.src;
-    //     img.style.position = "absolute";
-    //     // img.style.left = this.renderable.pos.x + "px";
-    //     // img.style.top = this.renderable.pos.y + "px";
-    //     img.style.left = xpos + "px";
-    //     img.style.top = ypos + "px";
-    //     img.style.width = w + "px";
-    //     img.style.height = h + "px";
-    //     img.style.zIndex = 10;
-    //     document.body.appendChild(img);
-
-    //     return super.draw(renderer, viewport);
-    // }
 
     onCollision(response, other) {
         return thisRenderable.onCollision(response, other);
