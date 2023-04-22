@@ -1,32 +1,32 @@
-Prompt: 1 / 1Instead of this pass me.game.world to drawPlatform and
-drawPlayer
-Answer: 1 / 1Sure, here's the updated implementation of getPlayScreen
-that passes me.game.world to drawPlatform and drawPlayer:javascriptCopy
-codefunction getPlayScreen(images) {
+Prompt: 1 / 1Now update getPlayScreen to call it.
+Answer: 1 / 1Sure, here's the
+updated implementation of getPlayScreen that calls
+getPlayerEntity:javascriptCopy codefunction getPlayScreen(images) {
+  const
+PlayerEntity = getPlayerEntity();
+
   class PlayScreen extends me.Stage {
 constructor() {
       super();
       this.backgroundColor = '#202020';
 drawPlatform(me.game.world, 0, 500, 800, 100, images.platform);
-drawPlayer(me.game.world, 0, 0, 64, 64, images.player);
+      const
+player = new PlayerEntity(0, 0, {
+        image: images.player,
+      });
+player.renderable.scale(2, 2);
+      player.body.gravityScale = 0;
+player.body.collisionType = me.collision.types.PLAYER_OBJECT;
+player.body.setVelocity(3, 3);
+      player.body.setMaxVelocity(3, 3);
+me.game.world.addChild(player);
     }
-onResetEvent() {
-      const { PlayScreen } = me.state;
-      PlayScreen.player
-= new me.PlayerEntity(0, 0, {});
-      PlayScreen.player.renderable.scale(2,
-2);
-      PlayScreen.player.body.gravityScale = 0;
-PlayScreen.player.body.collisionType = me.collision.types.PLAYER_OBJECT;
-PlayScreen.player.body.setVelocity(3, 3);
-PlayScreen.player.body.setMaxVelocity(3, 3);
 
-      drawPlatform(me.game.world,
-0, 500, 800, 100, images.platform);
-
-      me.input.bindKey(me.input.KEY.LEFT,
-"left");
-      me.input.bindKey(me.input.KEY.RIGHT, "right");
+    onResetEvent() {
+      const {
+PlayScreen } = me.state;
+      me.input.bindKey(me.input.KEY.LEFT, "left");
+me.input.bindKey(me.input.KEY.RIGHT, "right");
 me.input.bindKey(me.input.KEY.UP, "jump", true);
 me.input.bindKey(me.input.KEY.SPACE, "shoot");
 me.game.viewport.follow(PlayScreen.player.pos, me.game.viewport.AXIS.BOTH);
@@ -36,6 +36,7 @@ me.game.viewport.setDeadzone(30, 30);
   return PlayScreen;
 }
 In the
-updated implementation, getPlayScreen now passes me.game.world to drawPlatform
-and drawPlayer instead of this. This ensures that the entities are added to the
-game world instead of the stage.
+updated implementation, getPlayScreen now calls getPlayerEntity to get the
+PlayerEntity class. The drawPlayer function is no longer used. Instead, the
+function creates a new instance of PlayerEntity and adds it to me.game.world
+using me.game.world.addChild.
