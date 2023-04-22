@@ -1,6 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 
+const prelude = `
+    import * as melonjs from 'melonjs';
+    const me = melonjs;
+`;
+
+const postlude = `
+    document.addEventListener("DOMContentLoaded", main);
+`;
+
 function concatenateJSFilesAndWatch(dirPath) {
     const mainFilePath = 'main.js';
     let content = '';
@@ -11,9 +20,9 @@ function concatenateJSFilesAndWatch(dirPath) {
         content = jsFiles.reduce((accumulator, file) => {
             const filePath = path.join(dirPath, file);
             const fileContent = fs.readFileSync(filePath, 'utf-8');
-            return accumulator + fileContent;
+            return accumulator + fileContent + '\n\n';
         }, '');
-        content += 'main();'
+        content = prelude + content + postlude;
         try {
             fs.writeFileSync(mainFilePath, content);
         } catch (err) {
