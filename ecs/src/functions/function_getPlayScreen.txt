@@ -1,9 +1,17 @@
-Prompt: 1 / 1Now update getPlayScreen
-Answer: 1 / 1Sure, here's the updated
-implementation of getPlayScreen that uses the PlayerEntity class:javascriptCopy
-codefunction getPlayScreen(images) {
+Prompt: 1 / 1caught (in promise) TypeError: player.body.setVelocity is not a
+function you should use this.body.vel.x and this.body.vel.y instead
+Answer: 1 /
+1This error is being caused because the setVelocity function is not available on
+the body object of the PlayerEntity. In MelonJS, you should use the
+this.body.vel.x and this.body.vel.y properties to set the velocity of an
+entity.To fix the error, you need to replace player.body.setVelocity(3, 3) with
+player.body.vel.x = 3 and player.body.vel.y = 3. Here's the updated
+implementation of getPlayScreen:javascriptCopy codefunction
+getPlayScreen(images) {
   const PlayerEntity = getPlayerEntity();
-class PlayScreen extends me.Stage {
+
+  class
+PlayScreen extends me.Stage {
     constructor() {
       super();
 this.backgroundColor = '#202020';
@@ -18,8 +26,8 @@ image: images.player,
 player.renderable.scale(2, 2);
       player.body.gravityScale = 0;
 player.body.collisionType = me.collision.types.PLAYER_OBJECT;
-player.body.setVelocity(3, 3);
-      player.body.setMaxVelocity(3, 3);
+player.body.vel.x = 3;
+      player.body.vel.y = 3;
 me.game.world.addChild(player);
     }
 
@@ -37,6 +45,6 @@ me.game.viewport.setDeadzone(30, 30);
   return PlayScreen;
 }
 In the
-updated implementation, getPlayScreen now uses the PlayerEntity class to create
-a new player entity instead of using the drawPlayer function. The PlayerEntity
-constructor now includes width and height in the settings object.
+updated implementation, getPlayScreen now uses player.body.vel.x and
+player.body.vel.y to set the velocity of the player entity instead of using
+setVelocity.
