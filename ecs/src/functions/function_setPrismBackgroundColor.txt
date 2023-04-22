@@ -1,0 +1,36 @@
+Prompt: 1 / 1No, write a js function that sets the background color of prism
+using a style in head.
+Answer: 1 / 1Sure, here's an example of a JavaScript
+function that sets the background color of Prism.js using a style element in the
+head section of the HTML page:javascriptCopy codefunction
+setPrismBackgroundColor(color) {
+  const style =
+document.createElement("style");
+  style.innerHTML = `
+pre[class*="language-"] {
+      background-color: ${color};
+    }
+pre[class*="language-"] .line-highlight {
+      background-color: ${color};
+}
+  `;
+  document.head.appendChild(style);
+}
+In this example, the
+setPrismBackgroundColor() function takes a color parameter that specifies the
+desired background color.The function creates a new style element using the
+createElement() method of the document object. It sets the innerHTML property of
+the style element to a string that contains CSS rules to set the background
+color of Prism.js.The CSS rules use the pre[class*="language-"] selector to
+target all code blocks that have a class attribute that starts with "language-",
+and set their background-color property to the specified color parameter.The CSS
+rules also use the .line-highlight selector to target the line highlight that
+appears when a line is selected, and set its background-color property to the
+specified color parameter.Finally, the function appends the style element to the
+head element of the HTML page using the appendChild() method.You can call this
+function by passing the desired background color as an argument:javascriptCopy
+codesetPrismBackgroundColor("#f7f7f7");
+When you call this function in a
+JavaScript environment that has access to the HTML document object, it will set
+the background color of Prism.js using a style element in the head section of
+the HTML page.
