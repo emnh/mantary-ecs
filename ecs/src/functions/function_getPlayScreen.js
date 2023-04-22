@@ -20,12 +20,11 @@ function getPlayScreen(images) {
       this.player = player;
     }
     onResetEvent() {
-      const {PlayScreen} = me.state;
       me.input.bindKey(me.input.KEY.LEFT, "left");
       me.input.bindKey(me.input.KEY.RIGHT, "right");
       me.input.bindKey(me.input.KEY.UP, "jump", true);
       me.input.bindKey(me.input.KEY.SPACE, "shoot");
-      me.game.viewport.follow(PlayScreen.player.pos, me.game.viewport.AXIS.BOTH);
+      me.game.viewport.follow(this.player.pos, me.game.viewport.AXIS.BOTH);
       me.game.viewport.setDeadzone(30, 30);
     }
   }
