@@ -17,16 +17,7 @@ function getPlayScreen(images) {
       PlayScreen.player.body.collisionType = me.collision.types.PLAYER_OBJECT;
       PlayScreen.player.body.setVelocity(3, 3);
       PlayScreen.player.body.setMaxVelocity(3, 3);
-      const platform = new me.Entity(0, 500, {
-        width: 800,
-        height: 100,
-        collidable: true,
-        type: me.collision.types.WORLD_SHAPE
-      });
-      platform.renderable = new me.Sprite(0, 0, {
-        image: images.platform
-      });
-      world.addChild(platform);
+      drawPlatform(world, 0, 500, 800, 100, images.platform);
       me.input.bindKey(me.input.KEY.LEFT, "left");
       me.input.bindKey(me.input.KEY.RIGHT, "right");
       me.input.bindKey(me.input.KEY.UP, "jump", true);
