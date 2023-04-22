@@ -1,18 +1,35 @@
 function main() {
   console.log('main');
-  const rows = 5;
-  const cols = 5;
-  const table = document.createElement("table");
-  for (let i = 0; i < rows; i++) {
-    const row = document.createElement("tr");
-    for (let j = 0; j < cols; j++) {
-      const cell = document.createElement("td");
-      cell.style.width = "50px";
-      cell.style.height = "50px";
-      cell.style.border = "1px solid black";
-      row.appendChild(cell);
+  const board = [["", "", ""], ["", "", ""], ["", "", ""]];
+  function render() {
+    document.body.innerHTML = "";
+    const table = document.createElement("table");
+    for (let i = 0; i < board.length; i++) {
+      const row = document.createElement("tr");
+      for (let j = 0; j < board[i].length; j++) {
+        const cell = document.createElement("td");
+        cell.textContent = board[i][j];
+        cell.addEventListener("click", () => {
+          if (board[i][j] === "") {
+            board[i][j] = "X";
+            render();
+            computerTurn();
+          }
+        });
+        row.appendChild(cell);
+      }
+      table.appendChild(row);
     }
-    table.appendChild(row);
+    document.body.appendChild(table);
   }
-  document.body.appendChild(table);
+  function computerTurn() {
+    let i, j;
+    do {
+      i = Math.floor(Math.random() * board.length);
+      j = Math.floor(Math.random() * board[i].length);
+    } while (board[i][j] !== "");
+    board[i][j] = "O";
+    render();
+  }
+  render();
 }
