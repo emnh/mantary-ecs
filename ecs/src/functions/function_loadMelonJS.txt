@@ -1,16 +1,36 @@
-Prompt: 1 / 1Let the script source be https://esm.run/melonjs
-Answer: 1 /
-1Certainly! Here's an updated loadMelonJS function that uses the new
-URL:javascriptCopy codefunction loadMelonJS() {
-  const script =
-document.createElement('script');
-  script.src = 'https://esm.run/melonjs';
+Prompt: 1 / 1Make the loadMelonJS return a promise. Set script.type to be a
+module.
+Answer: 1 / 1Certainly! Here's an updated loadMelonJS function that
+returns a Promise and sets the type of the script to be a module:javascriptCopy
+codefunction loadMelonJS() {
+  return new Promise((resolve, reject) => {
+const script = document.createElement('script');
+    script.type = 'module';
+script.src = 'https://esm.run/melonjs';
+    script.addEventListener('load', ()
+=> {
+      resolve();
+    });
+    script.addEventListener('error', () => {
+reject(new Error('Failed to load melonJS'));
+    });
 document.head.appendChild(script);
+  });
 }
 
-loadMelonJS();
-This function creates a new
-script element, sets its src attribute to the URL for melonJS from
-https://esm.run/, and then appends it to the head element of the current page.
-Once this function is called, the browser will download and execute the melonJS
-script.
+loadMelonJS()
+  .then(() => {
+console.log('melonJS has been loaded!');
+    // additional code can be added
+here to use melonJS
+  })
+  .catch((error) => {
+    console.error(error);
+});
+This function creates a new Promise that resolves when the melonJS script
+has finished loading, and rejects if there is an error. The type of the script
+is set to module to indicate that it is an ECMAScript module. Once the script
+has loaded, the load event is fired and the Promise resolves. If there is an
+error, the error event is fired and the Promise rejects with an error message.By
+returning the Promise, the calling code can use .then() and .catch() to handle
+successful and failed loading of the melonJS script, respectively.
