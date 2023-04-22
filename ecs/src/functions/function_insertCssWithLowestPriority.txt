@@ -1,0 +1,29 @@
+Prompt: 1 / 1How do I insert css with lowest priority, aka first element in
+head?
+Answer: 1 / 1To insert a CSS stylesheet with the lowest priority, you can
+create a new link element and use the insertBefore() method to insert it as the
+first child of the head element:javascriptCopy codefunction
+insertCssWithLowestPriority(url) {
+  const linkElement =
+document.createElement("link");
+  linkElement.setAttribute("rel",
+"stylesheet");
+  linkElement.setAttribute("href", url);
+
+  const headElement =
+document.getElementsByTagName("head")[0];
+  const firstChildElement =
+headElement.firstChild;
+
+  headElement.insertBefore(linkElement,
+firstChildElement);
+}
+In this example, the insertCssWithLowestPriority()
+function creates a new link element and sets its rel and href attributes to the
+specified URL. It then gets a reference to the head element using the
+getElementsByTagName() method and retrieves its first child element using the
+firstChild property.Finally, the function uses the insertBefore() method to
+insert the new link element as the first child of the head element, using the
+firstChild element as the reference node. This ensures that the new CSS
+stylesheet has the lowest priority, because it will be loaded before any other
+stylesheets that are already present in the head element.
