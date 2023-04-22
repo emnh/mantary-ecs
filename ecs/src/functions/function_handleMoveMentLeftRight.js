@@ -1,5 +1,5 @@
 function handleMoveMentLeftRight(thisPlayer) {
-  console.log('handleMoveMentLeftRight');
+  if (('debug' in window) && window.debug) console.log('handleMoveMentLeftRight');
   if (me.input.isKeyPressed("left")) {
     if (thisPlayer.body.vel.y === 0) {}
     thisPlayer.body.force.x = -thisPlayer.body.maxVel.x;
