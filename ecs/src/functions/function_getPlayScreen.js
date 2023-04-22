@@ -1,11 +1,10 @@
-function getPlayScreen() {
-  console.log('getPlayScreen');
+async function getPlayScreen() {
   class PlayScreen extends me.Stage {
     constructor() {
       super();
     }
-    onResetEvent() {
-      const platformImage = me.loader.getImage('/images/platform2');
+    async onResetEvent() {
+      const platformImage = await getImage('/images/platform2');
       if (!platformImage) {
         console.error("Failed to load platform image!");
         return;
