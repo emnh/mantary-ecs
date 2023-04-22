@@ -1,4 +1,6 @@
-Prompt: 1 / 1TypeError: PlayerEntity is not a constructor
+Prompt: 1 / 1TypeError: Cannot read properties of null (reading
+'addEventListener')
+    at new PlayerEntity (about:srcdoc:44:22)
     at
 about:srcdoc:18:28
     at a.emit
@@ -8,23 +10,25 @@ at Zn
 at Ko
 (https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:36:14842)
 Answer:
-1 / 1The TypeError: PlayerEntity is not a constructor error is occurring because
-getPlayerEntity is returning undefined instead of the PlayerEntity class.To fix
-this error, you can modify the getPlayerEntity function to return the
-PlayerEntity class instead of undefined:javascriptCopy codefunction
-getPlayerEntity(me) {
-  class PlayerEntity extends me.Entity {
-constructor(x, y, settings) {
-      super(x, y, settings);
+1 / 1The TypeError: Cannot read properties of null (reading 'addEventListener')
+error is occurring because the image property of the settings object passed to
+the PlayerEntity constructor is null.This error can occur if the image specified
+in the settings object is not loaded yet. To fix this error, you can add a check
+to make sure that the image property is not null before trying to access its
+addEventListener method:javascriptCopy codefunction getPlayerEntity(me) {
+class PlayerEntity extends me.Entity {
+    constructor(x, y, settings) {
+super(x, y, settings);
 
-      this.speed =
-5;
+      this.speed = 5;
 
-      settings.image.addEventListener("loaded", () => {
+      if (settings.image) {
+settings.image.addEventListener("loaded", () => {
 this.renderable.addAnimation("stand", [0]);
 this.renderable.addAnimation("walk", [1, 2, 3, 4, 5, 6, 7, 8], 80);
 this.renderable.setCurrentAnimation("stand");
-      });
+        });
+      }
 this.body.setShape(new me.Rect(0, 0, 32, 64));
     }
 
@@ -34,7 +38,7 @@ this.body.setShape(new me.Rect(0, 0, 32, 64));
   return
 PlayerEntity;
 }
-In this modified code, we've added the class PlayerEntity
-definition inside the getPlayerEntity function, which ensures that me is in
-scope. We've also returned the PlayerEntity class from the getPlayerEntity
-function.This should fix the TypeError you're seeing.
+In this modified code, we've added a check to see if the image
+property of the settings object is null before trying to access its
+addEventListener method. If image is null, we skip adding the animation. This
+should prevent the TypeError you're seeing.
