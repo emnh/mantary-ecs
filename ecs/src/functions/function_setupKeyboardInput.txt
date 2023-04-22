@@ -70,7 +70,7 @@ me.input.bindKey(me.input.KEY.UP, "up");
 function getPlayerEntity(me) {
   // ...
 }
-Saved exampleIn this
-modified code, we've passed the me object as a parameter to the
+Saved exampleSaved mainIn
+this modified code, we've passed the me object as a parameter to the
 setupKeyboardInput and onReady functions. This ensures that the me object is in
 scope within these functions and should fix the ReferenceError you're seeing.
