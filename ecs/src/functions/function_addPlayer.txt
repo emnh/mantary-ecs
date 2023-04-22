@@ -1,0 +1,149 @@
+Prompt: 1 / 1List the functions and implementations starting from number 5
+handleJump.
+Answer: 1 / 1Certainly, here are the functions and implementations
+starting from handleJump:vbnetCopy codefunction handleJump(thisPlayer) {
+    if
+(me.input.isKeyPressed("jump")) {
+        //
+thisPlayer.renderable.setCurrentAnimation("jump");
+thisPlayer.body.jumping = true;
+        if (thisPlayer.multipleJump <= 2) {
+// easy "math" for double jump
+            thisPlayer.body.force.y =
+-thisPlayer.body.maxVel.y * thisPlayer.multipleJump++;
+            //
+me.audio.stop("jump");
+            // me.audio.play("jump", false);
+        }
+} else {
+        if (!thisPlayer.body.falling && !thisPlayer.body.jumping) {
+// reset the multipleJump flag if on the ground
+thisPlayer.multipleJump = 1;
+        }
+        else if (thisPlayer.body.falling
+&& thisPlayer.multipleJump < 2) {
+            // reset the multipleJump flag if
+falling
+            thisPlayer.multipleJump = 2;
+        }
+    }
+}
+File
+function_handleJump.js saved and committed successfully, diff: diff --git
+a/ecs/src/functions/function_handleJump.js
+b/ecs/src/functions/function_handleJump.js
+new file mode 100644
+index
+0000000..752bd1f
+--- /dev/null
++++ b/ecs/src/functions/function_handleJump.js
+@@
+-0,0 +1,15 @@
++function handleJump(thisPlayer) {
++  console.log('handleJump');
++
+if (me.input.isKeyPressed("jump")) {
++    thisPlayer.body.jumping = true;
++
+if (thisPlayer.multipleJump <= 2) {
++      thisPlayer.body.force.y =
+-thisPlayer.body.maxVel.y * thisPlayer.multipleJump++;
++    }
++  } else {
++
+if (!thisPlayer.body.falling && !thisPlayer.body.jumping) {
++
+thisPlayer.multipleJump = 1;
++    } else if (thisPlayer.body.falling &&
+thisPlayer.multipleJump < 2) {
++      thisPlayer.multipleJump = 2;
++    }
++
+}
++}
+scssCopy codefunction playerUpdate(thisPlayer, superUpdate, dt) {
+handleMoveMentLeftRight(thisPlayer);
+    handleJump(thisPlayer);
+
+    if
+(thisPlayer.body.force.x === 0 && thisPlayer.body.force.y === 0) {
+        //
+thisPlayer.renderable.setCurrentAnimation("stand");
+    }
+
+    // check if we
+fell into a hole
+    if (!thisPlayer.inViewport && (thisPlayer.pos.y >
+me.video.renderer.getHeight())) {
+        // if yes reset the game
+me.game.world.removeChild(thisPlayer);
+        me.game.viewport.fadeIn("#fff",
+150, function () {
+            me.audio.play("die", false);
+me.level.reload();
+            me.game.viewport.fadeOut("#fff", 150);
+});
+        return true;
+    }
+
+    // check if we moved (an "idle" animation
+would definitely be cleaner)
+    if (thisPlayer.body.vel.x !== 0 ||
+thisPlayer.body.vel.y !== 0 ||
+        (thisPlayer.renderable &&
+thisPlayer.renderable.isFlickering())
+    ) {
+        superUpdate(dt);
+return true;
+    }
+    return false;
+}
+phpCopy codefunction
+addPlayer(makeAnyEntity, world) {
+    const playerImg = new Image();
+playerImg.src = "./images/protagonist.png";
+
+    const s = 0.4;
+    const width
+= 396 * s;
+    const height = 579 * s;
+    playerImg.width = width;
+playerImg.height = height;
+    const player = makeAnyEntity(50, 0, {
+image: playerImg,
+        height: height,
+        width: width,
+        scale:
+1,
+        ignoreGravity: false,
+        update: playerUpdate,
+        maxVel: {
+x: 5, y: 15 },
+        myCollisionType: me.collision.types.PLAYER_OBJECT,
+onCollision: (response, other) => {
+            //
+console.log("PlayerCollision", response, other);
+            return true;
+}
+    });
+    world.addChild(player);
+
+    me.game.viewport.follow(player,
+me.game.viewport.AXIS.BOTH, 0.1);
+
+    setupInput();
+}
+scssCopy codefunction
+addLevel(makeAnyEntity, world) {
+    // add a gray background to the default
+Stage
+    me.game.world.addChild(new me.ColorLayer("background", "#808080"));
+// console.log("viewport camera", me.game.viewport);
+    const addPlatform =
+getAddPlatform(makeAnyEntity, world, "./images/platform2.png");
+
+    const sp =
+3.0;
+    addPlatform(sp*40, sp*500);
+    addPlatform(sp*200, sp*500);
+addPlatform(sp*
