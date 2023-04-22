@@ -1,3 +1,5 @@
+// WARNING: This script is deprecated.
+
 const fs = require('fs');
 const path = require('path');
 
