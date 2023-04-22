@@ -17,6 +17,7 @@ function getPlayScreen(images) {
       player.body.vel.x = 3;
       player.body.vel.y = 3;
       me.game.world.addChild(player);
+      this.player = player;
     }
     onResetEvent() {
       const {PlayScreen} = me.state;
