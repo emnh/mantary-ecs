@@ -1,5 +1,8 @@
 function initializeMelonJS(callback) {
-  me.video.init(640, 480, {
+  console.log('initializeMelonJS');
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  me.video.init(width, height, {
     parent: 'game-container',
     renderer: me.video.CANVAS,
     scale: 'auto',
