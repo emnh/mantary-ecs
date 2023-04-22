@@ -1,0 +1,47 @@
+Prompt: 1 / 1List the functions and their implementations starting from number 8
+addLevel.
+Answer: 1 / 1Sure, here are the functions and their implementations
+starting from addLevel:scssCopy codefunction addLevel(makeAnyEntity, world) {
+// add a gray background to the default Stage
+    me.game.world.addChild(new
+me.ColorLayer("background", "#808080"));
+
+    // console.log("viewport camera",
+me.game.viewport);
+    const addPlatform = getAddPlatform(makeAnyEntity, world,
+"./images/platform2.png");
+
+    const sp = 3.0;
+    addPlatform(sp*40, sp*500);
+addPlatform(sp*200, sp*500);
+    addPlatform(sp*400, sp*500);
+addPlatform(sp*600, sp*500);
+}
+File function_addLevel.js saved and committed
+successfully, diff: phpCopy codefunction deviceOnReady() {
+    // initialize the
+display canvas once the device/browser is ready
+    // if (!me.video.init(800,
+600, {
+    if (!me.video.init(3840, 2160, {
+        parent: "app",
+scaleMethod: "flex-width",
+        renderer: me.video.AUTO,
+preferWebGL1: false,
+        subPixel: true,
+        antiAlias: true,
+    })) {
+alert("Your browser does not support HTML5 canvas.");
+        return;
+}
+
+    const makeAnyEntity = getAnyEntity();
+    addLevel(makeAnyEntity,
+me.game.world);
+    addPlayer(makeAnyEntity, me.game.world);
+};
+
+function main()
+{
+    me.device.onReady(deviceOnReady);
+}
