@@ -1,10 +1,13 @@
-Prompt: 1 / 1Now replace "PlayScreen" with "this" in the follow line.
-Answer: 1
-/ 1Sure, here's the updated implementation of the getPlayScreen function with
-the reference to this instead of PlayScreen in the follow method:javascriptCopy
-codefunction getPlayScreen(images) {
+Prompt: 1 / 1In the constructor add the line "me.game.viewport.follow(this,
+me.game.viewport.AXIS.BOTH, 0.1);" and forget about the other follow
+line.
+Answer: 1 / 1Sure, here's the updated implementation of the getPlayScreen
+function with the updated follow method:javascriptCopy codefunction
+getPlayScreen(images) {
   const PlayerEntity = getPlayerEntity();
-class PlayScreen extends me.Stage {
+
+  class
+PlayScreen extends me.Stage {
     constructor() {
       super();
 this.backgroundColor = '#202020';
@@ -26,22 +29,28 @@ me.game.world.addChild(player);
       // set the player as a property of the
 PlayScreen instance
       this.player = player;
+
+      // follow the player with
+the viewport
+      me.game.viewport.follow(this, me.game.viewport.AXIS.BOTH,
+0.1);
     }
 
     onResetEvent() {
-me.input.bindKey(me.input.KEY.LEFT, "left");
-me.input.bindKey(me.input.KEY.RIGHT, "right");
+      me.input.bindKey(me.input.KEY.LEFT,
+"left");
+      me.input.bindKey(me.input.KEY.RIGHT, "right");
 me.input.bindKey(me.input.KEY.UP, "jump", true);
 me.input.bindKey(me.input.KEY.SPACE, "shoot");
-
-      // use `this` instead of
-`PlayScreen`
-      me.game.viewport.follow(this.player.pos,
-me.game.viewport.AXIS.BOTH);
-      me.game.viewport.setDeadzone(30, 30);
+me.game.viewport.setDeadzone(30, 30);
     }
-}
+  }
   return PlayScreen;
 }
-In the updated implementation, the follow method of the
-me.game.viewport now uses this.player instead of PlayScreen.player.
+In the
+updated implementation, the getPlayScreen function now uses the
+me.game.viewport.follow method to follow the PlayScreen instance with the
+viewport. The follow method now takes three parameters - the first is the object
+to follow (which is this in this case), the second is the axis to follow on
+(both horizontal and vertical in this case), and the third is the damping rate
+(which is set to 0.1). The other follow method call has been removed.
