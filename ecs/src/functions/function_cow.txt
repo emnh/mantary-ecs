@@ -1,0 +1,19 @@
+Prompt: 1 / 1Write a js cow function that says moo.
+Answer: 1 / 1Sure, here's a
+simple JavaScript function that creates a cow object with a moo() method that
+logs the message "moo" to the console:javascriptCopy codefunction cow() {
+const cowObject = {
+    moo: function() {
+      console.log("moo");
+    }
+  };
+return cowObject;
+}
+When you call the cow() function, it returns a cow object
+that has a moo() method. You can call the moo() method on the cow object to make
+it say "moo":javascriptCopy codeconst myCow = cow(); // create a new cow
+object
+myCow.moo(); // logs "moo" to the console
+Of course, you can modify this
+function to do something else with the "moo" message, such as displaying it on
+the screen or speaking it out loud using a text-to-speech library.
