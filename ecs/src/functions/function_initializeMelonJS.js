@@ -8,6 +8,8 @@ function initializeMelonJS(callback) {
   });
   const game = new me.Container();
   me.game.world.addChild(game);
+  const PlayScreen = getPlayScreen();
+  me.state.set(me.state.PLAY, new PlayScreen());
   me.state.change(me.state.PLAY);
   callback(game);
 }
