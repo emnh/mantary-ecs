@@ -1,5 +1,4 @@
 function initializeMelonJS(callback) {
-  console.log('initializeMelonJS');
   me.video.init(640, 480, {
     parent: 'game-container',
     renderer: me.video.CANVAS,
