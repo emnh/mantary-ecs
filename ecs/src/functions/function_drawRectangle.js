@@ -1,4 +1,4 @@
-function drawRectangle(x, y, width, height, color) {
+function drawRectangle(game, x, y, width, height, color) {
   const rect = new me.Renderable(x, y, width, height);
   rect.draw = function (renderer) {
     renderer.setColor(color);
