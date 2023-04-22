@@ -1,5 +1,5 @@
 function getAnyEntity() {
-  console.log('getAnyEntity');
+  if (('debug' in window) && window.debug) console.log('getAnyEntity');
   let counter = 0;
   class AnyEntity extends me.Entity {
     constructor(x, y, settings) {
