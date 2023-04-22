@@ -1,42 +1,48 @@
-Prompt: 1 / 1You should pass me.game to drawRectangle, not
-me.game.world.
-Answer: 1 / 1You're absolutely right! Thank you for catching that
-mistake. Here's an updated getPlayScreen function that passes me.game to
-drawRectangle instead of me.game.world:javascriptCopy codefunction
-getPlayScreen() {
-  class PlayScreen extends me.Stage {
+Prompt: 1 / 1Instead of calling to draw a rectangle, draw a platform instead.
+Use './images/platform2.png' for the image.
+Answer: 1 / 1Sure! Here's an updated
+getPlayScreen function that uses the drawPlatform function to draw a platform
+with the specified image:javascriptCopy codefunction getPlayScreen() {
+  class
+PlayScreen extends me.Stage {
     /**
-     *
-Constructor
+     * Constructor
      */
-    constructor() {
+constructor() {
       super();
     }
 
     /**
-     *
-Called when the state is first initialized
+     * Called when the state is
+first initialized
      */
     onResetEvent() {
-      //
-Add any game objects or UI elements here
-      drawRectangle(me.game, 100, 100,
-50, 50, '#FF0000');
+      // Add any game objects or
+UI elements here
+      const platformImage =
+me.loader.getImage('./images/platform2.png');
+      drawPlatform(me.game, 100,
+400, 200, 50, platformImage);
     }
 
     /**
-     * Called when the state is destroyed
-*/
+     * Called when the state is
+destroyed
+     */
     onDestroyEvent() {
-      // Clean up any game objects or UI elements
-here
+      // Clean up any game objects or
+UI elements here
     }
   }
 
   return PlayScreen;
 }
-In this updated code, drawRectangle is
-called with me.game as its first parameter instead of me.game.world. This
-ensures that the rectangle is added to the me.game object itself, rather than to
-a specific container within the game world.Thank you for catching that mistake,
-and I apologize for any confusion it may have caused.
+In this updated code,
+me.loader.getImage('./images/platform2.png') is used to load the platform image
+from the specified path, and the resulting image object is passed to the
+drawPlatform function as the image parameter. The drawPlatform function is
+called with the specified x, y, width, and height parameters, as well as the
+loaded image.This will draw a platform on the screen using the specified image.
+Note that this assumes that the image file is located in the ./images/ directory
+relative to the HTML file that includes the melonJS game. You may need to modify
+the path to the image file to match your specific file structure.
