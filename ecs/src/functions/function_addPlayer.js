@@ -1,5 +1,5 @@
 function addPlayer(makeAnyEntity, world) {
-  console.log('addPlayer');
+  if (('debug' in window) && window.debug) console.log('addPlayer');
   const playerImg = new Image();
   playerImg.src = "./images/protagonist.png";
   const s = 0.4;
