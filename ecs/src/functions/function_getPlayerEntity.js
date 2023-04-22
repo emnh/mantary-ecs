@@ -3,17 +3,12 @@ function getPlayerEntity(me) {
   class PlayerEntity extends me.Entity {
     constructor(x, y, settings) {
       super(x, y, settings);
+      this.renderable = new me.Renderable(0, 0, 32, 64);
+      this.renderable.anchorPoint.set(0, 0);
+      this.renderable.color = new me.Color(0, 255, 0);
       this.speed = 5;
-      if (settings.image) {
-        settings.image.addEventListener("loaded", () => {
-          this.renderable.addAnimation("stand", [0]);
-          this.renderable.addAnimation("walk", [1, 2, 3, 4, 5, 6, 7, 8], 80);
-          this.renderable.setCurrentAnimation("stand");
-        });
-      }
-      if (this.body) {
-        this.body.addShape(new me.Rect(0, 0, 32, 64));
-      }
+      this.body = new me.Body(this);
+      this.body.addShape(new me.Rect(0, 0, 32, 64));
     }
   }
   return PlayerEntity;
