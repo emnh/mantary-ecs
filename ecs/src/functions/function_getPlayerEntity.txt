@@ -1,20 +1,13 @@
-Prompt: 1 / 1TypeError: this.body.setShape is not a function
-    at new
-PlayerEntity (about:srcdoc:51:17)
-    at about:srcdoc:18:28
-    at a.emit
-(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:14:68136)
-at Zn
-(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:14:69409)
-at Ko
-(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:36:14842)
-Answer:
-1 / 1The TypeError: this.body.setShape is not a function error is occurring
+Prompt: 1 / 1I think you need to use addShape, but maybe the body has already
+been defined. And don't forget to wrap the class in a function.
+Answer: 1 /
+1You're correct! The this.body.setShape is not a function error is occurring
 because the setShape method is not defined on the body property of the
-PlayerEntity instance.This error can occur if the me.Body module is not
-correctly imported or if it is out of scope.To fix this error, you can add the
-me.Body module as a dependency of the PlayerEntity class:javascriptCopy
-codefunction getPlayerEntity(me) {
+PlayerEntity instance. The addShape method should be used instead.Here's an
+updated version of the getPlayerEntity function that defines the PlayerEntity
+class within it, uses the addShape method to set the shape of the me.Body
+instance, and returns the PlayerEntity class:javascriptCopy codefunction
+getPlayerEntity(me) {
   class PlayerEntity extends me.Entity {
 constructor(x, y, settings) {
       super(x, y, settings);
@@ -29,17 +22,22 @@ this.renderable.addAnimation("walk", [1, 2, 3, 4, 5, 6, 7, 8], 80);
 this.renderable.setCurrentAnimation("stand");
         });
       }
-this.body = new me.Body(this);
-      this.body.setShape(new me.Rect(0, 0, 32,
-64));
-    }
+
+      if
+(this.body) {
+        this.body.addShape(new me.Rect(0, 0, 32, 64));
+      }
+}
 
     // ...
   }
 
   return PlayerEntity;
 }
-In this modified code,
-we've added the me.Body module as a dependency of the PlayerEntity class. We've
-also created a new me.Body instance in the PlayerEntity constructor and set its
-shape using the setShape method.This should fix the TypeError you're seeing.
+To use the getPlayerEntity function
+to get the PlayerEntity class, you can call it and pass in the me object, like
+this:javascriptCopy codeconst PlayerEntity = getPlayerEntity(me);
+Make sure to
+import the me object and call me.boot() before using getPlayerEntity.Also, don't
+forget to wrap the PlayerEntity class definition inside a function to make it
+more modular and reusable.
