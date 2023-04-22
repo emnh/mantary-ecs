@@ -1,30 +1,32 @@
-Prompt: 1 / 1Let's use the previous url but set script type to module
-Answer: 1
-/ 1Sure, you can use the previous URL
-https://cdn.jsdelivr.net/npm/melonjs@15.1.1/dist/melonjs.module.js and set the
-type attribute of the script tag to "module" to load the melonjs module in a
-module context.Here's an updated version of the main function that uses the type
-attribute to load the melonjs module:javascriptCopy codefunction main() {
-const script = document.createElement("script");
+Prompt: 1 / 1no no I still want main to inject the script
+Answer: 1 / 1Sure!
+Here's an updated version of the main function that uses the script tag to load
+the melonjs module from esm.run:javascriptCopy codefunction main() {
+  const
+script = document.createElement("script");
   script.src =
-"https://cdn.jsdelivr.net/npm/melonjs@15.1.1/dist/melonjs.module.js";
-script.async = false;
+"https://esm.run/melonjs@latest/dist/melonjs.module.js";
+  script.async =
+false;
   script.type = "module";
   script.onload = function () {
-example();
-  };
+    example();
+};
   document.head.appendChild(script);
 }
-In this example, we
-set the type attribute of the script tag to "module", which tells the browser to
-load the melonjs script as a module. We also set the onload function to call the
-example function once the module has loaded.With this configuration, you can use
-the import statement to import the me object from the melonjs module, like
-this:javascriptCopy codeimport * as me from
-"https://cdn.jsdelivr.net/npm/melonjs@15.1.1/dist/melonjs.module.js";
+In this example, we use the script
+tag to load the melonjs module from esm.run. We set the src attribute of the
+script tag to "https://esm.run/melonjs@latest/dist/melonjs.module.js", which
+loads the latest version of melonjs from esm.run. We also set the type attribute
+of the script tag to "module", which tells the browser to load the script as a
+module.We set the onload function of the script tag to call the example function
+once the module has loaded. We also set async to false, which ensures that the
+script is loaded synchronously and executed before moving on to the next line of
+code.Here's the updated version of the example function that uses the me object
+from the melonjs module:javascriptCopy codefunction example() {
+  const me =
+window.me;
 
-function
-example() {
   me.device.onReady(function () {
     // initialize the display
 canvas once the device/browser is ready
@@ -53,9 +55,7 @@ me.game.world.addChild(new me.Text(609, 281, {
     }));
   });
 }
-
-main();
-In this
-example, we use the import statement to import the me object from the melonjs
-module, and define the example function to use the me object. We also call the
-main function to load the melonjs module and call the example function.
+In this example, we
+use the window.me object to access the melonjs library, since the module has
+been loaded by the script tag. We also define the example function to use the me
+object.
