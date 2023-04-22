@@ -1,13 +1,14 @@
-async function loadImages(imageUrls) {
+async function loadImages(imageFilenames) {
   console.log('loadImages');
   const images = {};
-  for (const imageUrl of imageUrls) {
-    const image = await getImage(`./images/${imageUrl}`);
+  for (const filename of imageFilenames) {
+    const imageUrl = `./images/${filename}`;
+    const image = await getImage(imageUrl);
     if (!image) {
       console.error(`Failed to load image from URL: ${imageUrl}`);
       continue;
     }
-    images[imageUrl] = image;
+    images[filename] = image;
   }
   return images;
 }
