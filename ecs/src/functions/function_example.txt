@@ -1,30 +1,15 @@
-Prompt: 1 / 1How do I get the exports of an injected module which doesn't set
-globals?
-Answer: 1 / 1If the module you are injecting with a script tag does not
-set any globals and does not expose any exports, you can use the import()
-function to dynamically load the module and access its exports.Here's an example
-of how you can use the import() function to load a module and access its
-exports:javascriptCopy codefunction main() {
-  const script =
-document.createElement("script");
-  script.src =
-"https://esm.run/melonjs@latest/dist/melonjs.module.js";
-  script.async =
-false;
-  script.type = "module";
-  script.onload = async function () {
-    const
-melonjs = await
+Prompt: 1 / 1Let main await the import directly instead of script
+onload.
+Answer: 1 / 1Sure, you can use the await keyword to wait for the
+import() function to finish loading the melonjs module before calling the
+example function.Here's an example of how you can modify the main() function to
+use await:javascriptCopy codeasync function main() {
+  const melonjs = await
 import("https://esm.run/melonjs@latest/dist/melonjs.module.js");
-example(melonjs);
-  };
-  document.head.appendChild(script);
+example(melonjs.default);
 }
 
-function
-example(melonjs) {
-  const me = melonjs.default;
-
+function example(me) {
   me.device.onReady(function
 () {
     // initialize the display canvas once the device/browser is ready
@@ -49,13 +34,10 @@ textAlign : "center",
 }
 
 main();
-Saved mainIn this example, we use the import() function to
-dynamically load the melonjs module after the script has been loaded. We use the
-async and await keywords to wait for the module to be loaded before calling the
-example function.The import() function returns a promise that resolves to the
-exports of the module. In this case, we access the me object by using the
-default property of the object returned by import(). We then pass the me object
-to the example function as a parameter.In the example function, we use the me
-object to access the melonjs library and define the melonjs code. Note that in
-this example, we don't need to set any globals since we are using the import()
-function to access the exports of the module.
+Saved mainIn this example, we use the async keyword to define the
+main() function as an asynchronous function. We then use the await keyword to
+wait for the import() function to load the melonjs module and resolve the
+promise with the exports.Once the melonjs object is loaded, we call the
+example() function with the me object as the parameter.The example() function is
+then defined to use the me object to access the melonjs library and define the
+melonjs code.
