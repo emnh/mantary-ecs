@@ -5,7 +5,7 @@ function getPlayScreen() {
       super();
     }
     onResetEvent() {
-      const platformImage = me.loader.getImage('/public/images/platform2.png');
+      const platformImage = me.loader.getImage('/public/images/platform2');
       if (!platformImage) {
         console.error("Failed to load platform image!");
         return;
