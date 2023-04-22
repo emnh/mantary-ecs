@@ -1,5 +1,5 @@
 function playerUpdate(thisPlayer, superUpdate, dt) {
-  console.log('playerUpdate');
+  if (('debug' in window) && window.debug) console.log('playerUpdate');
   handleMoveMentLeftRight(thisPlayer);
   handleJump(thisPlayer);
   if (thisPlayer.body.force.x === 0 && thisPlayer.body.force.y === 0) {}
