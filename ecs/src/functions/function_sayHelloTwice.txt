@@ -1,0 +1,13 @@
+Prompt: 1 / 1Write a js function that says hello world twice.
+Answer: 1 /
+1Here's a JavaScript function that will print "Hello, World!" twice when
+called:javascriptCopy codefunction sayHelloTwice() {
+  console.log("Hello,
+World!");
+  console.log("Hello, World!");
+}
+
+sayHelloTwice(); // Call the
+function to output "Hello, World!" twice
+When you run this code, you should see
+"Hello, World!" printed to the console twice.
