@@ -1,76 +1,42 @@
-Prompt: 1 / 1ReferenceError: me is not defined
-    at setupKeyboardInput
-(about:srcdoc:35:3)
-    at onReady (about:srcdoc:32:5)
-    at a.emit
-(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:14:68136)
-at Zn
-(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:14:69409)
-at Ko
-(https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:36:14842)
-Answer:
-1 / 1The ReferenceError: me is not defined error occurs because the me object is
-not defined in the setupKeyboardInput and onReady functions.This error can occur
-if the me object is not correctly imported or if it is out of scope.To fix this
-error, you can pass the me object as a parameter to the setupKeyboardInput and
-onReady functions. For example:javascriptCopy codeasync function main() {
-const melonjs = await
-import("https://esm.run/melonjs@latest/dist/melonjs.module.js");
-console.log("melonjs loaded:", melonjs);
-  example(melonjs);
-}
-
-function
-example(me) {
-  me.boot();
-
-  me.device.onReady(function () {
-    if
-(!me.video.init(1218, 562, { parent: "screen", scale: "auto" })) {
-alert("Your browser does not support HTML5 canvas.");
-      return;
+Prompt: 1 / 1Please remind me, what does our main function look like?
+Answer: 1
+/ 1Sure, here's an example of how your main function might look
+like:javascriptCopy codeasync function main() {
+  // load the melonJS library
+const me = await
+import("https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js");
+// set up the display canvas once the device/browser is ready
+me.device.onReady(() => {
+    if (!me.video.init(1218, 562, { parent: "screen",
+scale: "auto" })) {
+      alert("Your browser does not support HTML5 canvas.");
+return;
     }
+
+    // add a gray background to the default stage
 me.game.world.addChild(new me.ColorLayer("background", "#202020"));
 
-    const
-PlayerEntity = getPlayerEntity(me);
-    me.game.world.addChild(new
-PlayerEntity(100, 100, {
-      width: 32,
-      height: 64,
-      image:
-me.loader.getImage("player"),
-    }));
+    //
+create a new instance of the PlayerEntity class
+    const PlayerEntity =
+getPlayerEntity(me);
+    const player = new PlayerEntity(0, 0, {});
 
-    me.game.world.addChild(new
-me.Text(609, 281, {
-      font: "Arial",
-      size: 160,
-      fillStyle:
-"#FFFFFF",
-      textBaseline: "middle",
-      textAlign: "center",
-      text:
-"Hello World !",
-    }));
+    // add
+the player entity to the game world
+    me.game.world.addChild(player);
 
-    setupKeyboardInput(me);
+    //
+set up keyboard input
+    setupKeyboardInput(me, player);
   });
 }
 
-function
-setupKeyboardInput(me) {
-  me.input.bindKey(me.input.KEY.LEFT, "left");
-me.input.bindKey(me.input.KEY.RIGHT, "right");
-me.input.bindKey(me.input.KEY.UP, "up");
-  me.input.bindKey(me.input.KEY.DOWN,
-"down");
-}
-
-function getPlayerEntity(me) {
-  // ...
-}
-In this modified code,
-we've passed the me object as a parameter to the setupKeyboardInput and onReady
-functions. This ensures that the me object is in scope within these functions
-and should fix the ReferenceError you're seeing.
+// call the
+main function to start the game
+main();
+This code loads the melonJS library
+using dynamic import, sets up the display canvas, creates a new instance of the
+PlayerEntity class, adds the player entity to the game world, and sets up
+keyboard input using the setupKeyboardInput function. Finally, it calls the main
+function to start the game.
