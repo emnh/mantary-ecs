@@ -5,7 +5,8 @@ function getPlayScreen() {
       super();
     }
     onResetEvent() {
-      drawRectangle(me.game, 100, 100, 50, 50, '#FF0000');
+      const platformImage = me.loader.getImage('./images/platform2.png');
+      drawPlatform(me.game, 100, 400, 200, 50, platformImage);
     }
     onDestroyEvent() {}
   }
