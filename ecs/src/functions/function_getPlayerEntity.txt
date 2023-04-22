@@ -1,32 +1,68 @@
-Prompt: 1 / 1lonjs.module.js:37072 Uncaught (in promise) Error: height and width
-properties are mandatory when passing settings parameters to an object entity
-Answer: 1 / 1This error is being caused because the PlayerEntity class is
-missing the width and height properties in the super call of its constructor.
-These properties are mandatory when passing settings parameters to an object
-entity in MelonJS.To fix the error, you need to add settings.width and
-settings.height to the super call of the PlayerEntity constructor. Here's the
-updated implementation of getPlayerEntity that includes these
-properties:javascriptCopy codefunction getPlayerEntity() {
-  class PlayerEntity
-extends me.Entity {
-    constructor(x, y, settings) {
-      super(x, y, {
-width: settings.width,
-        height: settings.height,
-      });
-this.renderable = new me.Sprite(0, 0, {
-        image: settings.image,
-framewidth: 64,
-        frameheight: 64
-      });
-this.renderable.addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7]);
-this.renderable.setCurrentAnimation("walk");
+Prompt: 1 / 1Sorry, the follow line should not be in getPlayScreen, it should be
+in getPlayerEntity.
+Answer: 1 / 1No problem! Here's the updated implementation
+of the getPlayerEntity function with the follow method:javascriptCopy
+codefunction getPlayerEntity() {
+  class PlayerEntity extends me.Entity {
+constructor(x, y, settings) {
+      super(x, y, settings);
+this.alwaysUpdate = true;
+
+      this.renderable.addAnimation("walk", [0, 1, 2,
+3, 4, 5, 6, 7]);
+      this.renderable.setCurrentAnimation("walk");
+this.body.setMaxVelocity(3, 15);
+
+      me.game.viewport.follow(this,
+me.game.viewport.AXIS.BOTH, 0.1);
+    }
+
+    update(dt) {
+      if
+(me.input.isKeyPressed("left")) {
+        this.body.vel.x -= this.body.accel.x *
+me.timer.tick;
+        this.renderable.flipX(true);
+      } else if
+(me.input.isKeyPressed("right")) {
+        this.body.vel.x += this.body.accel.x
+* me.timer.tick;
+        this.renderable.flipX(false);
+      } else {
+this.body.vel.x = 0;
+      }
+
+      if (me.input.isKeyPressed("jump")) {
+if (!this.body.jumping && !this.body.falling) {
+          this.body.vel.y =
+-this.body.maxVel.y * me.timer.tick;
+          this.body.jumping = true;
+}
+      }
+
+      this.body.update(dt);
+      me.collision.check(this);
+return super.update(dt);
+    }
+
+    onCollision(response, other) {
+      if
+(other.body.collisionType === me.collision.types.WORLD_SHAPE) {
+        if
+(response.b.y > 0) {
+          this.body.falling = false;
+this.body.vel.y = -this.body.maxVel.y * me.timer.tick;
+this.body.jumping = true;
+        }
+      }
     }
   }
   return
 PlayerEntity;
 }
-In the updated implementation, getPlayerEntity includes
-settings.width and settings.height in the super call of the PlayerEntity
-constructor. This ensures that these properties are set correctly and avoids the
-error.
+In the updated implementation, the getPlayerEntity function now
+uses the me.game.viewport.follow method to follow the player entity with the
+viewport. The follow method now takes three parameters - the first is the object
+to follow (which is this in this case), the second is the axis to follow on
+(both horizontal and vertical in this case), and the third is the damping rate
+(which is set to 0.1).
