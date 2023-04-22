@@ -2,8 +2,11 @@ function getPlayScreen(images) {
   class PlayScreen extends me.Stage {
     constructor() {
       super();
+      this.container = null;
     }
     onResetEvent() {
+      this.container = new me.Container();
+      me.game.world.addChild(this.container);
       const platformImage = images['platform2.png'];
       if (!platformImage) {
         console.error("Failed to load platform image!");
@@ -14,10 +17,15 @@ function getPlayScreen(images) {
         console.error("Failed to load player image!");
         return;
       }
-      drawPlatform(me.game, 100, 400, 200, 50, platformImage);
-      drawPlayer(me.game, 100, 300, 50, 50, playerImage);
+      drawPlatform(this.container, 100, 400, 200, 50, platformImage);
+      drawPlayer(this.container, 100, 300, 50, 50, playerImage);
     }
-    onDestroyEvent() {}
+    onDestroyEvent() {
+      if (this.container) {
+        me.game.world.removeChild(this.container);
+        this.container = null;
+      }
+    }
   }
   return PlayScreen;
 }
