@@ -1,34 +1,22 @@
-Prompt: 1 / 1Write js helloworld2.
-Answer: 1 / 1Sure, here's another example of
-a JavaScript function that prints "Hello, world!" to an HTML page:javascriptCopy
-codefunction helloWorld() {
-  const message = document.createElement("p");
-message.textContent = "Hello, world!";
+Prompt: 1 / 1Update the hello world function to set a red background.
+Answer: 1
+/ 1Sure, here's an updated version of the JavaScript function that sets the
+background color of the HTML page to red and prints "Hello, world!" to the
+page:javascriptCopy codefunction helloWorld() {
+  const message =
+document.createElement("p");
+  message.textContent = "Hello, world!";
 document.body.appendChild(message);
+  document.body.style.backgroundColor =
+"red";
 }
-In this example, the helloWorld() function
-creates a new p element using the createElement() method of the document object.
-It sets the text content of the p element to "Hello, world!" using the
-textContent property. Finally, it appends the p element to the body element of
-the HTML page using the appendChild() method.You can call this function by
-running it in a JavaScript environment that has access to the HTML document
-object, such as a web browser. When the function is called, it creates a new p
-element with the text "Hello, world!" and appends it to the body element of the
-HTML page. This will cause the message to be displayed on the
-page.Alternatively, you can add the following HTML code to an HTML file and
-include a reference to your JavaScript file that contains the helloWorld()
-function:htmlCopy code<!DOCTYPE html>
-<html>
-<head>
-  <title>Hello,
-world!</title>
-</head>
-<body>
-  <script
-src="path/to/your/javascript/file.js"></script>
-</body>
-</html>
-When you open
-this HTML file in a web browser, the JavaScript file will be loaded and the
-helloWorld() function will be executed, which will add the "Hello, world!"
-message to the HTML page.
+In this example, the helloWorld() function creates a new p element with
+the text "Hello, world!" and appends it to the body element of the HTML page, as
+before.The function then sets the backgroundColor style property of the body
+element to "red". This changes the background color of the HTML page to red.You
+can call this function in the same way as the previous example:javascriptCopy
+codehelloWorld(); // Adds "Hello, world!" to the page and sets the background
+color to red
+When you run this updated code in a JavaScript environment that has
+access to the HTML document object, you should see the message "Hello, world!"
+printed to the page with a red background color.
