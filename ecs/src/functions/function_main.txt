@@ -1,25 +1,24 @@
-Prompt: 1 / 1Call it from main.
+Prompt: 1 / 1call it from main
 Answer: 1 / 1Sure! Here's an updated code that
-includes the displayHelloWorld() function and calls it from the main() function
+includes the redirectToGoogle() function and calls it from the main() function
 when the document has finished loading:javascriptCopy codefunction
-displayHelloWorld() {
-  const heading = document.createElement('h1');
-heading.textContent = 'Hello World!';
-document.body.appendChild(heading);
+redirectToGoogle() {
+  window.location.href =
+'https://www.google.com';
 }
 
 function main() {
-  // Call the
-displayHelloWorld function
-  displayHelloWorld();
+  // Call the redirectToGoogle
+function
+  redirectToGoogle();
 }
 
-// Call the main function
-when the document has finished loading
+// Call the main function when the document
+has finished loading
 window.addEventListener('load', main);
-In
-this code, we define both the displayHelloWorld() function and the main()
-function. We then add an event listener to the window object that listens for
-the load event, which is fired when the document has finished loading. When the
-load event is fired, the main() function is called, which in turn calls the
-displayHelloWorld() function to display the "Hello World!" message on the page.
+In this code, we
+define both the redirectToGoogle() function and the main() function. We then add
+an event listener to the window object that listens for the load event, which is
+fired when the document has finished loading. When the load event is fired, the
+main() function is called, which in turn calls the redirectToGoogle() function
+to redirect the browser to the Google homepage.
