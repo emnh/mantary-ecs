@@ -1,10 +1,10 @@
 Prompt: 1 / 1
   I get the following error:
-  TypeError: this.addChild is not a
-function
-    at new PlayerEntity (about:srcdoc:61:12)
-    at about:srcdoc:14:20
-at EventEmitter.emit
+  ReferenceError: me is not defined
+at getPlayerEntity (about:srcdoc:52:30)
+    at about:srcdoc:13:26
+    at
+EventEmitter.emit
 (https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js:9454:34)
 at emit
 (https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js:10074:25)
@@ -15,76 +15,92 @@ Please respond with up to 3 corrected functions.
 in functions.
   All functions must be named and short.
   No global variables.
-Answer: 1 / 1It looks like the addChild function is not defined on the Entity
-class in the latest version of MelonJS. To add a renderable object to an entity,
-you can use the addShape method of the me.Body object.Here's the modified
-PlayerEntity constructor that uses addShape to add the green
-rectangle:javascriptCopy codefunction getPlayerEntity(x, y, settings) {
+Answer: 1 / 1Sure, here are the updated functions to fix the
+ReferenceError:javascriptCopy codefunction getPlayerEntity() {
   class
 PlayerEntity extends me.Entity {
     constructor(x, y, settings) {
-      // set
-default values for width and height
-      settings = settings || {};
-settings.width = settings.width || 32;
-      settings.height = settings.height
-|| 64;
+super(x, y, Object.assign(settings, {width: 32, height: 32}));
 
-      super(x, y, settings);
-
-      this.speed = 5;
-
-      this.body =
-new me.Body(this);
-      this.body.addShape(new me.Rect(0, 0, settings.width,
-settings.height), true);
-      this.body.collisionType =
-me.collision.types.PLAYER_OBJECT;
-
-      // create a new renderable object
-const renderable = new me.Renderable(0, 0, settings.width, settings.height);
-renderable.anchorPoint.set(0.5, 0.5); // set anchor point to center
-
-      //
-set the renderable color to green
-      renderable.color = new me.Color(0, 255,
-0);
-
-      // set the renderable as the entity's shape
-this.body.setShape(renderable);
+      this.body
+= new me.Body(this, new me.Rect(0, 0, 32, 32));
+      this.body.setVelocity(3,
+3);
+      this.body.collisionType = me.collision.types.PLAYER_OBJECT;
+this.renderable = new me.ColorLayer("player", "#00ff00", 32, 32);
+this.anchorPoint.set(0.5, 0.5);
     }
 
     update(dt) {
 super.update(dt);
 
-      // handle keyboard input to move the player
-      if
-(me.input.isKeyPressed("left") || me.input.isKeyPressed("A")) {
-this.body.vel.x -= this.speed * me.timer.tick;
-      } else if
-(me.input.isKeyPressed("right") || me.input.isKeyPressed("D")) {
-this.body.vel.x += this.speed * me.timer.tick;
+      if (me.input.isKeyPressed("left") ||
+me.input.isKeyPressed("a")) {
+        this.body.vel.x -= this.body.accel.x *
+me.timer.tick;
+      }
+      if (me.input.isKeyPressed("right") ||
+me.input.isKeyPressed("d")) {
+        this.body.vel.x += this.body.accel.x *
+me.timer.tick;
+      }
+      if (me.input.isKeyPressed("up") ||
+me.input.isKeyPressed("w")) {
+        this.body.vel.y -= this.body.accel.y *
+me.timer.tick;
+      }
+      if (me.input.isKeyPressed("down") ||
+me.input.isKeyPressed("s")) {
+        this.body.vel.y += this.body.accel.y *
+me.timer.tick;
       }
 
-      if
-(me.input.isKeyPressed("up") || me.input.isKeyPressed("W")) {
-this.body.vel.y -= this.speed * me.timer.tick;
-      } else if
-(me.input.isKeyPressed("down") || me.input.isKeyPressed("S")) {
-this.body.vel.y += this.speed * me.timer.tick;
-      }
-
-      // update player
-movement
       this.body.update(dt);
-
+me.collision.check(this);
       return true;
     }
   }
 
-  return new
-PlayerEntity(x, y, settings);
+  return
+PlayerEntity;
 }
-With this modification, the green rectangle
-should be displayed in the center of the screen when the game starts, and the
-player should be able to move it with the arrow keys or WASD.
+
+function setupKeyboardInput() {
+me.input.bindKey(me.input.KEY.LEFT, "left");
+me.input.bindKey(me.input.KEY.RIGHT, "right");
+me.input.bindKey(me.input.KEY.UP, "up");
+  me.input.bindKey(me.input.KEY.DOWN,
+"down");
+  me.input.bindKey(me.input.KEY.W, "w");
+me.input.bindKey(me.input.KEY.A, "a");
+  me.input.bindKey(me.input.KEY.S, "s");
+me.input.bindKey(me.input.KEY.D, "d");
+  me.input.bindKey(me.input.KEY.SPACE,
+"space");
+
+  me.input.bindPointer(me.input.KEY.LEFT);
+me.input.bindPointer(me.input.KEY.RIGHT);
+me.input.bindPointer(me.input.KEY.UP);
+me.input.bindPointer(me.input.KEY.DOWN);
+}
+
+function example() {
+  const canvas
+= document.getElementById("screen");
+
+  me.init(canvas.width, canvas.height, {
+renderer: me.video.CANVAS,
+    wrapper: "screen",
+    scale: "auto",
+...me.game.HIDPI,
+  });
+
+  setupKeyboardInput();
+  me.game.world.addChild(new
+(getPlayerEntity())(me.game.viewport.width / 2, me.game.viewport.height / 2));
+me.state.change(me.state.PLAY);
+}
+Saved setupKeyboardInputSaved exampleHere we
+define a getPlayerEntity() function that returns the PlayerEntity class, and we
+call it when we create a new instance of PlayerEntity in the example()
+function.
