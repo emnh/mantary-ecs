@@ -1,5 +1,5 @@
 function setupInput() {
-  console.log('setupInput');
+  if (('debug' in window) && window.debug) console.log('setupInput');
   me.input.bindKey(me.input.KEY.LEFT, "left");
   me.input.bindKey(me.input.KEY.RIGHT, "right");
   me.input.bindKey(me.input.KEY.X, "jump", true);
