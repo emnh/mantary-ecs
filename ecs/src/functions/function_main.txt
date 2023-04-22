@@ -1,31 +1,19 @@
-Prompt: 1 / 1Don't wrap it in html
-Answer: 1 / 1Sure, here's an example of a
-standalone JavaScript file that defines a main() function to add an h1 element
-with the text "Hello, World!" to the current web page:javascriptCopy
-codefunction main() {
-  const h1 = document.createElement("h1");
-h1.textContent = "Hello, World!";
-  document.body.appendChild(h1);
+Prompt: 1 / 1Rewrite main to output goodbye world
+Answer: 1 / 1Sure, here's an
+updated version of the main() function that adds an h1 element with the text
+"Goodbye, World!" to the current web page:javascriptCopy codefunction main() {
+const h1 = document.createElement("h1");
+  h1.textContent = "Goodbye, World!";
+document.body.appendChild(h1);
 }
 
 main();
-To
-use this code, you can save it as a standalone JavaScript file with a .js
-extension, and then include it in your HTML file using a <script> tag:htmlCopy
-code<!DOCTYPE html>
-<html>
-  <head>
-    <title>My Page</title>
-    <script
-src="main.js"></script>
-  </head>
-  <body>
-  </body>
-</html>
-This code includes
-the main.js file using the src attribute of a <script> tag in the head section
-of the HTML file.When the HTML file is loaded in a web browser, the main()
-function in the main.js file will be executed, and an h1 element with the text
-"Hello, World!" will be added to the body element of the page.Note that the
-main() function is executed immediately when the script file is loaded, so you
-don't need to call it explicitly in your HTML file.
+This code is identical to the previous
+example, except that it sets the textContent property of the h1 element to
+"Goodbye, World!" instead of "Hello, World!".When you load the updated HTML file
+that includes this script in your web browser, it will display an h1 element
+with the text "Goodbye, World!" on the page.Note that in a real-world
+application, you would typically define more complex functions and include more
+code in your JavaScript file. This example is just meant to demonstrate how to
+define a standalone main() function in JavaScript that adds an h1 element to the
+page.
