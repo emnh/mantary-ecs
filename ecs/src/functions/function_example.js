@@ -1,7 +1,6 @@
 function example(me) {
   me.boot();
-  me.device.onReady(onReady);
-  function onReady() {
+  me.device.onReady(function () {
     if (!me.video.init(1218, 562, {
       parent: "screen",
       scale: "auto"
@@ -24,6 +23,6 @@ function example(me) {
       textAlign: "center",
       text: "Hello World !"
     }));
-    setupKeyboardInput();
-  }
+    setupKeyboardInput(me);
+  });
 }
