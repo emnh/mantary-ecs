@@ -1,7 +1,6 @@
-Prompt: 1 / 1ReferenceError: me is not defined
-    at setupKeyboardInput
-(about:srcdoc:35:3)
-    at onReady (about:srcdoc:32:5)
+Prompt: 1 / 1TypeError: PlayerEntity is not a constructor
+    at
+about:srcdoc:18:28
     at a.emit
 (https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:14:68136)
 at Zn
@@ -9,69 +8,33 @@ at Zn
 at Ko
 (https://cdn.jsdelivr.net/npm/melonjs@latest/dist/melonjs.module.js/+esm:36:14842)
 Answer:
-1 / 1The ReferenceError: me is not defined error occurs because the me object is
-not defined in the setupKeyboardInput and onReady functions.This error can occur
-if the me object is not correctly imported or if it is out of scope.To fix this
-error, you can pass the me object as a parameter to the setupKeyboardInput and
-onReady functions. For example:javascriptCopy codeasync function main() {
-const melonjs = await
-import("https://esm.run/melonjs@latest/dist/melonjs.module.js");
-console.log("melonjs loaded:", melonjs);
-  example(melonjs);
-}
+1 / 1The TypeError: PlayerEntity is not a constructor error is occurring because
+getPlayerEntity is returning undefined instead of the PlayerEntity class.To fix
+this error, you can modify the getPlayerEntity function to return the
+PlayerEntity class instead of undefined:javascriptCopy codefunction
+getPlayerEntity(me) {
+  class PlayerEntity extends me.Entity {
+constructor(x, y, settings) {
+      super(x, y, settings);
 
-function
-example(me) {
-  me.boot();
+      this.speed =
+5;
 
-  me.device.onReady(function () {
-    if
-(!me.video.init(1218, 562, { parent: "screen", scale: "auto" })) {
-alert("Your browser does not support HTML5 canvas.");
-      return;
+      settings.image.addEventListener("loaded", () => {
+this.renderable.addAnimation("stand", [0]);
+this.renderable.addAnimation("walk", [1, 2, 3, 4, 5, 6, 7, 8], 80);
+this.renderable.setCurrentAnimation("stand");
+      });
+this.body.setShape(new me.Rect(0, 0, 32, 64));
     }
-me.game.world.addChild(new me.ColorLayer("background", "#202020"));
 
-    const
-PlayerEntity = getPlayerEntity(me);
-    me.game.world.addChild(new
-PlayerEntity(100, 100, {
-      width: 32,
-      height: 64,
-      image:
-me.loader.getImage("player"),
-    }));
+    // ...
+  }
 
-    me.game.world.addChild(new
-me.Text(609, 281, {
-      font: "Arial",
-      size: 160,
-      fillStyle:
-"#FFFFFF",
-      textBaseline: "middle",
-      textAlign: "center",
-      text:
-"Hello World !",
-    }));
-
-    setupKeyboardInput(me);
-  });
+  return
+PlayerEntity;
 }
-
-function
-setupKeyboardInput(me) {
-  me.input.bindKey(me.input.KEY.LEFT, "left");
-me.input.bindKey(me.input.KEY.RIGHT, "right");
-me.input.bindKey(me.input.KEY.UP, "up");
-  me.input.bindKey(me.input.KEY.DOWN,
-"down");
-}
-
-function getPlayerEntity(me) {
-  // ...
-}
-Saved
-setupKeyboardInputSaved exampleIn this modified code, we've passed the me object
-as a parameter to the setupKeyboardInput and onReady functions. This ensures
-that the me object is in scope within these functions and should fix the
-ReferenceError you're seeing.
+In this modified code, we've added the class PlayerEntity
+definition inside the getPlayerEntity function, which ensures that me is in
+scope. We've also returned the PlayerEntity class from the getPlayerEntity
+function.This should fix the TypeError you're seeing.
