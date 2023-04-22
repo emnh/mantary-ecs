@@ -1,0 +1,17 @@
+Prompt: 1 / 1Write a js function that redirects to google.
+Answer: 1 / 1Sure!
+Here's a JavaScript function that redirects the browser to the Google
+homepage:javascriptCopy codefunction redirectToGoogle() {
+  window.location.href
+= 'https://www.google.com';
+}
+In this code, we define a function called
+redirectToGoogle() that sets the window.location.href property to the URL of the
+Google homepage. This causes the browser to navigate to that URL, effectively
+redirecting the user to the Google homepage.You can call this function from
+anywhere in your JavaScript code to redirect the user to Google. For example,
+you could add a button to your HTML page with an onclick attribute that calls
+the function:htmlCopy code<button onclick="redirectToGoogle()">Go to
+Google</button>
+When the button is clicked, the redirectToGoogle() function will
+be executed and the browser will be redirected to the Google homepage.
