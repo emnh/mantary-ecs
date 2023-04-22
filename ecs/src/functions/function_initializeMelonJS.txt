@@ -1,18 +1,12 @@
-Prompt: 1 / 1Rewrite main without drawing a rectangle there.
-Answer: 1 /
-1Certainly! Here's an updated main function that loads dependencies and
-initializes melonJS, without drawing a rectangle:javascriptCopy codeasync
-function loadDependencies() {
-  try {
-    await loadMelonJS();
-console.log('melonJS has been loaded!');
-  } catch (error) {
-console.error(error);
-  }
-}
-
-function initializeMelonJS(callback) {
-me.video.init(640, 480, {
+Prompt: 1 / 1Use window size. Please respond only with updated
+initializeMelonJS.
+Answer: 1 / 1Sure thing! Here's an updated initializeMelonJS
+function that uses the window size to determine the size of the game
+canvas:javascriptCopy codefunction initializeMelonJS(callback) {
+  const width =
+window.innerWidth;
+  const height = window.innerHeight;
+me.video.init(width, height, {
     parent: 'game-container',
     renderer:
 me.video.CANVAS,
@@ -34,25 +28,8 @@ me.state.change(me.state.PLAY);
   
   callback(game);
 }
-
-async function main() {
-try {
-    await loadDependencies();
-    console.log('Dependencies have been
-loaded!');
-    initializeMelonJS((game) => {
-      console.log('melonJS has been
-initialized!');
-    });
-  } catch (error) {
-    console.error(error);
-}
-}
-
-main();
-Saved mainIn this updated code, the drawRectangle function has been
-removed from the initializeMelonJS function and the main function. Instead,
-initializeMelonJS now calls a callback function that logs a message once melonJS
-has been initialized.This code still calls loadDependencies to load any
-necessary dependencies, and then calls initializeMelonJS with a callback
-function that logs a message once melonJS has been initialized.
+In this updated code,
+window.innerWidth and window.innerHeight are used to determine the size of the
+game canvas, which is passed to me.video.init as the width and height
+parameters.This allows the game canvas to match the size of the window, ensuring
+that the game is displayed properly regardless of the device or screen size.
