@@ -1,0 +1,39 @@
+Prompt: 1 / 1The new button will have the text commit, it's the existing button
+which has the text "Copy code".
+Answer: 1 / 1Apologies for the confusion in my
+previous response. Here's the updated function that adds a new button with the
+text "commit" before an existing button with the text "Copy code", and logs the
+tag to console on click:javascriptCommitCopy codefunction addCommitButton(tag,
+handler) {
+  const buttons = document.getElementsByTagName("button"); // get all
+buttons on the page
+  let existingButton;
+  for (let i = 0; i < buttons.length;
+i++) {
+    if (buttons[i].innerText === "Copy code") { // find the existing
+button with the text "Copy code"
+      existingButton = buttons[i];
+break;
+    }
+  }
+  const newButton = document.createElement("button"); // create
+a new button element
+  newButton.innerText = "commit"; // set the text of the
+new button
+  existingButton.parentNode.insertBefore(newButton, existingButton);
+// insert the new button before the existing button
+newButton.addEventListener("click", function() {
+    console.log(tag); // log
+the tag to console on click
+    handler(); // call the event handler
+  });
+}
+To
+use this function, you would pass in a tag and an event handler as arguments,
+like this:javascriptCommitCopy codeaddCommitButton("p", function() {
+console.log("commit button clicked!");
+});
+This would add a new "commit" button
+before the existing button with the text "Copy code" on the page (assuming such
+a button exists), and when the new button is clicked, it would log the tag "p"
+to console and call the event handler function that was passed in.
